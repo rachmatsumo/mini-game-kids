@@ -229,11 +229,29 @@
     #startBtn, .choice-btn{transition:none;}
   }
   [hidden]{display:none !important;}
+
+  .mascot-icon {
+    font-size: 32px;
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #FFC93C, #FF9F1C);
+    border: 3px solid #FFF;
+    box-shadow: 0 8px 20px rgba(255, 159, 28, 0.4);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #3A2400;
+    animation: mascotFloat 3s ease-in-out infinite;
+  }
+  @keyframes mascotFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+
 </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
 <div id="stage">
-  <button id="musicToggle" aria-label="Musik latar">🔇</button>
+  <button id="musicToggle" aria-label="Musik latar"><i class="bi bi-volume-mute-fill"></i></button>
   <div class="stars" id="starsLayer"></div>
 
   <!-- MENU -->
@@ -261,7 +279,7 @@
   <!-- GAME -->
   <div id="gameScreen">
     <div id="topbar">
-      <button id="backBtn">← Menu</button>
+      <button id="backBtn"><i class="bi bi-arrow-left"></i> Menu</button>
       <div class="stat">Level <b id="lblLevel">-</b></div>
       <div class="stat">Kecepatan <b id="lblSpeed">-</b></div>
       <div class="stat">Skor <b id="lblScore">0</b></div>

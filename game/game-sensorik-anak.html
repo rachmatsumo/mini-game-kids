@@ -171,6 +171,23 @@ tr.new td{background:#FFF6C7}
 .empty{opacity:.6;padding:4vmin 0}
 .lv{font-size:.75em;padding:.2em .6em;border-radius:999px;background:#eee}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important}}
+
+  .mascot-icon {
+    font-size: 32px;
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #FFC93C, #FF9F1C);
+    border: 3px solid #FFF;
+    box-shadow: 0 8px 20px rgba(255, 159, 28, 0.4);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #3A2400;
+    animation: mascotFloat 3s ease-in-out infinite;
+  }
+  @keyframes mascotFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+
 </style>
 </head>
 <body>

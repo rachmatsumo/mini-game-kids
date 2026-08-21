@@ -164,12 +164,29 @@
     #menuScreen > *{animation:menuIn .01s linear both;}
     .hand{animation:none; filter:none;}
   }
+
+  .mascot-icon {
+    font-size: 32px;
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #FFC93C, #FF9F1C);
+    border: 3px solid #FFF;
+    box-shadow: 0 8px 20px rgba(255, 159, 28, 0.4);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #3A2400;
+    animation: mascotFloat 3s ease-in-out infinite;
+  }
+  @keyframes mascotFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
 <div id="stage">
-  <button id="musicToggle" aria-label="Musik latar">🔇</button>
+  <button id="musicToggle" aria-label="Musik latar"><i class="bi bi-volume-mute-fill"></i></button>
 
   <!-- MENU -->
   <div id="menuScreen">
@@ -189,7 +206,7 @@
   <!-- GAME -->
   <div id="gameScreen">
     <div id="topbar">
-      <button id="backBtn">← Menu</button>
+      <button id="backBtn"><i class="bi bi-arrow-left"></i> Menu</button>
       <div class="stat">Percobaan <b id="lblMoves">0</b></div>
       <div class="stat">Benar <b id="lblCorrect">0</b>/<span id="lblTotal">0</span></div>
     </div>
@@ -635,11 +652,11 @@ const CURRENT_GAME_KEY = "count";
       kicker.textContent = 'Level ' + LEVELS[state.levelKey].label + ' Selesai!';
       title.textContent = '<i class="bi bi-trophy-fill" style="color: #F59E0B;"></i> Semua Soal Selesai!';
       nextBtn.hidden = false;
-      nextBtn.textContent = 'Lanjut ke Level ' + LEVELS[nextKey].label + ' ➡️';
+      nextBtn.textContent = 'Lanjut ke Level ' + LEVELS[nextKey].label + ' <i class="bi bi-arrow-right-short"></i>';
       nextBtn.onclick = () => { sfxClick(); state.levelKey = nextKey; startGame(); };
     } else {
       kicker.textContent = 'Semua Level Selesai!';
-      title.textContent = '🏆 Kamu Jago Berhitung!';
+      title.textContent = '<i class="bi bi-trophy-fill" style="color:#FFC93C"></i> Kamu Jago Berhitung!';
       nextBtn.hidden = true;
     }
   }

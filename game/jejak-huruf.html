@@ -591,12 +591,29 @@
         animation: none;
       }
     }
-  </style>
+  
+  .mascot-icon {
+    font-size: 32px;
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #FFC93C, #FF9F1C);
+    border: 3px solid #FFF;
+    box-shadow: 0 8px 20px rgba(255, 159, 28, 0.4);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #3A2400;
+    animation: mascotFloat 3s ease-in-out infinite;
+  }
+  @keyframes mascotFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+
+</style>
 </head>
 
 <body>
   <div id="stage">
-    <button id="musicToggle" aria-label="Musik latar">🔇</button>
+    <button id="musicToggle" aria-label="Musik latar"><i class="bi bi-volume-mute-fill"></i></button>
     <div class="dust" id="dustLayer"></div>
 
     <!-- MENU -->
@@ -604,7 +621,7 @@
       <div class="mascot" aria-hidden="true">🖍️</div>
       <div class="title-wrap">
         <span class="kicker">Latihan Menulis</span>
-        <h1>✏️ Jejak Huruf</h1>
+        <h1><i class="bi bi-pencil-fill" style="color:#FFC93C"></i> Jejak Huruf</h1>
         <p class="subtitle">Ikuti titik-titiknya dengan jari untuk membentuk huruf atau angka. Pelan-pelan saja, tidak
           perlu terburu-buru!</p>
       </div>
@@ -622,7 +639,7 @@
     <div id="traceScreen">
       <div id="topbar">
         <div style="display:flex; gap:6px; align-items:center;">
-          <button id="backBtn">← Menu</button>
+          <button id="backBtn"><i class="bi bi-arrow-left"></i> Menu</button>
         </div>
         <div id="progressLbl"><b id="lblIndex">1</b> / <span id="lblTotal">26</span></div>
       </div>
@@ -634,7 +651,7 @@
           <canvas id="drawCanvas"></canvas>
           <div id="celebrate">
             <div class="praise-big" id="praiseText">Hebat!</div>
-            <button id="nextBtn">Lanjut ➡️</button>
+            <button id="nextBtn">Lanjut <i class="bi bi-arrow-right-short"></i></button>
           </div>
         </div>
       </div>
