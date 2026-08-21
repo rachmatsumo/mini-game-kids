@@ -22,7 +22,8 @@
   <meta property="og:title" content="main-edu — Portal Game Edukasi Interaktif Anak">
   <meta property="og:description"
     content="main-edu: Portal game edukasi interaktif anak dengan tema ceria! Mengetik luar angkasa, motorik kebun, latihan menulis, berhitung jari, dan loncat pipa emas. PWA & Fullscreen Ready!">
-  <meta property="og:image" content="https://main-edu.webkuy.com/assets/img/thumbnail.webp">
+  <meta property="og:image" content="https://main-edu.webkuy.com/assets/img/thumbnail.png">
+  <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="main-edu">
@@ -35,7 +36,7 @@
   <meta name="twitter:title" content="main-edu — Portal Game Edukasi Interaktif Anak">
   <meta name="twitter:description"
     content="main-edu: Portal game edukasi interaktif anak dengan tema ceria! Mengetik luar angkasa, motorik kebun, latihan menulis, berhitung jari, dan loncat pipa emas. PWA & Fullscreen Ready!">
-  <meta name="twitter:image" content="https://main-edu.webkuy.com/assets/img/thumbnail.webp">
+  <meta name="twitter:image" content="https://main-edu.webkuy.com/assets/img/thumbnail.png">
 
   <!-- Favicons & Icons -->
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
@@ -469,6 +470,7 @@
       box-shadow: 0 10px 25px rgba(14, 165, 233, 0.25);
       position: relative;
       z-index: 100;
+      max-width: 100%;
     }
 
     .brand {
@@ -562,10 +564,12 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      flex-shrink: 0;
+      flex-shrink: 1;
+      min-width: 0;
     }
 
     .kids-btn-icon {
+      flex-shrink: 0;
       width: 40px;
       height: 40px;
       border-radius: 14px;
@@ -590,7 +594,121 @@
       transform: scale(0.92);
     }
 
+    .kids-btn-icon.active-toggle {
+      background: linear-gradient(135deg, #F472B6, #EC4899);
+    }
 
+    /* Collapsible Search Bar */
+    .search-bar-wrap {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 3px solid #FFFFFF;
+      border-radius: 999px;
+      box-shadow: 0 10px 25px rgba(14, 165, 233, 0.2);
+      padding: 4px 8px 4px 18px;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      border-width: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      margin-top: -10px;
+      transition: max-height 0.28s ease, opacity 0.2s ease, margin-top 0.28s ease, border-width 0.28s ease, padding 0.28s ease;
+    }
+
+    .search-bar-wrap.open {
+      max-height: 60px;
+      opacity: 1;
+      border-width: 3px;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      margin-top: 0;
+    }
+
+    .search-bar-icon {
+      color: #2563EB;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .search-bar-input {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text-dark);
+      padding: 10px 0;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .search-bar-input::placeholder {
+      color: #94A3B8;
+      font-weight: 600;
+    }
+
+    .search-bar-clear {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: #F1F5F9;
+      color: #64748B;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s ease;
+    }
+
+    .search-bar-clear:hover {
+      background: #FEE2E2;
+      color: #DC2626;
+    }
+
+    /* Empty State (No Search/Filter Results) */
+    .empty-state {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .empty-state-emoji {
+      font-size: 48px;
+      margin-bottom: 6px;
+      opacity: 0.85;
+      animation: bobCloud 2.5s ease-in-out infinite alternate;
+    }
+
+    .empty-state-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 18px;
+      color: #0F172A;
+    }
+
+    .empty-state-sub {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
 
     /* Direct App Launcher Main Panel */
     .app-launcher-panel {
@@ -685,6 +803,34 @@
       transform: scale(0.92);
     }
 
+    .app-card:focus-visible .app-icon-wrap {
+      outline: 3px solid #2563EB;
+      outline-offset: 3px;
+    }
+
+    /* New Game Ribbon Badge */
+    .app-new-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: linear-gradient(135deg, #EC4899, #F472B6);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 0.03em;
+      padding: 3px 9px;
+      border-radius: 999px;
+      box-shadow: 0 3px 8px rgba(236, 72, 153, 0.5);
+      border: 1.5px solid #FFFFFF;
+      z-index: 3;
+      display: none;
+    }
+
+    .app-card.is-new .app-new-badge {
+      display: block;
+    }
+
     /* Golden 3D Ring Frame around AI icons */
     .app-icon-wrap {
       position: relative;
@@ -721,8 +867,13 @@
     /* Header Responsiveness (Prevent Mobile Overflow Leak) */
     @media (max-width: 640px) {
       header.kids-header {
-        gap: 6px;
-        padding: 6px 12px;
+        gap: 4px;
+        padding: 6px 10px;
+      }
+
+      .brand-icon {
+        width: 38px;
+        height: 38px;
       }
 
       .brand-title {
@@ -730,30 +881,35 @@
       }
 
       .kids-select-wrapper {
-        min-width: 85px;
-        max-width: 140px;
+        min-width: 0;
+        max-width: 96px;
+        flex: 0 1 auto;
       }
 
       .kids-select {
-        padding: 7px 24px 7px 10px;
-        font-size: 12px;
+        padding: 7px 22px 7px 8px;
+        font-size: 11px;
       }
 
       .kids-player-pill {
-        padding: 6px 10px;
+        padding: 6px 8px;
         font-size: 12px;
-        max-width: 100px;
+        max-width: 84px;
       }
 
       .kids-actions {
-        gap: 4px;
+        gap: 3px;
       }
 
       .kids-btn-icon {
-        width: 36px;
-        height: 36px;
-        font-size: 15px;
-        border-radius: 12px;
+        width: 32px;
+        height: 32px;
+        font-size: 13px;
+        border-radius: 10px;
+      }
+
+      .search-bar-wrap {
+        padding-left: 12px;
       }
     }
 
@@ -766,53 +922,10 @@
         padding: 6px 8px;
         max-width: fit-content;
       }
-    }
 
-    /* Pagination Navigation Wrapper & Buttons */
-    .pagination-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 8px 0 4px;
-      flex-shrink: 0;
-    }
-
-    .page-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 14px;
-      border: 3px solid #FFFFFF;
-      background: linear-gradient(180deg, #FFFFFF 0%, #F1F5F9 100%);
-      color: #0284C7;
-      font-family: var(--font-heading);
-      font-weight: 700;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
-      transition: all 0.2s ease;
-    }
-
-    .page-btn:hover:not(:disabled) {
-      transform: translateY(-2px) scale(1.05);
-      background: #E0F2FE;
-      border-color: #38BDF8;
-    }
-
-    .page-btn.active {
-      background: linear-gradient(180deg, #38BDF8 0%, #0284C7 100%);
-      color: #FFFFFF;
-      border-color: #FFFFFF;
-      box-shadow: 0 6px 16px rgba(2, 132, 199, 0.4);
-    }
-
-    .page-btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      box-shadow: none;
+      .kids-btn-icon#btnPwaInstall {
+        display: none !important;
+      }
     }
 
     /* Player Name Pill */
@@ -832,6 +945,8 @@
       box-shadow: 0 3px 10px rgba(59, 130, 246, 0.15);
       transition: all 0.2s ease;
       max-width: 140px;
+      min-width: 0;
+      flex-shrink: 1;
     }
 
     .kids-player-pill:hover {
@@ -932,7 +1047,7 @@
       transition: all 0.2s ease;
     }
 
-    .page-btn:hover {
+    .page-btn:hover:not(:disabled):not(.active) {
       background: #DBEAFE;
       transform: translateY(-2px);
     }
@@ -942,12 +1057,23 @@
       color: #FFFFFF;
       border-color: #FFFFFF;
       box-shadow: 0 6px 16px rgba(217, 119, 6, 0.4);
+      cursor: default;
     }
 
     .page-btn:disabled {
       opacity: 0.4;
       cursor: not-allowed;
       transform: none;
+    }
+
+    /* Grid Fade-in on Page/Filter Change */
+    .grid-launcher {
+      animation: gridFadeIn 0.25s ease;
+    }
+
+    @keyframes gridFadeIn {
+      0% { opacity: 0; transform: translateY(6px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
 
     /* Kids Footer */
@@ -1179,6 +1305,19 @@
       justify-content: center;
       backdrop-filter: blur(6px);
       z-index: 2;
+      transition: all 0.2s ease;
+    }
+
+    .modal-preview-close:hover {
+      background: #DC2626;
+      transform: scale(1.08) rotate(90deg);
+    }
+
+    button:focus-visible,
+    .app-card:focus-visible,
+    select:focus-visible {
+      outline: 3px solid #2563EB;
+      outline-offset: 2px;
     }
 
     .modal-body-content {
@@ -1307,7 +1446,7 @@
       <!-- Category Dropdown Select (Clean, Simple & Grouped) -->
       <div class="kids-select-wrapper">
         <select id="kidsCategorySelect" class="kids-select">
-          <option value="all">Semua Game (18)</option>
+          <option value="all">Semua Game</option>
           <option value="cerdas_cermat">Cerdas Cermat &amp; Kuis</option>
           <option value="logika_puzzle">Logika &amp; Puzzle</option>
           <option value="motorik_keterampilan">Motorik &amp; Kerapian</option>
@@ -1319,6 +1458,9 @@
 
       <!-- Action Buttons -->
       <div class="kids-actions">
+        <button id="btnSearch" class="kids-btn-icon" title="Cari Game">
+          <i class="bi bi-search"></i>
+        </button>
         <button id="btnPlayerName" class="kids-player-pill" title="Ubah Nama Pemain">
           <i class="bi bi-person-fill" style="color: #2563EB;"></i>
           <span id="lblPlayerName">Pemain Cilik</span>
@@ -1337,7 +1479,12 @@
       </div>
     </header>
 
-
+    <!-- Collapsible Search Bar -->
+    <div id="searchBarWrap" class="search-bar-wrap">
+      <i class="bi bi-search search-bar-icon"></i>
+      <input id="gameSearchInput" class="search-bar-input" type="text" placeholder="Cari nama game, mis. 'puzzle', 'huruf'..." autocomplete="off">
+      <button id="searchBarClear" class="search-bar-clear" title="Bersihkan pencarian"><i class="bi bi-x-lg"></i></button>
+    </div>
 
     <!-- Main Direct App Launcher Grid -->
     <main class="app-launcher-panel">
@@ -1345,14 +1492,21 @@
         <div class="panel-title">
           <i class="bi bi-controller" style="color: #0284C7;"></i> Game Edukasi Anak
         </div>
-        <span class="panel-badge">18 Game Aktif</span>
+        <span class="panel-badge" id="gameCountBadge">18 Game Aktif</span>
+      </div>
+
+      <!-- Empty search/filter state -->
+      <div id="emptyState" class="empty-state" style="display:none;">
+        <div class="empty-state-emoji">🔍</div>
+        <p class="empty-state-title">Game tidak ditemukan</p>
+        <p class="empty-state-sub">Coba kata kunci lain atau pilih kategori "Semua Game"</p>
       </div>
 
       <!-- Direct Grid (3D Vibrant AI App Icon Squares with Golden Stars) -->
       <div class="grid-launcher" id="appGrid">
 
         <!-- App 1: Luas Angkasa -->
-        <div class="app-card" data-category="ketik" data-key="space">
+        <div class="app-card" data-category="ketik" data-key="space" tabindex="0" role="button">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
             <img src="assets/img/game-thumbnail/app-space.webp" alt="Tembak Huruf Angkasa App Icon" class="app-icon-img">
@@ -1366,7 +1520,7 @@
         </div>
 
         <!-- App 2: Tap Tap Kebun -->
-        <div class="app-card" data-category="sensorik" data-key="garden">
+        <div class="app-card" data-category="sensorik" data-key="garden" tabindex="0" role="button">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
             <img src="assets/img/game-thumbnail/app-garden.webp" alt="Tap Tap Kebun App Icon" class="app-icon-img">
@@ -1380,7 +1534,7 @@
         </div>
 
         <!-- App 3: Jejak Huruf -->
-        <div class="app-card" data-category="menulis" data-key="trace">
+        <div class="app-card" data-category="menulis" data-key="trace" tabindex="0" role="button">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
             <img src="assets/img/game-thumbnail/app-trace.webp" alt="Jejak Huruf App Icon" class="app-icon-img">
@@ -1394,7 +1548,7 @@
         </div>
 
         <!-- App 4: Kartu Ingatan -->
-        <div class="app-card" data-category="ingatan" data-key="memory">
+        <div class="app-card" data-category="ingatan" data-key="memory" tabindex="0" role="button">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
             <img src="assets/img/game-thumbnail/app-memory.webp" alt="Kartu Ingatan App Icon" class="app-icon-img">
@@ -1408,7 +1562,7 @@
         </div>
 
         <!-- App 5: Cocokkan Huruf -->
-        <div class="app-card" data-category="cocokkan" data-key="match">
+        <div class="app-card" data-category="cocokkan" data-key="match" tabindex="0" role="button">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
             <img src="assets/img/game-thumbnail/app-match.webp" alt="Cocokkan Huruf App Icon" class="app-icon-img">
@@ -1422,7 +1576,7 @@
         </div>
 
         <!-- App 6: Tebak Suara -->
-        <div class="app-card" data-category="suara" data-key="sound">
+        <div class="app-card" data-category="suara" data-key="sound" tabindex="0" role="button">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
             <img src="assets/img/game-thumbnail/app-sound.webp" alt="Tebak Suara App Icon" class="app-icon-img">
@@ -1436,7 +1590,7 @@
         </div>
 
         <!-- App 7: Berhitung Jari -->
-        <div class="app-card" data-category="hitung" data-key="count">
+        <div class="app-card" data-category="hitung" data-key="count" tabindex="0" role="button">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
             <img src="assets/img/game-thumbnail/app-count.webp" alt="Berhitung Jari App Icon" class="app-icon-img">
@@ -1450,8 +1604,9 @@
         </div>
 
         <!-- App 9: Puzzle Hewan (NEW!) -->
-        <div class="app-card" data-category="puzzle" data-key="puzzle">
+        <div class="app-card is-new" data-category="puzzle" data-key="puzzle" tabindex="0" role="button">
           <div class="app-icon-wrap">
+            <span class="app-new-badge">BARU</span>
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
             <img src="assets/img/game-thumbnail/app-puzzle.webp" alt="Puzzle Hewan App Icon" class="app-icon-img">
           </div>
@@ -1464,7 +1619,7 @@
         </div>
 
         <!-- App 8: Loncat Pipa Emas -->
-        <div class="app-card" data-category="refleks" data-key="jump">
+        <div class="app-card" data-category="refleks" data-key="jump" tabindex="0" role="button">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
             <img src="assets/img/game-thumbnail/app-jump.webp" alt="Loncat Pipa Emas App Icon" class="app-icon-img">
@@ -1484,7 +1639,7 @@
 
 
         <!-- App 18: Rapikan Kamar -->
-        <div class="app-card" data-category="rapikan_kamar" data-key="rapikan_kamar">
+        <div class="app-card" data-category="rapikan_kamar" data-key="rapikan_kamar" tabindex="0" role="button">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
             <img src="assets/img/game-thumbnail/app-rapikan-kamar.webp" alt="Rapikan Kamar App Icon"
@@ -1499,7 +1654,7 @@
         </div>
 
         <!-- App 17: Game Logika -->
-        <div class="app-card" data-category="logika" data-key="logika">
+        <div class="app-card" data-category="logika" data-key="logika" tabindex="0" role="button">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
             <img src="assets/img/game-thumbnail/app-logika.webp" alt="Game Logika App Icon" class="app-icon-img">
@@ -1513,7 +1668,7 @@
         </div>
 
         <!-- App 16: Piano Mini -->
-        <div class="app-card" data-category="piano" data-key="piano">
+        <div class="app-card" data-category="piano" data-key="piano" tabindex="0" role="button">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
             <img src="assets/img/game-thumbnail/app-piano.webp" alt="Piano Mini App Icon" class="app-icon-img">
@@ -1527,7 +1682,7 @@
         </div>
 
         <!-- App 15: Jam Berapa Sekarang? -->
-        <div class="app-card" data-category="clock_quiz" data-key="clock_quiz">
+        <div class="app-card" data-category="clock_quiz" data-key="clock_quiz" tabindex="0" role="button">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
             <img src="assets/img/game-thumbnail/app-clock-quiz.webp" alt="Jam Berapa Sekarang App Icon"
@@ -1542,7 +1697,7 @@
         </div>
 
         <!-- App 14: Cerdas Cermat Warna & Bentuk -->
-        <div class="app-card" data-category="color_shape_quiz" data-key="color_shape_quiz">
+        <div class="app-card" data-category="color_shape_quiz" data-key="color_shape_quiz" tabindex="0" role="button">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
             <img src="assets/img/game-thumbnail/app-color-shape-quiz.webp" alt="Cerdas Cermat Warna & Bentuk App Icon"
@@ -1557,7 +1712,7 @@
         </div>
 
         <!-- App 13: Cerdas Cermat Benda -->
-        <div class="app-card" data-category="object_quiz" data-key="object_quiz">
+        <div class="app-card" data-category="object_quiz" data-key="object_quiz" tabindex="0" role="button">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
             <img src="assets/img/game-thumbnail/app-object-quiz.webp" alt="Cerdas Cermat Benda App Icon"
@@ -1572,7 +1727,7 @@
         </div>
 
         <!-- App 12: Cerdas Cermat Hewan -->
-        <div class="app-card" data-category="quiz" data-key="quiz">
+        <div class="app-card" data-category="quiz" data-key="quiz" tabindex="0" role="button">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
             <img src="assets/img/game-thumbnail/app-quiz.webp" alt="Cerdas Cermat Hewan App Icon" class="app-icon-img">
@@ -1586,7 +1741,7 @@
         </div>
 
         <!-- App 11: Sambung Titik -->
-        <div class="app-card" data-category="dots" data-key="dots">
+        <div class="app-card" data-category="dots" data-key="dots" tabindex="0" role="button">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
             <img src="assets/img/game-thumbnail/app-dots.webp" alt="Sambung Titik App Icon" class="app-icon-img">
@@ -1600,7 +1755,7 @@
         </div>
 
         <!-- App 10: Labirin Kecil -->
-        <div class="app-card" data-category="maze" data-key="maze">
+        <div class="app-card" data-category="maze" data-key="maze" tabindex="0" role="button">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
             <img src="assets/img/game-thumbnail/app-maze.webp" alt="Labirin Kecil App Icon" class="app-icon-img">
@@ -1768,7 +1923,12 @@
 
         // Reset scroll position to top when page changes
         const appGrid = document.getElementById('appGrid');
-        if (appGrid) appGrid.scrollTop = 0;
+        if (appGrid) {
+          appGrid.scrollTop = 0;
+          appGrid.style.animation = 'none';
+          void appGrid.offsetWidth;
+          appGrid.style.animation = '';
+        }
 
         // Build Pagination Buttons HTML
         let navHtml = '';
@@ -1796,22 +1956,37 @@
         musik_refleks: ['piano', 'hitung', 'refleks']
       };
 
+      const gameCountBadge = document.getElementById('gameCountBadge');
+      const emptyState = document.getElementById('emptyState');
+      const appGridEl = document.getElementById('appGrid');
+      const gameSearchInput = document.getElementById('gameSearchInput');
+      let searchQuery = '';
+
       function applyFilterAndPagination() {
         const selectedCat = kidsCategorySelect ? kidsCategorySelect.value : 'all';
+        const query = searchQuery.trim().toLowerCase();
         const matchingCards = [];
 
         appCards.forEach(card => {
           const cardCat = card.dataset.category || card.dataset.key;
-          const isMatch = selectedCat === 'all' ||
+          const isCatMatch = selectedCat === 'all' ||
             cardCat === selectedCat ||
             (CATEGORY_GROUPS[selectedCat] && CATEGORY_GROUPS[selectedCat].includes(cardCat));
 
-          if (isMatch) {
+          const titleEl = card.querySelector('.app-title');
+          const title = titleEl ? titleEl.textContent.toLowerCase() : '';
+          const isQueryMatch = !query || title.includes(query);
+
+          if (isCatMatch && isQueryMatch) {
             matchingCards.push(card);
           } else {
             card.style.display = 'none';
           }
         });
+
+        if (appGridEl) appGridEl.style.display = matchingCards.length ? 'grid' : 'none';
+        if (emptyState) emptyState.style.display = matchingCards.length ? 'none' : 'flex';
+        if (gameCountBadge) gameCountBadge.textContent = `${appCards.length} Game Aktif`;
 
         renderPagination(matchingCards);
       }
@@ -1823,21 +1998,44 @@
         });
       }
 
-      // Initial Call
-      applyFilterAndPagination();
-
-      if (false && kidsCategorySelect) {
-        kidsCategorySelect.addEventListener('change', (e) => {
-          const category = e.target.value;
-          appCards.forEach(card => {
-            if (category === 'all' || card.dataset.category === category) {
-              card.style.display = 'flex';
-            } else {
-              card.style.display = 'none';
-            }
-          });
+      if (gameSearchInput) {
+        gameSearchInput.addEventListener('input', (e) => {
+          searchQuery = e.target.value;
+          currentPage = 1;
+          applyFilterAndPagination();
+          const searchBarClear = document.getElementById('searchBarClear');
+          if (searchBarClear) searchBarClear.style.visibility = searchQuery ? 'visible' : 'hidden';
         });
       }
+
+      const btnSearch = document.getElementById('btnSearch');
+      const searchBarWrap = document.getElementById('searchBarWrap');
+      const searchBarClear = document.getElementById('searchBarClear');
+
+      if (btnSearch && searchBarWrap) {
+        btnSearch.addEventListener('click', () => {
+          const isOpen = searchBarWrap.classList.toggle('open');
+          btnSearch.classList.toggle('active-toggle', isOpen);
+          if (isOpen && gameSearchInput) {
+            setTimeout(() => gameSearchInput.focus(), 150);
+          }
+        });
+      }
+
+      if (searchBarClear && gameSearchInput) {
+        searchBarClear.style.visibility = 'hidden';
+        searchBarClear.addEventListener('click', () => {
+          gameSearchInput.value = '';
+          searchQuery = '';
+          currentPage = 1;
+          applyFilterAndPagination();
+          searchBarClear.style.visibility = 'hidden';
+          gameSearchInput.focus();
+        });
+      }
+
+      // Initial Call
+      applyFilterAndPagination();
 
       // Game Details Data
       const GAME_DETAILS = {
@@ -2018,20 +2216,28 @@
       let currentModalGame = null;
 
       // Click App Card -> Open Preview Modal
+      function openGameModal(card) {
+        const key = card.dataset.key;
+        const info = GAME_DETAILS[key];
+        if (!info) return;
+
+        currentModalGame = info;
+        modalPreviewImg.src = info.previewImg;
+        modalTitle.textContent = info.title;
+        modalBadge.textContent = info.category;
+        modalDesc.textContent = info.desc;
+        modalBenefits.innerHTML = info.benefits.map(b => `<li>${b}</li>`).join('');
+
+        gameModal.classList.add('active');
+      }
+
       appCards.forEach(card => {
-        card.addEventListener('click', () => {
-          const key = card.dataset.key;
-          const info = GAME_DETAILS[key];
-          if (!info) return;
-
-          currentModalGame = info;
-          modalPreviewImg.src = info.previewImg;
-          modalTitle.textContent = info.title;
-          modalBadge.textContent = info.category;
-          modalDesc.textContent = info.desc;
-          modalBenefits.innerHTML = info.benefits.map(b => `<li>${b}</li>`).join('');
-
-          gameModal.classList.add('active');
+        card.addEventListener('click', () => openGameModal(card));
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openGameModal(card);
+          }
         });
       });
 
@@ -2099,6 +2305,10 @@
         if (e.key === 'Escape') {
           if (gameStage.classList.contains('active')) closeGameStage();
           if (gameModal.classList.contains('active')) gameModal.classList.remove('active');
+          if (searchBarWrap && searchBarWrap.classList.contains('open') && document.activeElement === gameSearchInput) {
+            searchBarWrap.classList.remove('open');
+            btnSearch.classList.remove('active-toggle');
+          }
         }
       });
 
