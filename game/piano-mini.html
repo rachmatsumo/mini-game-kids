@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Piano Mini</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+  :root{
+    --bg-top:#E0F7F4;
+    --bg-bottom:#FFE6F2;
+    --ink:#3A2B4A;
+    --dim:#7A6A8C;
+    --panel-bg:rgba(255,255,255,.65);
+    --gold:#FFC93C;
+    --coral:#FF6F59;
+    --teal:#3FBFAE;
+    --font-display:'Fredoka', sans-serif;
+    --font-body:'Nunito', sans-serif;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none;}
+  html,body{margin:0; padding:0; height:100%; overflow:hidden;
+    background:linear-gradient(165deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+    font-family:var(--font-body); color:var(--ink); touch-action:none;}
+  #stage{position:relative; width:100%; height:100vh; min-height:560px; display:flex; flex-direction:column; overflow:hidden;}
+  [hidden]{display:none !important;}
+
+  /* ---------- MENU ---------- */
+  #menuScreen{position:relative; z-index:2; flex:1; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; padding:24px; gap:18px;
+    overflow-y:auto; touch-action:pan-y; -webkit-overflow-scrolling:touch;}
+  #menuScreen > *{ animation:menuIn .6s cubic-bezier(.22,.9,.32,1.1) both; }
+  #menuScreen > *:nth-child(1){ animation-delay:.05s; }
+  #menuScreen > *:nth-child(2){ animation-delay:.16s; }
+  #menuScreen > *:nth-child(3){ animation-delay:.27s; }
+  #menuScreen > *:nth-child(4){ animation-delay:.38s; }
+  @keyframes menuIn{0%{opacity:0; transform:translateY(20px) scale(.97);} 100%{opacity:1; transform:translateY(0) scale(1);}}
+
+  .mascot{position:absolute; top:6%; left:8%; font-size:38px; pointer-events:none;
+    animation:bob 4.2s ease-in-out infinite, menuIn .6s ease .5s both;}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-6deg);} 50%{transform:translateY(-12px) rotate(6deg);}}
+
+  .kicker{font-family:var(--font-body); font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    font-size:12px; color:#C2612E;}
+  h1{font-family:var(--font-display); font-weight:700; font-size:clamp(28px,6vw,44px); margin:6px 0 0; color:var(--ink);}
+  .subtitle{color:var(--dim); font-size:15px; max-width:400px; margin:6px auto 0; font-weight:700;}
+
+  .panel{background:var(--panel-bg); border:1px solid rgba(58,43,74,.08); border-radius:20px;
+    padding:18px 20px; width:min(92vw,420px); backdrop-filter:blur(6px);
+    box-shadow:0 10px 26px rgba(58,43,74,.1);}
+  .panel h2{font-family:var(--font-display); font-size:13px; font-weight:600; margin:0 0 12px;
+    color:var(--dim); text-transform:uppercase; letter-spacing:.08em; text-align:left;}
+
+  #freeBtn{width:100%; font-family:var(--font-display); font-weight:600; font-size:17px; color:#3A2400;
+    background:linear-gradient(135deg, var(--gold), #E0A93A); border:none; border-radius:16px;
+    padding:16px; cursor:pointer; box-shadow:0 8px 18px rgba(255,201,60,.35); transition:transform .15s ease;
+    margin-bottom:6px;}
+  #freeBtn:active{ transform:scale(.98); }
+
+  .song-grid{display:flex; flex-direction:column; gap:10px; max-height:38vh; overflow-y:auto;
+    touch-action:pan-y; -webkit-overflow-scrolling:touch; padding-right:4px; margin-right:-4px;}
+  .song-grid::-webkit-scrollbar{ width:6px; }
+  .song-grid::-webkit-scrollbar-thumb{ background:rgba(58,43,74,.2); border-radius:3px; }
+  .song-btn{display:flex; align-items:center; gap:12px; text-align:left; font-family:var(--font-body);
+    font-weight:800; font-size:14px; color:var(--ink); background:rgba(255,255,255,.7);
+    border:2px solid rgba(58,43,74,.1); border-radius:14px; padding:12px 14px; cursor:pointer;
+    transition:all .15s ease;}
+  .song-btn .icon{ font-size:26px; }
+  .song-btn small{ display:block; font-weight:700; color:var(--dim); font-size:11.5px; margin-top:2px; }
+  .song-btn:hover{ border-color:var(--teal); transform:translateY(-1px); }
+
+  /* ---------- GAME ---------- */
+  #gameScreen{position:relative; z-index:2; flex:1; display:none; flex-direction:column; min-height:0;}
+  #topbar{display:flex; align-items:center; justify-content:space-between; gap:8px;
+    padding:12px 16px 8px; font-family:var(--font-body); font-weight:800; font-size:13px;
+    color:var(--dim); flex-wrap:wrap;}
+  #backBtn{background:rgba(58,43,74,.08); border:none; color:var(--ink); font-weight:800;
+    border-radius:999px; padding:6px 14px; cursor:pointer; font-family:var(--font-body); font-size:12px;}
+  .stat{background:rgba(255,255,255,.7); border-radius:999px; padding:6px 14px;}
+  .stat b{color:var(--ink);}
+  #demoBtn{background:linear-gradient(135deg, var(--teal), #2A9C8D); border:none; color:#fff; font-weight:800;
+    border-radius:999px; padding:6px 16px; cursor:pointer; font-family:var(--font-body); font-size:12px;}
+
+  #stageArea{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; padding:10px 16px; }
+  .mascot-big{ font-size:64px; animation:bob 3.6s ease-in-out infinite; }
+
+  #pianoRow{ display:flex; gap:6px; width:min(94vw,560px); height:min(30vh,180px); }
+  .key{
+    flex:1; border:none; border-radius:14px; cursor:pointer; position:relative;
+    display:flex; flex-direction:column; align-items:center; justify-content:flex-end; padding-bottom:10px;
+    box-shadow:0 8px 0 rgba(0,0,0,.18), 0 10px 16px rgba(0,0,0,.18);
+    transition:transform .08s ease, box-shadow .08s ease;
+    font-family:var(--font-display); font-weight:700; font-size:clamp(11px,2.6vw,15px); color:rgba(255,255,255,.9);
+  }
+  .key:active, .key.pressed{ transform:translateY(6px); box-shadow:0 2px 0 rgba(0,0,0,.18), 0 4px 8px rgba(0,0,0,.16); }
+  .key .ring{ position:absolute; inset:-6px; border-radius:18px; border:3px solid #fff; opacity:0;
+    transform-box:fill-box; }
+  .key.target .ring{ opacity:.95; animation:keyRingPulse 1s ease-in-out infinite; }
+  @keyframes keyRingPulse{ 0%,100%{ transform:scale(1); opacity:.95;} 50%{ transform:scale(1.06); opacity:.5;} }
+
+  .note-particle{ position:absolute; font-size:18px; pointer-events:none; animation:noteFloat .8s ease-out forwards; }
+  @keyframes noteFloat{ 0%{ opacity:1; transform:translateY(0) scale(.8);} 100%{ opacity:0; transform:translateY(-46px) scale(1.2);} }
+
+  /* ---------- FINISH ---------- */
+  #finishScreen{position:relative; z-index:2; flex:1; display:none; flex-direction:column;
+    align-items:center; justify-content:center; gap:12px; text-align:center; padding:24px;}
+  .btn-row{display:flex; gap:12px; flex-wrap:wrap; justify-content:center;}
+  .secondary-btn{font-family:var(--font-body); font-weight:800; font-size:14px; color:var(--ink);
+    background:rgba(255,255,255,.75); border:2px solid rgba(58,43,74,.12); border-radius:999px;
+    padding:12px 26px; cursor:pointer;}
+
+  @media (prefers-reduced-motion: reduce){
+    .mascot, .mascot-big{animation:none;}
+    #menuScreen > *{animation:menuIn .01s linear both;}
+    .key.target .ring{animation:none;}
+  }
+  .mascot-img-wrap {
+    width: 84px;
+    height: 84px;
+    border-radius: 24px;
+    border: 4px solid #FFC93C;
+    box-shadow: 0 10px 25px rgba(255, 201, 60, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.6);
+    overflow: hidden;
+    background: #FFF;
+    display: inline-block;
+    margin-bottom: 8px;
+    animation: mascotFloat 3s ease-in-out infinite;
+  }
+  .mascot-3d-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  @keyframes mascotFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- MENU -->
+  <div id="menuScreen">
+    <div class="mascot-img-wrap"><img src="../assets/img/game-thumbnail/app-piano.png" alt="Nano Banana Mascot" class="mascot-3d-img"></div>
+    <div class="title-wrap">
+      <span class="kicker">Eksplorasi Musik</span>
+      <h1><i class="bi bi-music-note-beamed" style="color:#FFC93C"></i> Piano Mini</h1>
+      <p class="subtitle">Tekan tuts warna-warni untuk membunyikan nada, atau ikuti lagu bersama!</p>
+    </div>
+    <div class="panel">
+      <button id="freeBtn">🎵 Main Bebas</button>
+    </div>
+    <div class="panel">
+      <h2>Atau Ikuti Lagu</h2>
+      <div class="song-grid" id="songGrid"></div>
+    </div>
+  </div>
+
+  <!-- GAME -->
+  <div id="gameScreen">
+    <div id="topbar">
+      <button id="backBtn">← Menu</button>
+      <div class="stat" id="modeLabel">Main Bebas</div>
+      <div class="stat" id="progressStat" hidden>Nada <b id="lblProgress">0</b>/<span id="lblTotal">0</span></div>
+      <button id="demoBtn" hidden>▶️ Dengarkan</button>
+    </div>
+    <div id="stageArea">
+      <div class="mascot-big" id="bigMascot" aria-hidden="true">🎼</div>
+      <div id="pianoRow"></div>
+    </div>
+  </div>
+
+  <!-- FINISH -->
+  <div id="finishScreen">
+    <span class="kicker">Selesai!</span>
+    <h1 style="font-size:clamp(24px,5vw,36px)">🎉 Lagunya selesai dimainkan!</h1>
+    <p class="subtitle" id="finishSongName">Bintang Kecil</p>
+    <div class="btn-row">
+      <button class="secondary-btn" id="replaySongBtn" style="background:linear-gradient(135deg,var(--gold),#E0A93A); color:#3A2400; border:none;">🔁 Ulangi Lagu</button>
+    </div>
+    <div class="btn-row">
+      <button class="secondary-btn" id="freePlayFromFinishBtn">🎵 Main Bebas</button>
+      <button class="secondary-btn" id="menuBtn2" style="background:linear-gradient(135deg,var(--teal),#2A9C8D); color:#fff; border:none;">🏠 Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function submitPortalScore(gameKey, score) {
+  try {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'MAINEDU_SUBMIT_SCORE',
+        gameKey: gameKey,
+        score: Number(score) || 0
+      }, '*');
+    }
+  } catch(e) {}
+}
+const CURRENT_GAME_KEY = "piano";
+
+(function(){
+  const NOTES = [
+    { name:'Do',  freq:261.63, color:'#FF6F59', dark:'#D8493A' },
+    { name:'Re',  freq:293.66, color:'#FFA23C', dark:'#D67E1F' },
+    { name:'Mi',  freq:329.63, color:'#FFC93C', dark:'#D6A11F' },
+    { name:'Fa',  freq:349.23, color:'#8CC63F', dark:'#6BA324' },
+    { name:'Sol', freq:392.00, color:'#3FBFAE', dark:'#2A9C8D' },
+    { name:'La',  freq:440.00, color:'#4C7CE0', dark:'#345FC0' },
+    { name:'Si',  freq:493.88, color:'#9B6BDE', dark:'#7A4FC0' },
+    { name:'Do²', freq:523.25, color:'#FF8FC0', dark:'#E066A0' },
+  ];
+  const SONGS = {
+    bintang: { name:'Bintang Kecil', icon:'⭐',
+      // not angka: 5321 7217 65 | 6715 1353 12 | 5321 3532 16 | 7165 2342 671
+      notes:['Sol','Mi','Re','Do','Si','Re','Do','Si','La','Sol',
+             'La','Si','Do²','Sol','Do','Mi','Sol','Mi','Do','Re',
+             'Sol','Mi','Re','Do','Mi','Sol','Mi','Re','Do','La',
+             'Si','Do²','La','Sol','Re','Mi','Fa','Re','La','Si','Do²',
+             'Sol','Mi','Re','Do','Si','Re','Do','Si','La','Sol',
+             'La','Si','Do²','Sol','Do','Mi','Sol','Mi','Do','Re',
+             'Sol','Mi','Re','Do','Mi','Sol','Mi','Re','Do','La',
+             'Si','Do²','La','Sol','Re','Mi','Fa','Re','La','Si','Do²'] },
+    tangga: { name:'Tangga Nada Do-Re-Mi', icon:'🎶',
+      notes:['Do','Re','Mi','Fa','Sol','La','Si','Do²','Do²','Si','La','Sol','Fa','Mi','Re','Do'] },
+    ceria: { name:'Lagu Ceria', icon:'😄',
+      notes:['Do','Mi','Sol','Do²','Sol','Mi','Do','Sol','Fa','Mi','Re','Do','Re','Mi','Fa','Sol',
+             'Do','Mi','Sol','Do²','Sol','Mi','Do','Sol','Fa','Mi','Re','Do','Re','Mi','Fa','Sol'] },
+    riang: { name:'Nada Riang', icon:'🌈',
+      notes:['Do','Re','Mi','Do','Mi','Sol','Sol','Fa','Mi','Re','Do','Re','Mi','Fa','Mi','Re','Do',
+             'Do','Re','Mi','Do','Mi','Sol','Sol','Fa','Mi','Re','Do','Re','Mi','Fa','Mi','Re','Do'] },
+    lompat: { name:'Langkah Melompat', icon:'🐇',
+      notes:['Sol','Mi','Do','Mi','Sol','Do²','Sol','Mi','Do','Re','Mi','Fa','Sol','La','Sol','Fa','Mi','Re','Do',
+             'Sol','Mi','Do','Mi','Sol','Do²','Sol','Mi','Do','Re','Mi','Fa','Sol','La','Sol','Fa','Mi','Re','Do'] },
+    cicak: { name:'Cicak-cicak di Dinding', icon:'🦎',
+      // not angka: 5353345 (cicak..dinding) | 4246543 (diam..merayap) | 6464671 (datang..nyamuk) | 1 (hap) | 35421 (lalu ditangkap)
+      notes:['Sol','Mi','Sol','Mi','Mi','Fa','Sol',
+             'Fa','Re','Fa','La','Sol','Fa','Mi',
+             'La','Fa','La','Fa','La','Si','Do²',
+             'Do²',
+             'Mi','Sol','Fa','Re','Do',
+             'Sol','Mi','Sol','Mi','Mi','Fa','Sol',
+             'Fa','Re','Fa','La','Sol','Fa','Mi',
+             'La','Fa','La','Fa','La','Si','Do²',
+             'Do²',
+             'Mi','Sol','Fa','Re','Do'] },
+  };
+
+  const menuScreen = document.getElementById('menuScreen');
+  const gameScreen = document.getElementById('gameScreen');
+  const finishScreen = document.getElementById('finishScreen');
+  const songGrid = document.getElementById('songGrid');
+  const pianoRow = document.getElementById('pianoRow');
+  const modeLabel = document.getElementById('modeLabel');
+  const progressStat = document.getElementById('progressStat');
+  const demoBtn = document.getElementById('demoBtn');
+  const bigMascot = document.getElementById('bigMascot');
+
+  let state = {
+    mode: 'free', // 'free' | 'song'
+    songKey: null,
+    songIdx: 0,
+    demoPlaying: false,
+  };
+
+  // ---------- sound engine ----------
+  let audioCtx = null;
+  function ensureAudio(){
+    if(!audioCtx){
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if(!AC) return null;
+      audioCtx = new AC();
+    }
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+    return audioCtx;
+  }
+  function playNoteTone(freq){
+    const ctx = ensureAudio();
+    if(!ctx) return;
+    const t0 = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const osc2 = ctx.createOscillator();
+    const gain = ctx.createGain();
+    const gain2 = ctx.createGain();
+    osc.type = 'triangle'; osc.frequency.setValueAtTime(freq, t0);
+    osc2.type = 'sine'; osc2.frequency.setValueAtTime(freq*2, t0);
+    gain.gain.setValueAtTime(0.0001, t0);
+    gain.gain.linearRampToValueAtTime(0.22, t0+0.012);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0+0.85);
+    gain2.gain.setValueAtTime(0.0001, t0);
+    gain2.gain.linearRampToValueAtTime(0.05, t0+0.012);
+    gain2.gain.exponentialRampToValueAtTime(0.0001, t0+0.5);
+    osc.connect(gain).connect(ctx.destination);
+    osc2.connect(gain2).connect(ctx.destination);
+    osc.start(t0); osc.stop(t0+0.9);
+    osc2.start(t0); osc2.stop(t0+0.55);
+  }
+  function sfxClick(){
+    const ctx = ensureAudio(); if(!ctx) return;
+    const t0 = ctx.currentTime;
+    const osc = ctx.createOscillator(); const g = ctx.createGain();
+    osc.type='square'; osc.frequency.setValueAtTime(600,t0);
+    g.gain.setValueAtTime(0.0001,t0); g.gain.linearRampToValueAtTime(0.06,t0+0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001,t0+0.06);
+    osc.connect(g).connect(ctx.destination); osc.start(t0); osc.stop(t0+0.08);
+  }
+  function sfxFanfare(){
+    [523,659,784,1046,1318].forEach((f,i)=>{
+      const ctx = ensureAudio(); if(!ctx) return;
+      const t0 = ctx.currentTime + i*0.09;
+      const osc = ctx.createOscillator(); const g = ctx.createGain();
+      osc.type='triangle'; osc.frequency.setValueAtTime(f,t0);
+      g.gain.setValueAtTime(0.0001,t0); g.gain.linearRampToValueAtTime(0.17,t0+0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001,t0+0.18);
+      osc.connect(g).connect(ctx.destination); osc.start(t0); osc.stop(t0+0.2);
+    });
+  }
+
+  // ---------- build menu song list ----------
+  Object.entries(SONGS).forEach(([key, song]) => {
+    const btn = document.createElement('button');
+    btn.className = 'song-btn';
+    btn.innerHTML = `<span class="icon">${song.icon}</span><span>${song.name}<small>${song.notes.length} nada</small></span>`;
+    btn.onclick = () => { sfxClick(); startSong(key); };
+    songGrid.appendChild(btn);
+  });
+
+  // ---------- piano keys ----------
+  function buildPiano(){
+    pianoRow.innerHTML = '';
+    NOTES.forEach((note, i) => {
+      const key = document.createElement('button');
+      key.className = 'key';
+      key.dataset.name = note.name;
+      key.style.background = `linear-gradient(180deg, ${note.color}, ${note.dark})`;
+      key.innerHTML = `<span class="ring"></span><span>${note.name}</span>`;
+      key.addEventListener('pointerdown', (e) => { e.preventDefault(); pressKey(note, key); });
+      pianoRow.appendChild(key);
+    });
+  }
+  buildPiano();
+
+  function flashKey(name){
+    const key = pianoRow.querySelector(`.key[data-name="${CSS.escape(name)}"]`);
+    if(!key) return;
+    key.classList.add('pressed');
+    setTimeout(()=>key.classList.remove('pressed'), 140);
+    spawnNoteParticle(key);
+  }
+  function spawnNoteParticle(keyEl){
+    const p = document.createElement('div');
+    p.className = 'note-particle';
+    p.textContent = ['🎵','🎶','✨'][Math.floor(Math.random()*3)];
+    const rect = keyEl.getBoundingClientRect();
+    const parentRect = keyEl.parentElement.getBoundingClientRect();
+    p.style.left = (rect.left - parentRect.left + rect.width/2 - 9) + 'px';
+    p.style.top = '0px';
+    keyEl.parentElement.style.position = 'relative';
+    keyEl.parentElement.appendChild(p);
+    setTimeout(()=>p.remove(), 820);
+  }
+
+  function pressKey(note, keyEl){
+    ensureAudio();
+    playNoteTone(note.freq);
+    flashKey(note.name);
+    if(state.mode === 'song' && !state.demoPlaying){
+      const song = SONGS[state.songKey];
+      const expected = song.notes[state.songIdx];
+      if(note.name === expected){
+        state.songIdx++;
+        updateProgress();
+        updateTargetHighlight();
+        if(state.songIdx >= song.notes.length){
+          setTimeout(onSongComplete, 500);
+        }
+      }
+      // wrong-note taps just make sound, no penalty, no progress change
+    }
+  }
+
+  function updateProgress(){
+    document.getElementById('lblProgress').textContent = state.songIdx;
+    document.getElementById('lblTotal').textContent = SONGS[state.songKey].notes.length;
+  }
+
+  function updateTargetHighlight(){
+    pianoRow.querySelectorAll('.key').forEach(k => k.classList.remove('target'));
+    if(state.mode !== 'song') return;
+    const song = SONGS[state.songKey];
+    if(state.songIdx >= song.notes.length) return;
+    const expected = song.notes[state.songIdx];
+    const key = pianoRow.querySelector(`.key[data-name="${CSS.escape(expected)}"]`);
+    if(key) key.classList.add('target');
+  }
+
+  function playDemo(){
+    if(state.mode !== 'song' || state.demoPlaying) return;
+    state.demoPlaying = true;
+    demoBtn.disabled = true;
+    const song = SONGS[state.songKey];
+    let t = 0;
+    song.notes.forEach((n) => {
+      setTimeout(() => {
+        const note = NOTES.find(x => x.name === n);
+        if(note) playNoteTone(note.freq);
+        flashKey(n);
+      }, t);
+      t += 360;
+    });
+    setTimeout(() => { state.demoPlaying = false; demoBtn.disabled = false; }, t + 200);
+  }
+  demoBtn.onclick = playDemo;
+
+  function onSongComplete(){
+    sfxFanfare();
+    const song = SONGS[state.songKey];
+    const earnedScore = (song.notes.length * 10) + 50;
+    submitPortalScore("piano", earnedScore);
+    gameScreen.style.display = 'none';
+    finishScreen.style.display = 'flex';
+    document.getElementById('finishSongName').textContent = song.name + ' ' + song.icon;
+  }
+
+  function startFree(){
+    ensureAudio();
+    state.mode = 'free';
+    state.demoPlaying = false;
+    modeLabel.textContent = '🎵 Main Bebas';
+    progressStat.hidden = true;
+    demoBtn.hidden = true;
+    bigMascot.textContent = '🎼';
+    menuScreen.style.display = 'none';
+    finishScreen.style.display = 'none';
+    gameScreen.style.display = 'flex';
+    pianoRow.querySelectorAll('.key').forEach(k => k.classList.remove('target'));
+  }
+
+  function startSong(key){
+    ensureAudio();
+    state.mode = 'song';
+    state.songKey = key;
+    state.songIdx = 0;
+    state.demoPlaying = false;
+    modeLabel.textContent = SONGS[key].icon + ' ' + SONGS[key].name;
+    progressStat.hidden = false;
+    demoBtn.hidden = false;
+    demoBtn.disabled = false;
+    bigMascot.textContent = SONGS[key].icon;
+    menuScreen.style.display = 'none';
+    finishScreen.style.display = 'none';
+    gameScreen.style.display = 'flex';
+    updateProgress();
+    updateTargetHighlight();
+  }
+
+  function backToMenu(){
+    state.demoPlaying = false;
+    gameScreen.style.display = 'none';
+    finishScreen.style.display = 'none';
+    menuScreen.style.display = 'flex';
+  }
+
+  document.getElementById('freeBtn').onclick = () => { sfxClick(); startFree(); };
+  document.getElementById('backBtn').onclick = () => { sfxClick(); backToMenu(); };
+  document.getElementById('replaySongBtn').onclick = () => { sfxClick(); startSong(state.songKey); };
+  document.getElementById('freePlayFromFinishBtn').onclick = () => { sfxClick(); startFree(); };
+  document.getElementById('menuBtn2').onclick = () => { sfxClick(); backToMenu(); };
+})();
+</script>
+</body>
+</html>

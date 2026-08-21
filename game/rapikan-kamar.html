@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Rapikan Kamar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<style>
+  :root{
+    --bg-top:#FFE8F0;
+    --bg-bottom:#E6F0FF;
+    --ink:#3A2B4A;
+    --dim:#7A6A8C;
+    --panel-bg:rgba(255,255,255,.65);
+    --gold:#FFC93C;
+    --toy:#FF9F43;
+    --toy-dark:#D6791E;
+    --clothes:#4C8DFF;
+    --clothes-dark:#2E6FE0;
+    --book:#3FBFAE;
+    --book-dark:#2A9C8D;
+    --food:#FF6F59;
+    --food-dark:#D8493A;
+    --font-display:'Fredoka', sans-serif;
+    --font-body:'Nunito', sans-serif;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none;}
+  html,body{margin:0; padding:0; height:100%; overflow:hidden;
+    background:linear-gradient(165deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+    font-family:var(--font-body); color:var(--ink);}
+  #stage{position:relative; width:100%; height:100vh; min-height:580px; display:flex; flex-direction:column; overflow:hidden;}
+  [hidden]{display:none !important;}
+
+  #musicToggle{
+    position:absolute; top:14px; right:14px; z-index:30;
+    width:40px; height:40px; border-radius:50%;
+    background:rgba(58,43,74,.08); border:1px solid rgba(58,43,74,.14);
+    color:var(--ink); font-size:17px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:transform .12s ease, background .15s ease;
+  }
+  #musicToggle:hover{ background:rgba(58,43,74,.16); }
+  #musicToggle:active{ transform:scale(.9); }
+  #musicToggle.on{ background:linear-gradient(135deg, var(--book), var(--book-dark)); color:#fff; border-color:transparent; }
+
+  /* ---------- MENU ---------- */
+  #menuScreen{position:relative; z-index:2; flex:1; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; padding:24px; gap:18px;}
+  #menuScreen > *{ animation:menuIn .6s cubic-bezier(.22,.9,.32,1.1) both; }
+  #menuScreen > *:nth-child(1){ animation-delay:.05s; }
+  #menuScreen > *:nth-child(2){ animation-delay:.16s; }
+  #menuScreen > *:nth-child(3){ animation-delay:.27s; }
+  #menuScreen > *:nth-child(4){ animation-delay:.38s; }
+  @keyframes menuIn{0%{opacity:0; transform:translateY(20px) scale(.97);} 100%{opacity:1; transform:translateY(0) scale(1);}}
+
+  .mascot{position:absolute; top:6%; left:8%; font-size:38px; pointer-events:none;
+    animation:bob 4.2s ease-in-out infinite, menuIn .6s ease .5s both;}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-6deg);} 50%{transform:translateY(-12px) rotate(6deg);}}
+
+  .kicker{font-family:var(--font-body); font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    font-size:12px; color:#C2612E;}
+  h1{font-family:var(--font-display); font-weight:700; font-size:clamp(28px,6vw,44px); margin:6px 0 0; color:var(--ink);}
+  .subtitle{color:var(--dim); font-size:15px; max-width:400px; margin:6px auto 0; font-weight:700;}
+
+  .panel{background:var(--panel-bg); border:1px solid rgba(58,43,74,.08); border-radius:20px;
+    padding:18px 20px; width:min(92vw,420px); backdrop-filter:blur(6px);
+    box-shadow:0 10px 26px rgba(58,43,74,.1);}
+  .panel h2{font-family:var(--font-display); font-size:13px; font-weight:600; margin:0 0 12px;
+    color:var(--dim); text-transform:uppercase; letter-spacing:.08em; text-align:left;}
+  .level-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
+  .level-btn{position:relative; font-family:var(--font-body); font-weight:800; font-size:14px; color:var(--ink);
+    background:rgba(255,255,255,.75); border:2px solid rgba(58,43,74,.1); border-radius:14px;
+    padding:12px 6px; cursor:pointer; transition:all .15s ease;}
+  .level-btn small{display:block; font-weight:700; color:var(--dim); font-size:11px; margin-top:3px;}
+  .level-btn:hover{border-color:var(--book); transform:translateY(-1px);}
+  .level-btn.active{background:linear-gradient(135deg, var(--book), var(--book-dark)); color:#fff; border-color:transparent;
+    box-shadow:0 6px 18px rgba(63,191,174,.35);}
+  .level-btn.active small{color:#E9FBF7;}
+  .level-btn.level-done::after{
+    content:'✓'; position:absolute; top:-6px; right:-6px; width:18px; height:18px; border-radius:50%;
+    background:var(--food); color:#fff; font-size:11px; font-weight:800; display:flex;
+    align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(0,0,0,.2);
+  }
+
+  #startBtn{font-family:var(--font-display); font-weight:600; font-size:18px; color:#3A2400;
+    background:linear-gradient(135deg, var(--gold), #E0A93A); border:none; border-radius:999px;
+    padding:14px 40px; cursor:pointer; box-shadow:0 10px 26px rgba(255,201,60,.4); transition:transform .15s ease;}
+  #startBtn:hover{transform:translateY(-2px) scale(1.02);}
+  #startBtn:active{transform:translateY(0) scale(.98);}
+
+  /* ---------- GAME ---------- */
+  #gameScreen{position:relative; z-index:2; flex:1; display:none; flex-direction:column; min-height:0;}
+  #topbar{display:flex; align-items:center; justify-content:space-between; gap:8px;
+    padding:12px 60px 8px 16px; font-family:var(--font-body); font-weight:800; font-size:13px;
+    color:var(--dim); flex-wrap:wrap;}
+  #backBtn{background:rgba(58,43,74,.08); border:none; color:var(--ink); font-weight:800;
+    border-radius:999px; padding:6px 14px; cursor:pointer; font-family:var(--font-body); font-size:12px;}
+  .stat{background:rgba(255,255,255,.7); border-radius:999px; padding:6px 14px;}
+  .stat b{color:var(--ink);}
+
+  .hint-text{text-align:center; font-size:13px; color:var(--dim); margin:2px 0 6px; font-weight:700;}
+
+  #basketRow{display:flex; gap:12px; padding:6px 14px 10px; justify-content:center;}
+  .basket{ flex:1; max-width:150px; display:flex; flex-direction:column; align-items:center; gap:0;
+    transition:transform .15s ease; cursor:default; }
+  .basket-box{
+    width:100%; aspect-ratio:1/0.85; border-radius:16px;
+    background:linear-gradient(180deg, var(--bc), var(--bcd));
+    border:3px dashed rgba(255,255,255,.85);
+    display:flex; align-items:center; justify-content:center;
+    font-size:clamp(26px,7vw,36px);
+    box-shadow:0 8px 14px rgba(58,43,74,.2);
+  }
+  .basket .label{ font-family:var(--font-display); font-weight:700; font-size:clamp(11px,2.6vw,13px); color:#fff;
+    background:var(--bcd); padding:3px 12px; border-radius:999px; margin-top:6px;
+    box-shadow:0 3px 6px rgba(0,0,0,.18); }
+  .basket.hover{ transform:scale(1.08); }
+  .basket.hover .basket-box{ box-shadow:0 0 0 4px #fff, 0 10px 16px rgba(0,0,0,.2); }
+  .basket.pulse{ animation:basketPulse .4s ease; }
+  @keyframes basketPulse{ 0%{transform:scale(1);} 40%{transform:scale(1.12);} 100%{transform:scale(1);} }
+
+  #pileWrap{ flex:1; display:flex; align-items:center; justify-content:center; padding:6px 16px 16px; min-height:0; }
+  #pile{ display:flex; flex-wrap:wrap; gap:14px; justify-content:center; align-content:center;
+    width:min(92vw,460px); max-height:100%; overflow-y:auto; padding:6px; }
+
+  .item-chip{
+    width:66px; height:66px; border-radius:16px; background:rgba(255,255,255,.85);
+    display:flex; align-items:center; justify-content:center; font-size:32px; cursor:grab;
+    box-shadow:0 6px 14px rgba(58,43,74,.18); transition:opacity .15s ease, transform .15s ease;
+    touch-action:none;
+  }
+  .item-chip.dragging-source{ opacity:.25; }
+  .item-chip.shake{ animation:shakeChip .35s ease; }
+  @keyframes shakeChip{0%,100%{transform:translateX(0);} 25%{transform:translateX(-6px);} 75%{transform:translateX(6px);}}
+
+  .drag-ghost{ position:fixed; width:66px; height:66px; border-radius:16px; background:rgba(255,255,255,.95);
+    display:flex; align-items:center; justify-content:center; font-size:32px; pointer-events:none; z-index:50;
+    box-shadow:0 14px 24px rgba(58,43,74,.3); transform:translate(-50%,-50%) scale(1.1); }
+
+  .spark{ position:fixed; font-size:16px; pointer-events:none; z-index:51; animation:sparkPop .5s ease-out forwards; }
+  @keyframes sparkPop{ 0%{opacity:1; transform:translate(-50%,-50%) scale(.6);} 100%{opacity:0; transform:translate(-50%,-140%) scale(1.3);} }
+
+  /* ---------- FINISH ---------- */
+  #finishScreen{position:relative; z-index:2; flex:1; display:none; flex-direction:column;
+    align-items:center; justify-content:center; gap:12px; text-align:center; padding:24px;}
+  .btn-row{display:flex; gap:12px; flex-wrap:wrap; justify-content:center;}
+  .secondary-btn{font-family:var(--font-body); font-weight:800; font-size:14px; color:var(--ink);
+    background:rgba(255,255,255,.75); border:2px solid rgba(58,43,74,.12); border-radius:999px;
+    padding:12px 26px; cursor:pointer;}
+  .score-big{font-family:var(--font-display); font-size:44px; font-weight:700; color:#C2612E;}
+
+  .mascot-img-wrap {
+    width: 84px;
+    height: 84px;
+    border-radius: 24px;
+    border: 4px solid #FFC93C;
+    box-shadow: 0 10px 25px rgba(255, 201, 60, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.6);
+    overflow: hidden;
+    background: #FFF;
+    display: inline-block;
+    margin-bottom: 8px;
+    animation: mascotFloat 3s ease-in-out infinite;
+  }
+  .mascot-3d-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  @keyframes mascotFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+</style>
+</head>
+<body>
+<div id="stage">
+  <button id="musicToggle" aria-label="Musik latar">🔇</button>
+
+  <!-- MENU -->
+  <div id="menuScreen">
+    <div class="mascot-img-wrap"><img src="../assets/img/game-thumbnail/app-rapikan-kamar.png" alt="Game Mascot" class="mascot-3d-img"></div>
+    <div class="title-wrap">
+      <span class="kicker">Latihan Mengelompokkan</span>
+      <h1><i class="bi bi-box-seam-fill" style="color:#FFC93C"></i> Rapikan Kamar</h1>
+      <p class="subtitle">Seret barang yang berserakan ke keranjang kategori yang benar!</p>
+    </div>
+    <div class="panel">
+      <h2>Pilih Level</h2>
+      <div class="level-grid" id="levelGrid"></div>
+    </div>
+    <button id="startBtn">Mulai Merapikan 🧹</button>
+  </div>
+
+  <!-- GAME -->
+  <div id="gameScreen">
+    <div id="topbar">
+      <button id="backBtn">← Menu</button>
+      <div class="stat">Percobaan <b id="lblMoves">0</b></div>
+      <div class="stat">Rapi <b id="lblSorted">0</b>/<span id="lblTotal">0</span></div>
+    </div>
+    <p class="hint-text">Seret barangnya ke keranjang yang cocok 🧺</p>
+    <div id="basketRow"></div>
+    <div id="pileWrap"><div id="pile"></div></div>
+  </div>
+
+  <!-- FINISH -->
+  <div id="finishScreen">
+    <span class="kicker" id="finishKicker">Selesai!</span>
+    <h1 id="finishTitle" style="font-size:clamp(24px,5vw,36px)">🎉 Kamar sudah rapi!</h1>
+    <div class="score-big" id="finalMoves">0</div>
+    <p class="subtitle">kali percobaan</p>
+    <div class="btn-row">
+      <button class="secondary-btn" id="nextLevelBtn" hidden style="background:linear-gradient(135deg,var(--gold),#E0A93A); color:#3A2400; border:none;">Lanjut Level Berikutnya ➡️</button>
+    </div>
+    <div class="btn-row">
+      <button class="secondary-btn" id="restartBtn">🔁 Ulangi Level Ini</button>
+      <button class="secondary-btn" id="menuBtn2" style="background:linear-gradient(135deg,var(--book),var(--book-dark)); color:#fff; border:none;">🏠 Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function submitPortalScore(gameKey, score) {
+  try {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'MAINEDU_SUBMIT_SCORE',
+        gameKey: gameKey,
+        score: Number(score) || 0
+      }, '*');
+    }
+  } catch(e) {}
+}
+const CURRENT_GAME_KEY = "rapikan_kamar";
+
+(function(){
+  const CATEGORIES = {
+    mainan:  { label:'Mainan',   icon:'🧸', color:'var(--toy)',     dark:'var(--toy-dark)',
+      items:['🧸','🚗','⚽','🪀','🎲','🧩','🚂','🪁'] },
+    baju:    { label:'Baju',     icon:'👕', color:'var(--clothes)', dark:'var(--clothes-dark)',
+      items:['👕','👖','🧦','👗','🧥','👒','🧢','👟'] },
+    buku:    { label:'Buku',     icon:'📚', color:'var(--book)',    dark:'var(--book-dark)',
+      items:['📚','📖','📕','📗','📘','📙','📓','📔'] },
+    makanan: { label:'Makanan',  icon:'🍎', color:'var(--food)',    dark:'var(--food-dark)',
+      items:['🍎','🍌','🍕','🍔','🍇','🥕','🍞','🍪'] },
+  };
+  const CAT_KEYS = Object.keys(CATEGORIES);
+  const LEVELS = {
+    mudah:  { label:'Mudah',  sub:'2 kategori', catCount:2, itemCount:4 },
+    sedang: { label:'Sedang', sub:'3 kategori', catCount:3, itemCount:6 },
+    sulit:  { label:'Sulit',  sub:'4 kategori', catCount:4, itemCount:8 },
+  };
+  const LEVEL_ORDER = ['mudah', 'sedang', 'sulit'];
+
+  const menuScreen = document.getElementById('menuScreen');
+  const gameScreen = document.getElementById('gameScreen');
+  const finishScreen = document.getElementById('finishScreen');
+  const levelGrid = document.getElementById('levelGrid');
+  const basketRow = document.getElementById('basketRow');
+  const pile = document.getElementById('pile');
+
+  let state = {
+    levelKey: 'mudah',
+    doneLevels: new Set(),
+    activeCats: [],
+    totalItems: 0,
+    sortedCount: 0,
+    moves: 0,
+    ghost: null,
+    dragItem: null,
+  };
+
+  // ---------- sound effects ----------
+  let audioCtx = null;
+  function ensureAudio(){
+    if(!audioCtx){
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if(!AC) return null;
+      audioCtx = new AC();
+    }
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+    return audioCtx;
+  }
+  function playTone({freq=440, freqEnd=null, duration=0.12, type='sine', volume=0.15, delay=0}){
+    const ctx = ensureAudio();
+    if(!ctx) return;
+    const t0 = ctx.currentTime + delay;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, t0);
+    if(freqEnd !== null){ osc.frequency.exponentialRampToValueAtTime(Math.max(freqEnd,1), t0+duration); }
+    gain.gain.setValueAtTime(0.0001, t0);
+    gain.gain.linearRampToValueAtTime(volume, t0+0.01);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0+duration);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(t0);
+    osc.stop(t0+duration+0.03);
+  }
+  function sfxPickup(){ playTone({freq:440, duration:0.06, type:'triangle', volume:0.09}); }
+  function sfxCorrect(){ [660,880,1108].forEach((f,i)=>playTone({freq:f, duration:0.13, type:'triangle', volume:0.15, delay:i*0.07})); }
+  function sfxWrong(){ playTone({freq:300, duration:0.12, type:'sine', volume:0.1}); playTone({freq:220, duration:0.18, type:'sine', volume:0.1, delay:0.1}); }
+  function sfxFinish(){ [523,659,784,1046].forEach((f,i)=>playTone({freq:f, duration:0.16, type:'triangle', volume:0.16, delay:i*0.09})); }
+  function sfxClick(){ playTone({freq:600, duration:0.05, type:'square', volume:0.06}); }
+
+  // ---------- background music ----------
+  let musicOn = false;
+  let musicTimer = null;
+  let musicGain = null;
+  let musicStep = 0;
+  const MUSIC_PATTERN = [349.23, null, 392.00, 440.00, null, 392.00, 329.63, null, 349.23, null, null, null];
+  const musicToggleBtn = document.getElementById('musicToggle');
+
+  function ensureMusicGain(){
+    const ctx = ensureAudio();
+    if(!ctx) return null;
+    if(!musicGain){
+      musicGain = ctx.createGain();
+      musicGain.gain.value = 0.0001;
+      musicGain.connect(ctx.destination);
+    }
+    return musicGain;
+  }
+  function playMusicNote(freq){
+    const ctx = ensureAudio();
+    const gainBus = ensureMusicGain();
+    if(!ctx || !gainBus) return;
+    const t0 = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const g = ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(freq, t0);
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.linearRampToValueAtTime(0.045, t0+0.06);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0+0.5);
+    osc.connect(g).connect(gainBus);
+    osc.start(t0);
+    osc.stop(t0+0.55);
+  }
+  function startMusic(){
+    const ctx = ensureAudio();
+    const gainBus = ensureMusicGain();
+    if(!ctx || !gainBus || musicTimer) return;
+    gainBus.gain.cancelScheduledValues(ctx.currentTime);
+    gainBus.gain.linearRampToValueAtTime(1, ctx.currentTime+0.6);
+    musicStep = 0;
+    musicTimer = setInterval(()=>{
+      const note = MUSIC_PATTERN[musicStep % MUSIC_PATTERN.length];
+      if(note) playMusicNote(note);
+      musicStep++;
+    }, 460);
+  }
+  function stopMusic(){
+    if(musicTimer){ clearInterval(musicTimer); musicTimer=null; }
+    if(musicGain){
+      const ctx = ensureAudio();
+      musicGain.gain.cancelScheduledValues(ctx.currentTime);
+      musicGain.gain.linearRampToValueAtTime(0.0001, ctx.currentTime+0.3);
+    }
+  }
+  function updateMusicBtn(){
+    musicToggleBtn.textContent = musicOn ? '🔊' : '🔇';
+    musicToggleBtn.classList.toggle('on', musicOn);
+  }
+  musicToggleBtn.onclick = () => {
+    musicOn = !musicOn;
+    if(musicOn){ ensureAudio(); startMusic(); } else { stopMusic(); }
+    updateMusicBtn();
+  };
+
+  // ---------- menu ----------
+  function buildLevelGrid(){
+    levelGrid.innerHTML = '';
+    Object.entries(LEVELS).forEach(([key, cfg]) => {
+      const btn = document.createElement('button');
+      btn.className = 'level-btn' + (key===state.levelKey ? ' active':'') + (state.doneLevels.has(key) ? ' level-done':'');
+      btn.innerHTML = cfg.label + '<small>' + cfg.sub + '</small>';
+      btn.onclick = () => {
+        sfxClick();
+        state.levelKey = key;
+        [...levelGrid.children].forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+      };
+      levelGrid.appendChild(btn);
+    });
+  }
+  buildLevelGrid();
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+  }
+
+  function updateStats(){
+    document.getElementById('lblMoves').textContent = state.moves;
+    document.getElementById('lblSorted').textContent = state.sortedCount;
+    document.getElementById('lblTotal').textContent = state.totalItems;
+  }
+
+  function buildRound(){
+    const cfg = LEVELS[state.levelKey];
+    state.activeCats = shuffle(CAT_KEYS).slice(0, cfg.catCount);
+    state.sortedCount = 0;
+    state.moves = 0;
+
+    // build item pool: roughly even spread across active categories
+    const perCat = Math.ceil(cfg.itemCount / cfg.catCount);
+    let pool = [];
+    state.activeCats.forEach(catKey => {
+      const picks = shuffle(CATEGORIES[catKey].items).slice(0, perCat);
+      picks.forEach(emoji => pool.push({ emoji, cat: catKey, id: catKey+'-'+emoji+'-'+Math.random() }));
+    });
+    pool = shuffle(pool).slice(0, cfg.itemCount);
+    state.totalItems = pool.length;
+
+    // build baskets
+    basketRow.innerHTML = '';
+    state.activeCats.forEach(catKey => {
+      const cat = CATEGORIES[catKey];
+      const basket = document.createElement('div');
+      basket.className = 'basket';
+      basket.dataset.cat = catKey;
+      basket.style.setProperty('--bc', cat.color);
+      basket.style.setProperty('--bcd', cat.dark);
+      basket.innerHTML = `
+        <div class="basket-box">${cat.icon}</div>
+        <div class="label">${cat.label}</div>`;
+      basketRow.appendChild(basket);
+    });
+
+    // build pile
+    pile.innerHTML = '';
+    pool.forEach(item => {
+      const chip = document.createElement('div');
+      chip.className = 'item-chip';
+      chip.textContent = item.emoji;
+      chip.dataset.cat = item.cat;
+      chip.dataset.id = item.id;
+      attachDrag(chip);
+      pile.appendChild(chip);
+    });
+
+    updateStats();
+  }
+
+  function attachDrag(chip){
+    chip.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      startDrag(chip, e.clientX, e.clientY);
+    });
+  }
+
+  function startDrag(chip, x, y){
+    state.dragItem = chip;
+    chip.classList.add('dragging-source');
+    sfxPickup();
+
+    const ghost = document.createElement('div');
+    ghost.className = 'drag-ghost';
+    ghost.textContent = chip.textContent;
+    ghost.style.left = x+'px';
+    ghost.style.top = y+'px';
+    document.body.appendChild(ghost);
+    state.ghost = ghost;
+
+    function onMove(ev){
+      ghost.style.left = ev.clientX+'px';
+      ghost.style.top = ev.clientY+'px';
+      highlightBasketUnder(ev.clientX, ev.clientY);
+    }
+    function onUp(ev){
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      finishDrag(chip, ev.clientX, ev.clientY);
+    }
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+  }
+
+  function basketAt(x, y){
+    const baskets = basketRow.querySelectorAll('.basket');
+    for(const b of baskets){
+      const r = b.getBoundingClientRect();
+      if(x>=r.left && x<=r.right && y>=r.top && y<=r.bottom) return b;
+    }
+    return null;
+  }
+
+  function highlightBasketUnder(x, y){
+    basketRow.querySelectorAll('.basket').forEach(b => b.classList.remove('hover'));
+    const b = basketAt(x, y);
+    if(b) b.classList.add('hover');
+  }
+
+  function finishDrag(chip, x, y){
+    basketRow.querySelectorAll('.basket').forEach(b => b.classList.remove('hover'));
+    const basket = basketAt(x, y);
+    if(state.ghost){ state.ghost.remove(); state.ghost = null; }
+    chip.classList.remove('dragging-source');
+
+    if(!basket){ state.dragItem = null; return; }
+
+    state.moves++;
+    updateStats();
+
+    if(basket.dataset.cat === chip.dataset.cat){
+      sfxCorrect();
+      basket.classList.remove('pulse'); void basket.offsetWidth; basket.classList.add('pulse');
+      spawnSparks(basket);
+      chip.remove();
+      state.sortedCount++;
+      updateStats();
+      if(state.sortedCount >= state.totalItems){
+        setTimeout(showFinish, 500);
+      }
+    } else {
+      sfxWrong();
+      chip.classList.add('shake');
+      setTimeout(()=>chip.classList.remove('shake'), 350);
+    }
+    state.dragItem = null;
+  }
+
+  function spawnSparks(basketEl){
+    const r = basketEl.getBoundingClientRect();
+    const cx = r.left + r.width/2, cy = r.top + r.height/2;
+    ['✨','⭐','✨'].forEach((s,i) => {
+      const el = document.createElement('div');
+      el.className = 'spark';
+      el.textContent = s;
+      el.style.left = (cx + (i-1)*16) + 'px';
+      el.style.top = cy + 'px';
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(), 520);
+    });
+  }
+
+  function showFinish(){
+    sfxFinish();
+    const earnedScore = Math.max(10, (state.totalItems * 25) - (state.moves - state.totalItems) * 5);
+    submitPortalScore("rapikan_kamar", earnedScore);
+    gameScreen.style.display = 'none';
+    finishScreen.style.display = 'flex';
+    document.getElementById('finalMoves').textContent = state.moves;
+
+    state.doneLevels.add(state.levelKey);
+    const curIdx = LEVEL_ORDER.indexOf(state.levelKey);
+    const nextKey = LEVEL_ORDER[curIdx+1];
+    const nextBtn = document.getElementById('nextLevelBtn');
+    const kicker = document.getElementById('finishKicker');
+    const title = document.getElementById('finishTitle');
+
+    if(nextKey){
+      kicker.textContent = 'Level ' + LEVELS[state.levelKey].label + ' Selesai!';
+      title.textContent = '🎉 Kamar sudah rapi!';
+      nextBtn.hidden = false;
+      nextBtn.textContent = 'Lanjut ke Level ' + LEVELS[nextKey].label + ' ➡️';
+      nextBtn.onclick = () => { sfxClick(); state.levelKey = nextKey; startGame(); };
+    } else {
+      kicker.textContent = 'Semua Level Selesai!';
+      title.textContent = '🏆 Kamu Jago Merapikan Kamar!';
+      nextBtn.hidden = true;
+    }
+  }
+
+  function startGame(){
+    ensureAudio();
+    menuScreen.style.display = 'none';
+    finishScreen.style.display = 'none';
+    gameScreen.style.display = 'flex';
+    buildRound();
+  }
+  function backToMenu(){
+    gameScreen.style.display = 'none';
+    finishScreen.style.display = 'none';
+    menuScreen.style.display = 'flex';
+    buildLevelGrid();
+  }
+
+  document.getElementById('startBtn').onclick = startGame;
+  document.getElementById('backBtn').onclick = () => { sfxClick(); backToMenu(); };
+  document.getElementById('restartBtn').onclick = () => { sfxClick(); startGame(); };
+  document.getElementById('menuBtn2').onclick = () => { sfxClick(); backToMenu(); };
+})();
+</script>
+</body>
+</html>

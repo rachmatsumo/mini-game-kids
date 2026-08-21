@@ -1072,7 +1072,10 @@
       <!-- Category Dropdown Select (Clean & Compact) -->
       <div class="kids-select-wrapper">
         <select id="kidsCategorySelect" class="kids-select">
-          <option value="all">Semua Game (15)</option>
+          <option value="all">Semua Game (18)</option>
+          <option value="rapikan_kamar">Rapikan Kamar</option>
+          <option value="logika">Game Logika</option>
+          <option value="piano">Piano Mini &amp; Musik</option>
           <option value="puzzle">Puzzle &amp; Logika</option>
           <option value="maze">Labirin &amp; Spasial</option>
           <option value="dots">Sambung Titik &amp; Angka</option>
@@ -1119,7 +1122,7 @@
         <div class="panel-title">
           <i class="bi bi-controller" style="color: #0284C7;"></i> Game Edukasi Anak
         </div>
-        <span class="panel-badge">15 Game Aktif</span>
+        <span class="panel-badge">18 Game Aktif</span>
       </div>
 
       <!-- Direct Grid (3D Vibrant AI App Icon Squares with Golden Stars) -->
@@ -1257,6 +1260,48 @@
         
         
         
+        <!-- App 18: Rapikan Kamar -->
+        <div class="app-card" data-category="rapikan_kamar" data-key="rapikan_kamar">
+          <div class="app-icon-wrap">
+            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+            <img src="assets/img/game-thumbnail/app-rapikan-kamar.png" alt="Rapikan Kamar App Icon" class="app-icon-img">
+          </div>
+          <div class="app-title-pill">
+            <span class="app-title">Rapikan Kamar</span>
+            <div class="app-stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- App 17: Game Logika -->
+        <div class="app-card" data-category="logika" data-key="logika">
+          <div class="app-icon-wrap">
+            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+            <img src="assets/img/game-thumbnail/app-logika.png" alt="Game Logika App Icon" class="app-icon-img">
+          </div>
+          <div class="app-title-pill">
+            <span class="app-title">Game Logika</span>
+            <div class="app-stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- App 16: Piano Mini -->
+        <div class="app-card" data-category="piano" data-key="piano">
+          <div class="app-icon-wrap">
+            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+            <img src="assets/img/game-thumbnail/app-piano.png" alt="Piano Mini App Icon" class="app-icon-img">
+          </div>
+          <div class="app-title-pill">
+            <span class="app-title">Piano Mini</span>
+            <div class="app-stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+          </div>
+        </div>
+
         <!-- App 15: Jam Berapa Sekarang? -->
         <div class="app-card" data-category="clock_quiz" data-key="clock_quiz">
           <div class="app-icon-wrap">
@@ -1553,6 +1598,33 @@
 
       // Game Details Data
       const GAME_DETAILS = {
+        rapikan_kamar: {
+          title: "Rapikan Kamar",
+          category: "Motorik & Sensorik",
+          url: "game/rapikan-kamar.html",
+          hash: "rapikan_kamar",
+          previewImg: "assets/img/game-thumbnail/preview-rapikan-kamar.png",
+          desc: "Game edukasi mengelompokkan barang. Seret mainan, baju, buku, dan makanan yang berserakan ke keranjang yang sesuai!",
+          benefits: ["Keterampilan mengategorikan benda", "Kerapian & kemandirian anak", "Motorik halus seret-dan-lepas"]
+        },
+        logika: {
+          title: "Game Logika",
+          category: "Logika & Problem Solving",
+          url: "game/game-logika.html",
+          hash: "logika",
+          previewImg: "assets/img/game-thumbnail/preview-logika.png",
+          desc: "Game latihan berpikir logis dan pemecahan masalah interaktif. Dengarkan situasi cerita lalu pilih benda yang paling tepat!",
+          benefits: ["Penalaran sebab-akibat & logika", "Pemecahan masalah sehari-hari", "Kosakata & pemahaman situasi"]
+        },
+        piano: {
+          title: "Piano Mini",
+          category: "Eksplorasi Musik",
+          url: "game/piano-mini.html",
+          hash: "piano",
+          previewImg: "assets/img/game-thumbnail/preview-piano.png",
+          desc: "Game eksplorasi musik interaktif bersama Nano Banana! Tekan tuts warna-warni untuk membunyikan nada, atau ikuti alunan lagu anak favorit.",
+          benefits: ["Kepekaan pendengaran musik & nada", "Koordinasi motorik jari tangan", "Pengenalan irama lagu anak"]
+        },
         space: {
           title: "Tembak Huruf Angkasa",
           category: "Mengetik & Ketangkasan",
@@ -1886,7 +1958,10 @@
         quiz: [{ name: 'Rayyan', score: 160 }, { name: 'Rara', score: 130 }],
         object_quiz: [{ name: 'Rara', score: 170 }, { name: 'Rayyan', score: 140 }],
         color_shape_quiz: [{ name: 'Rayyan', score: 180 }, { name: 'Rara', score: 150 }],
-        clock_quiz: [{ name: 'Rayyan', score: 190 }, { name: 'Rara', score: 160 }]
+        clock_quiz: [{ name: 'Rayyan', score: 190 }, { name: 'Rara', score: 160 }],
+        piano: [{ name: 'Rayyan', score: 150 }, { name: 'Rara', score: 120 }],
+        logika: [{ name: 'Rayyan', score: 180 }, { name: 'Rara', score: 150 }],
+        rapikan_kamar: [{ name: 'Rayyan', score: 160 }, { name: 'Rara', score: 130 }]
       };
 
       function initDefaultLeaderboard() {
@@ -2073,6 +2148,9 @@
           <option value="object_quiz">Cerdas Cermat Benda</option>
           <option value="color_shape_quiz">Cerdas Cermat Warna &amp; Bentuk</option>
           <option value="clock_quiz">Jam Berapa Sekarang?</option>
+          <option value="piano">Piano Mini</option>
+          <option value="logika">Game Logika</option>
+          <option value="rapikan_kamar">Rapikan Kamar</option>
         </select>
       </div>
 

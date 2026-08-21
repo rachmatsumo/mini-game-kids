@@ -198,5 +198,41 @@
       "score": 160,
       "date": "21/08/2026"
     }
+  ],
+  "piano": [
+    {
+      "name": "Rayyan",
+      "score": 150,
+      "date": "21/08/2026"
+    },
+    {
+      "name": "Rara",
+      "score": 120,
+      "date": "21/08/2026"
+    }
+  ],
+  "logika": [
+    {
+      "name": "Rayyan",
+      "score": 180,
+      "date": "21/08/2026"
+    },
+    {
+      "name": "Rara",
+      "score": 150,
+      "date": "21/08/2026"
+    }
+  ],
+  "rapikan_kamar": [
+    {
+      "name": "Rayyan",
+      "score": 160,
+      "date": "21/08/2026"
+    },
+    {
+      "name": "Rara",
+      "score": 130,
+      "date": "21/08/2026"
+    }
   ]
 }

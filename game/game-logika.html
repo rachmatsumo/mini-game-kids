@@ -3,18 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Cerdas Cermat Warna & Bentuk — main-edu</title>
-<meta name="theme-color" content="#2E1F63">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+<title>Game Logika</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 <style>
   :root{
-    --bg-top:#2E1F63;
-    --bg-bottom:#4A2E8C;
+    --bg-top:#123A45;
+    --bg-bottom:#1F6B72;
     --ink:#F5F0FF;
     --dim:#C9BFE8;
     --panel-bg:rgba(255,255,255,.1);
@@ -141,29 +137,6 @@
     padding:12px 26px; cursor:pointer;}
   .score-big{font-family:var(--font-display); font-size:44px; font-weight:700; color:var(--gold);}
 
-  @media (prefers-reduced-motion: reduce){
-    .mascot{animation:none;}
-    #menuScreen > *{animation:menuIn .01s linear both;}
-    .spark{animation:none;}
-  }
-
-  .mascot-icon {
-    font-size: 32px;
-    width: 60px;
-    height: 60px;
-    border-radius: 20px;
-    background: linear-gradient(135deg, #FFC93C, #FF9F1C);
-    border: 3px solid #FFF;
-    box-shadow: 0 8px 20px rgba(255, 159, 28, 0.4);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: #3A2400;
-    animation: mascotFloat 3s ease-in-out infinite;
-  }
-  @keyframes mascotFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
-
-
   .mascot-img-wrap {
     width: 84px;
     height: 84px;
@@ -183,41 +156,39 @@
     display: block;
   }
   @keyframes mascotFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
-
 </style>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
 <div id="stage">
   <div id="sparkLayer"></div>
-  <button id="musicToggle" aria-label="Musik latar"><i class="bi bi-volume-mute-fill"></i></button>
+  <button id="musicToggle" aria-label="Musik latar">🔇</button>
 
   <!-- MENU -->
   <div id="menuScreen">
-    <div class="mascot-img-wrap"><img src="../assets/img/game-thumbnail/app-color-shape-quiz.png" alt="Game Mascot" class="mascot-3d-img"></div>
+    <div class="mascot-img-wrap"><img src="../assets/img/game-thumbnail/app-logika.png" alt="Game Mascot" class="mascot-3d-img"></div>
     <div class="title-wrap">
-      <span class="kicker">Kuis Pengetahuan Warna & Bentuk</span>
-      <h1><i class="bi bi-palette-fill" style="color:#FFC93C"></i> Cerdas Cermat Warna & Bentuk</h1>
-      <p class="subtitle">Dengarkan pertanyaannya, lalu tap warna atau bentuk yang jawabannya benar!</p>
+      <span class="kicker">Latihan Berpikir Logis</span>
+      <h1><i class="bi bi-lightbulb-fill" style="color:#FFC93C"></i> Game Logika</h1>
+      <p class="subtitle">Dengarkan situasinya, lalu tap benda yang paling masuk akal!</p>
     </div>
     <div class="panel">
       <h2>Pilih Level</h2>
       <div class="level-grid" id="levelGrid"></div>
     </div>
-    <button id="startBtn">Mulai Kuis <i class="bi bi-trophy-fill" style="color:#FFC93C"></i></button>
+    <button id="startBtn">Mulai Berpikir 💡</button>
   </div>
 
   <!-- GAME -->
   <div id="gameScreen">
     <div id="topbar">
-      <button id="backBtn"><i class="bi bi-arrow-left"></i> Menu</button>
+      <button id="backBtn">← Menu</button>
       <div class="stat">Percobaan <b id="lblMoves">0</b></div>
       <div class="stat">Benar <b id="lblCorrect">0</b>/<span id="lblTotal">0</span></div>
     </div>
     <div id="questionArea">
       <div id="questionCard">
         <div id="questionText">Memuat pertanyaan...</div>
-        <button id="replayBtn"><span class="ring"></span><i class="bi bi-volume-up-fill"></i></button>
+        <button id="replayBtn"><span class="ring"></span>🔊</button>
       </div>
     </div>
     <div id="choicesGrid"></div>
@@ -226,11 +197,11 @@
   <!-- FINISH -->
   <div id="finishScreen">
     <span class="kicker" id="finishKicker">Selesai!</span>
-    <h1 id="finishTitle" style="font-size:clamp(24px,5vw,36px)"><i class="bi bi-stars" style="color:#FFC93C"></i> Semua Pertanyaan Terjawab!</h1>
+    <h1 id="finishTitle" style="font-size:clamp(24px,5vw,36px)">🎉 Semua pertanyaan terjawab!</h1>
     <div class="score-big" id="finalMoves">0</div>
     <p class="subtitle">kali percobaan</p>
     <div class="btn-row">
-      <button class="secondary-btn" id="nextLevelBtn" hidden style="background:linear-gradient(135deg,var(--gold),#E0A93A); color:#3A2400; border:none;">Lanjut Level Berikutnya <i class="bi bi-arrow-right-short"></i></button>
+      <button class="secondary-btn" id="nextLevelBtn" hidden style="background:linear-gradient(135deg,var(--gold),#E0A93A); color:#3A2400; border:none;">Lanjut Level Berikutnya ➡️</button>
     </div>
     <div class="btn-row">
       <button class="secondary-btn" id="restartBtn">🔁 Ulangi Level Ini</button>
@@ -251,34 +222,35 @@ function submitPortalScore(gameKey, score) {
     }
   } catch(e) {}
 }
-const CURRENT_GAME_KEY = "color_shape_quiz";
+const CURRENT_GAME_KEY = "logika";
 
 (function(){
   const QUESTION_BANK = {
     mudah: [
-      { q:'Yang mana warna merah?', correct:{e:'🔴',n:'Merah'}, wrong:[{e:'🔵',n:'Biru'}] },
-      { q:'Yang mana warna kuning?', correct:{e:'🟡',n:'Kuning'}, wrong:[{e:'🟢',n:'Hijau'}] },
-      { q:'Yang mana warna biru?', correct:{e:'🔵',n:'Biru'}, wrong:[{e:'🔴',n:'Merah'}] },
-      { q:'Yang mana warna hijau?', correct:{e:'🟢',n:'Hijau'}, wrong:[{e:'🟠',n:'Oranye'}] },
-      { q:'Yang mana bentuk bintang?', correct:{e:'⭐',n:'Bintang'}, wrong:[{e:'⬛',n:'Persegi'}] },
-      { q:'Yang mana bentuk persegi?', correct:{e:'⬛',n:'Persegi'}, wrong:[{e:'⭐',n:'Bintang'}] },
+      { q:'Hari ini hujan deras, apa yang kamu bawa supaya tidak basah?', correct:{e:'☂️',n:'Payung'}, wrong:[{e:'🍽️',n:'Piring'}] },
+      { q:'Kamu lapar, apa yang kamu makan?', correct:{e:'🍎',n:'Apel'}, wrong:[{e:'🧦',n:'Kaos Kaki'}] },
+      { q:'Kamu mengantuk dan mau tidur, kamu pergi ke mana?', correct:{e:'🛏️',n:'Kasur'}, wrong:[{e:'⚽',n:'Bola'}] },
+      { q:'Cuaca sangat panas dan terik, apa yang kamu pakai di kepala?', correct:{e:'🧢',n:'Topi'}, wrong:[{e:'🧤',n:'Sarung Tangan'}] },
+      { q:'Habis makan giginya kotor, apa yang dipakai membersihkannya?', correct:{e:'🪥',n:'Sikat Gigi'}, wrong:[{e:'🔑',n:'Kunci'}] },
+      { q:'Kamu haus sekali, apa yang kamu minum?', correct:{e:'🥤',n:'Air Minum'}, wrong:[{e:'👟',n:'Sepatu'}] },
+      { q:'Malam hari kamu mau membaca buku, apa yang kamu perlukan supaya bisa melihat?', correct:{e:'💡',n:'Lampu'}, wrong:[{e:'🧊',n:'Es Batu'}] },
     ],
     sedang: [
-      { q:'Yang mana warna oranye?', correct:{e:'🟠',n:'Oranye'}, wrong:[{e:'🔴',n:'Merah'},{e:'🟡',n:'Kuning'}] },
-      { q:'Yang mana warna ungu?', correct:{e:'🟣',n:'Ungu'}, wrong:[{e:'🔵',n:'Biru'},{e:'🟤',n:'Cokelat'}] },
-      { q:'Yang mana bentuk segitiga?', correct:{e:'🔺',n:'Segitiga'}, wrong:[{e:'⭐',n:'Bintang'},{e:'⬛',n:'Persegi'}] },
-      { q:'Yang mana bentuk belah ketupat?', correct:{e:'🔷',n:'Belah Ketupat'}, wrong:[{e:'⬛',n:'Persegi'},{e:'⭐',n:'Bintang'}] },
-      { q:'Yang mana warna cokelat?', correct:{e:'🟤',n:'Cokelat'}, wrong:[{e:'⚫',n:'Hitam'},{e:'🟠',n:'Oranye'}] },
-      { q:'Yang mana warna hitam?', correct:{e:'⚫',n:'Hitam'}, wrong:[{e:'🟤',n:'Cokelat'},{e:'⚪',n:'Putih'}] },
+      { q:'Sebelum tidur malam, apa yang sebaiknya kamu lakukan dulu?', correct:{e:'🪥',n:'Sikat Gigi'}, wrong:[{e:'🎮',n:'Main Game'},{e:'🍭',n:'Permen'}] },
+      { q:'Kamu mau berangkat ke sekolah, apa yang kamu bawa?', correct:{e:'🎒',n:'Tas Sekolah'}, wrong:[{e:'⚽',n:'Bola'},{e:'🏀',n:'Bola Basket'}] },
+      { q:'Lampu kamar tiba-tiba mati saat malam hari, apa yang kamu cari?', correct:{e:'🔦',n:'Senter'}, wrong:[{e:'🕶️',n:'Kacamata Hitam'},{e:'📖',n:'Buku'}] },
+      { q:'Sebelum makan, apa yang sebaiknya kamu lakukan?', correct:{e:'🧼',n:'Cuci Tangan'}, wrong:[{e:'🛌',n:'Tidur'},{e:'📺',n:'Nonton TV'}] },
+      { q:'Kamu terluka kecil dan berdarah, apa yang dipakai untuk menutup lukanya?', correct:{e:'🩹',n:'Plester'}, wrong:[{e:'🎈',n:'Balon'},{e:'📏',n:'Penggaris'}] },
+      { q:'Cuaca dingin dan berangin, apa yang kamu pakai supaya hangat?', correct:{e:'🧥',n:'Jaket'}, wrong:[{e:'🩳',n:'Celana Pendek'},{e:'👙',n:'Baju Renang'}] },
     ],
     sulit: [
-      { q:'Kalau warna biru dicampur warna kuning, jadi warna apa?', correct:{e:'🟢',n:'Hijau'}, wrong:[{e:'🟣',n:'Ungu'},{e:'🟠',n:'Oranye'},{e:'🔴',n:'Merah'}] },
-      { q:'Kalau warna merah dicampur warna kuning, jadi warna apa?', correct:{e:'🟠',n:'Oranye'}, wrong:[{e:'🟢',n:'Hijau'},{e:'🟣',n:'Ungu'},{e:'🔵',n:'Biru'}] },
-      { q:'Bentuk apa yang punya tiga sisi?', correct:{e:'🔺',n:'Segitiga'}, wrong:[{e:'🟦',n:'Persegi'},{e:'⭐',n:'Bintang'},{e:'🔷',n:'Belah Ketupat'}] },
-      { q:'Bentuk apa yang bulat dan tidak punya sudut?', correct:{e:'🔴',n:'Lingkaran'}, wrong:[{e:'🟥',n:'Persegi'},{e:'🔺',n:'Segitiga'},{e:'🟦',n:'Persegi'}] },
-      { q:'Kalau warna merah dicampur warna biru, jadi warna apa?', correct:{e:'🟣',n:'Ungu'}, wrong:[{e:'🟢',n:'Hijau'},{e:'🟠',n:'Oranye'},{e:'⚫',n:'Hitam'}] },
-      { q:'Bentuk apa yang punya empat sisi sama panjang dan sudut siku-siku?', correct:{e:'🟥',n:'Persegi'}, wrong:[{e:'🔺',n:'Segitiga'},{e:'⭐',n:'Bintang'},{e:'🔷',n:'Belah Ketupat'}] },
-      { q:'Bentuk apa yang punya banyak sudut runcing seperti di langit malam?', correct:{e:'⭐',n:'Bintang'}, wrong:[{e:'🟥',n:'Persegi'},{e:'🔺',n:'Segitiga'},{e:'🔷',n:'Belah Ketupat'}] },
+      { q:'Listrik padam dan ruangan gelap gulita, apa yang kamu nyalakan?', correct:{e:'🕯️',n:'Lilin'}, wrong:[{e:'🧊',n:'Es Batu'},{e:'🌂',n:'Payung'},{e:'🎈',n:'Balon'}] },
+      { q:'Kamu ingin menulis surat untuk teman, apa yang kamu perlukan?', correct:{e:'✏️',n:'Pensil'}, wrong:[{e:'🔨',n:'Palu'},{e:'🧊',n:'Es Batu'},{e:'⚽',n:'Bola'}] },
+      { q:'Lantai rumah kotor berdebu, apa yang dipakai untuk membersihkannya?', correct:{e:'🧹',n:'Sapu'}, wrong:[{e:'🎸',n:'Gitar'},{e:'🎨',n:'Kuas Cat'},{e:'📚',n:'Buku'}] },
+      { q:'Kamu mau berenang di kolam, apa yang kamu pakai?', correct:{e:'🩱',n:'Baju Renang'}, wrong:[{e:'🧥',n:'Jaket Tebal'},{e:'🧤',n:'Sarung Tangan'},{e:'🥾',n:'Sepatu Bot'}] },
+      { q:'Sudah larut malam dan besok pagi harus sekolah, apa yang sebaiknya kamu lakukan sekarang?', correct:{e:'🛏️',n:'Tidur'}, wrong:[{e:'🎮',n:'Main Game'},{e:'🍭',n:'Makan Permen'},{e:'📱',n:'Main HP'}] },
+      { q:'Kamu ingin mengabari nenek yang jauh tapi tidak bisa datang langsung, apa yang kamu pakai?', correct:{e:'📞',n:'Telepon'}, wrong:[{e:'🔨',n:'Palu'},{e:'🧹',n:'Sapu'},{e:'⚽',n:'Bola'}] },
+      { q:'Bajumu robek sedikit, apa yang dipakai untuk menjahitnya?', correct:{e:'🪡',n:'Jarum'}, wrong:[{e:'🔨',n:'Palu'},{e:'✂️',n:'Gunting'},{e:'🧲',n:'Magnet'}] },
     ],
   };
   const LEVELS = {
@@ -522,14 +494,11 @@ const CURRENT_GAME_KEY = "color_shape_quiz";
 
   function showFinish(){
     sfxFinish();
+    const earnedScore = Math.max(10, (state.correctCount * 30) - (state.moves - state.correctCount) * 5);
+    submitPortalScore("logika", earnedScore);
     gameScreen.style.display = 'none';
     finishScreen.style.display = 'flex';
     document.getElementById('finalMoves').textContent = state.moves;
-
-    const levelMultiplier = state.levelKey === 'sulit' ? 30 : (state.levelKey === 'sedang' ? 20 : 10);
-    const accuracyBonus = Math.max(0, (state.totalRounds * 2) - state.moves) * 5;
-    const earnedScore = (state.totalRounds * levelMultiplier) + accuracyBonus;
-    submitPortalScore("color_shape_quiz", earnedScore);
 
     state.doneLevels.add(state.levelKey);
     const curIdx = LEVEL_ORDER.indexOf(state.levelKey);
@@ -540,13 +509,13 @@ const CURRENT_GAME_KEY = "color_shape_quiz";
 
     if(nextKey){
       kicker.textContent = 'Level ' + LEVELS[state.levelKey].label + ' Selesai!';
-      title.textContent = '<i class="bi bi-stars" style="color:#FFC93C"></i> Semua Pertanyaan Terjawab!';
+      title.textContent = '🎉 Semua pertanyaan terjawab!';
       nextBtn.hidden = false;
-      nextBtn.textContent = 'Lanjut ke Level ' + LEVELS[nextKey].label + ' <i class="bi bi-arrow-right-short"></i>';
+      nextBtn.textContent = 'Lanjut ke Level ' + LEVELS[nextKey].label + ' ➡️';
       nextBtn.onclick = () => { sfxClick(); state.levelKey = nextKey; startGame(); };
     } else {
       kicker.textContent = 'Semua Level Selesai!';
-      title.textContent = '<i class="bi bi-trophy-fill" style="color:#FFC93C"></i> Kamu Jago Warna & Bentuk!';
+      title.textContent = '🏆 Kamu Jago Berpikir Logis!';
       nextBtn.hidden = true;
     }
   }
