@@ -584,6 +584,53 @@
       }
     }
 
+    /* Pagination Navigation Wrapper & Buttons */
+    .pagination-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 8px 0 4px;
+      flex-shrink: 0;
+    }
+
+    .page-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      border: 3px solid #FFFFFF;
+      background: linear-gradient(180deg, #FFFFFF 0%, #F1F5F9 100%);
+      color: #0284C7;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
+      transition: all 0.2s ease;
+    }
+
+    .page-btn:hover:not(:disabled) {
+      transform: translateY(-2px) scale(1.05);
+      background: #E0F2FE;
+      border-color: #38BDF8;
+    }
+
+    .page-btn.active {
+      background: linear-gradient(180deg, #38BDF8 0%, #0284C7 100%);
+      color: #FFFFFF;
+      border-color: #FFFFFF;
+      box-shadow: 0 6px 16px rgba(2, 132, 199, 0.4);
+    }
+
+    .page-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
     /* Player Name Pill */
     .kids-player-pill {
       display: flex;
@@ -1281,7 +1328,7 @@
       </div>
 
       <!-- Pagination Bar Container -->
-      <div id="paginationContainer" class="pagination-wrapper" style="display: none !important;"></div>
+      <div id="paginationContainer" class="pagination-wrapper"></div>
     </main>
 
     <!-- Kids Footer -->
@@ -1398,13 +1445,51 @@
 
       function renderPagination(matchingCards) {
         const paginationContainer = document.getElementById('paginationContainer');
-        if (paginationContainer) {
-          paginationContainer.style.display = 'none !important';
+        if (!paginationContainer) return;
+
+        const totalItems = matchingCards.length;
+        const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+        if (totalPages <= 1) {
+          paginationContainer.style.display = 'none';
           paginationContainer.innerHTML = '';
+          matchingCards.forEach(card => card.style.display = 'flex');
+          return;
         }
 
-        // Display all matching game cards on a single scrollable grid view
-        matchingCards.forEach(card => card.style.display = 'flex');
+        paginationContainer.style.display = 'flex';
+
+        // Clamp currentPage
+        if (currentPage > totalPages) currentPage = totalPages;
+        if (currentPage < 1) currentPage = 1;
+
+        // Hide/Show items based on current page (10 items per page)
+        const startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
+        const endIdx = startIdx + ITEMS_PER_PAGE;
+
+        matchingCards.forEach((card, idx) => {
+          if (idx >= startIdx && idx < endIdx) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        // Reset scroll position to top when page changes
+        const appGrid = document.getElementById('appGrid');
+        if (appGrid) appGrid.scrollTop = 0;
+
+        // Build Pagination Buttons HTML
+        let navHtml = '';
+        navHtml += `<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="changePage(${currentPage - 1})"><i class="bi bi-chevron-left"></i></button>`;
+
+        for (let p = 1; p <= totalPages; p++) {
+          navHtml += `<button class="page-btn ${p === currentPage ? 'active' : ''}" onclick="changePage(${p})">${p}</button>`;
+        }
+
+        navHtml += `<button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''} onclick="changePage(${currentPage + 1})"><i class="bi bi-chevron-right"></i></button>`;
+
+        paginationContainer.innerHTML = navHtml;
       }
 
       window.changePage = function(page) {
