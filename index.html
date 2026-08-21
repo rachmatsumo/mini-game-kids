@@ -3,17 +3,17 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>main-edu — Portal Game Edukasi Interaktif Anak</title>
 
   <!-- Meta SEO -->
   <meta name="description"
     content="main-edu: Portal game edukasi interaktif anak dengan tema ceria! Mengetik luar angkasa, motorik kebun, latihan menulis, berhitung jari, dan loncat pipa emas. PWA & Fullscreen Ready!">
   <link rel="canonical" href="https://main-edu.webkuy.com/">
-  <meta name="theme-color" content="#38BDF8">
+  <meta name="theme-color" content="#8FD3FF">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="main-edu">
 
   <!-- Open Graph / Facebook Meta Tags -->
@@ -446,12 +446,21 @@
       height: 100vh;
       height: 100dvh;
       margin: 0 auto;
-      padding: 10px 16px 8px;
+      padding: max(10px, env(safe-area-inset-top)) 16px 8px;
+      padding-top: max(10px, env(safe-area-inset-top));
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
       gap: 10px;
       overflow: hidden;
+    }
+
+    /* Hide Fullscreen Button in PWA App Mode */
+    @media (display-mode: standalone), (display-mode: fullscreen), (display-mode: minimal-ui) {
+      #btnFullscreen,
+      #stageFsBtn {
+        display: none !important;
+      }
     }
 
     /* Top Bright Header Controller Bar */
@@ -2256,6 +2265,18 @@
       // Fullscreen Portal Button Header
       const btnFullscreen = document.getElementById('btnFullscreen');
       const fsIcon = document.getElementById('fsIcon');
+      const stageFsBtn = document.getElementById('stageFsBtn');
+
+      // Hide fullscreen buttons when opened as PWA app
+      const isStandalonePWA = window.matchMedia('(display-mode: standalone)').matches ||
+                              window.matchMedia('(display-mode: fullscreen)').matches ||
+                              window.navigator.standalone === true ||
+                              document.referrer.includes('android-app://');
+
+      if (isStandalonePWA) {
+        if (btnFullscreen) btnFullscreen.style.display = 'none';
+        if (stageFsBtn) stageFsBtn.style.display = 'none';
+      }
 
       if (btnFullscreen) {
         btnFullscreen.addEventListener('click', () => {
