@@ -114,13 +114,35 @@
   ],
   "maze": [
     {
+      "name": "Rara",
+      "score": 121,
+      "date": "21/8/2026"
+    },
+    {
       "name": "Rayyan",
       "score": 120,
       "date": "21/08/2026"
     },
     {
       "name": "Rara",
+      "score": 113,
+      "date": "21/8/2026"
+    },
+    {
+      "name": "Rara",
       "score": 95,
+      "date": "21/08/2026"
+    }
+  ],
+  "dots": [
+    {
+      "name": "Rara",
+      "score": 150,
+      "date": "21/08/2026"
+    },
+    {
+      "name": "Rayyan",
+      "score": 100,
       "date": "21/08/2026"
     }
   ]

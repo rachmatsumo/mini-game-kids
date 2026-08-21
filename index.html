@@ -932,9 +932,10 @@
       <!-- Category Dropdown Select (Clean & Compact) -->
       <div class="kids-select-wrapper">
         <select id="kidsCategorySelect" class="kids-select">
-          <option value="all">Semua Game (10)</option>
+          <option value="all">Semua Game (11)</option>
           <option value="puzzle">Puzzle &amp; Logika</option>
           <option value="maze">Labirin &amp; Spasial</option>
+          <option value="dots">Sambung Titik &amp; Angka</option>
           <option value="ketik">Mengetik &amp; Ketangkasan</option>
           <option value="sensorik">Motorik &amp; Sensorik</option>
           <option value="menulis">Latihan Menulis</option>
@@ -977,7 +978,7 @@
         <div class="panel-title">
           <i class="bi bi-controller" style="color: #0284C7;"></i> Game Edukasi Anak
         </div>
-        <span class="panel-badge">10 Game Aktif</span>
+        <span class="panel-badge">11 Game Aktif</span>
       </div>
 
       <!-- Direct Grid (3D Vibrant AI App Icon Squares with Golden Stars) -->
@@ -1110,6 +1111,21 @@
         </div>
 
       
+        
+        <!-- App 11: Sambung Titik -->
+        <div class="app-card" data-category="dots" data-key="dots">
+          <div class="app-icon-wrap">
+            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+            <img src="assets/img/game-thumbnail/app-dots.png" alt="Sambung Titik App Icon" class="app-icon-img">
+          </div>
+          <div class="app-title-pill">
+            <span class="app-title">Sambung Titik</span>
+            <div class="app-stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+          </div>
+        </div>
+
         <!-- App 10: Labirin Kecil -->
         <div class="app-card" data-category="maze" data-key="maze">
           <div class="app-icon-wrap">
@@ -1400,7 +1416,16 @@
           desc: "Game puzzle potongan gambar karakter hewan lucu. Menyusun kepingan puzzle menjadi gambar utuh hewan jerapah, singa, gajah, dan karakter favorit lainnya!",
           benefits: ["Kemampuan pemecahan masalah", "Persepsi bentuk & spasial", "Fokus, ketelitian & kesabaran"]
         },
-                maze: {
+                        dots: {
+          title: "Sambung Titik",
+          category: "Logika & Urutan Angka",
+          url: "game/sambung-titik.html",
+          hash: "dots",
+          previewImg: "assets/img/game-thumbnail/preview-dots.png",
+          desc: "Game menghubungkan titik-titik angka secara berurutan untuk mengungkap gambar rahasia yang tersembunyi!",
+          benefits: ["Mengenal & melatih urutan angka", "Koordinasi mata & tangan", "Motorik & ketelitian visual"]
+        },
+        maze: {
           title: "Labirin Kecil",
           category: "Spasial & Problem Solving",
           url: "game/labirin-kecil.html",
@@ -1499,6 +1524,7 @@
         else if (hash === '#play-sound') launchGame(GAME_DETAILS.sound.url, GAME_DETAILS.sound.title, 'sound');
         else if (hash === '#play-count') launchGame(GAME_DETAILS.count.url, GAME_DETAILS.count.title, 'count');
         else if (hash === '#play-puzzle') launchGame(GAME_DETAILS.puzzle.url, GAME_DETAILS.puzzle.title, 'puzzle');
+        else if (hash === '#play-dots') launchGame(GAME_DETAILS.dots.url, GAME_DETAILS.dots.title, 'dots');
         else if (hash === '#play-maze') launchGame(GAME_DETAILS.maze.url, GAME_DETAILS.maze.title, 'maze');
         else if (hash === '#play-jump') launchGame(GAME_DETAILS.jump.url, GAME_DETAILS.jump.title, 'jump');
       }
@@ -1606,7 +1632,8 @@
         count: [{ name: 'Rara', score: 80 }, { name: 'Rayyan', score: 60 }],
         jump: [{ name: 'Rayyan', score: 25 }, { name: 'Rara', score: 18 }],
         puzzle: [{ name: 'Rara', score: 100 }, { name: 'Budi', score: 70 }],
-        maze: [{ name: 'Rayyan', score: 120 }, { name: 'Rara', score: 95 }]
+        maze: [{ name: 'Rayyan', score: 120 }, { name: 'Rara', score: 95 }],
+        dots: [{ name: 'Rara', score: 150 }, { name: 'Rayyan', score: 100 }]
       };
 
       function initDefaultLeaderboard() {
@@ -1788,6 +1815,7 @@
           <option value="jump">Loncat Pipa Emas</option>
           <option value="puzzle">Puzzle Hewan</option>
           <option value="maze">Labirin Kecil</option>
+          <option value="dots">Sambung Titik</option>
         </select>
       </div>
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'main-edu-v13';
+const CACHE_NAME = 'main-edu-v14';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -12,6 +12,7 @@ const ASSETS_TO_CACHE = [
   './game/loncat-pipa-emas.html',
   './game/puzzle-hewan.html',
   './game/labirin-kecil.html',
+  './game/sambung-titik.html',
   './manifest.json',
   './score.json',
   './assets/img/favicon.svg',
@@ -41,10 +42,12 @@ const ASSETS_TO_CACHE = [
   './assets/img/game-thumbnail/app-jump.png',
   './assets/img/game-thumbnail/app-puzzle.png',
   './assets/img/game-thumbnail/app-maze.png',
+  './assets/img/game-thumbnail/app-dots.png',
   './assets/img/game-thumbnail/preview-count.png',
   './assets/img/game-thumbnail/preview-jump.png',
   './assets/img/game-thumbnail/preview-puzzle.png',
   './assets/img/game-thumbnail/preview-maze.png',
+  './assets/img/game-thumbnail/preview-dots.png',
   './assets/img/thumbnail.png',
   'https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&family=Outfit:wght@600;700;800&display=swap'
 ];
