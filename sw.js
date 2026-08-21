@@ -1,4 +1,4 @@
-const CACHE_NAME = 'main-edu-v15';
+const CACHE_NAME = 'main-edu-v16';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -14,6 +14,7 @@ const ASSETS_TO_CACHE = [
   './game/labirin-kecil.html',
   './game/sambung-titik.html',
   './game/cerdas-cermat-hewan.html',
+  './game/cerdas-cermat-benda.html',
   './manifest.json',
   './score.json',
   './assets/img/favicon.svg',
@@ -45,12 +46,14 @@ const ASSETS_TO_CACHE = [
   './assets/img/game-thumbnail/app-maze.png',
   './assets/img/game-thumbnail/app-dots.png',
   './assets/img/game-thumbnail/app-quiz.png',
+  './assets/img/game-thumbnail/app-object-quiz.png',
   './assets/img/game-thumbnail/preview-count.png',
   './assets/img/game-thumbnail/preview-jump.png',
   './assets/img/game-thumbnail/preview-puzzle.png',
   './assets/img/game-thumbnail/preview-maze.png',
   './assets/img/game-thumbnail/preview-dots.png',
   './assets/img/game-thumbnail/preview-quiz.png',
+  './assets/img/game-thumbnail/preview-object-quiz.png',
   './assets/img/thumbnail.png',
   'https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&family=Outfit:wght@600;700;800&display=swap'
 ];

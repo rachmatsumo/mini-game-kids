@@ -3,7 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Cerdas Cermat Benda</title>
+<title>Cerdas Cermat Benda — main-edu</title>
+<meta name="theme-color" content="#2E1F63">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
 <style>
@@ -196,6 +201,19 @@
 </div>
 
 <script>
+function submitPortalScore(gameKey, score) {
+  try {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'MAINEDU_SUBMIT_SCORE',
+        gameKey: gameKey,
+        score: Number(score) || 0
+      }, '*');
+    }
+  } catch(e) {}
+}
+const CURRENT_GAME_KEY = "object_quiz";
+
 (function(){
   const QUESTION_BANK = {
     mudah: [
@@ -469,6 +487,11 @@
     gameScreen.style.display = 'none';
     finishScreen.style.display = 'flex';
     document.getElementById('finalMoves').textContent = state.moves;
+
+    const levelMultiplier = state.levelKey === 'sulit' ? 30 : (state.levelKey === 'sedang' ? 20 : 10);
+    const accuracyBonus = Math.max(0, (state.totalRounds * 2) - state.moves) * 5;
+    const earnedScore = (state.totalRounds * levelMultiplier) + accuracyBonus;
+    submitPortalScore("object_quiz", earnedScore);
 
     state.doneLevels.add(state.levelKey);
     const curIdx = LEVEL_ORDER.indexOf(state.levelKey);

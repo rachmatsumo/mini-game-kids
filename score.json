@@ -162,5 +162,17 @@
       "score": 130,
       "date": "21/08/2026"
     }
+  ],
+  "object_quiz": [
+    {
+      "name": "Rara",
+      "score": 170,
+      "date": "21/08/2026"
+    },
+    {
+      "name": "Rayyan",
+      "score": 140,
+      "date": "21/08/2026"
+    }
   ]
 }
