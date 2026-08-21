@@ -456,6 +456,56 @@
       transform: scale(1.06);
     }
 
+    
+    /* Pagination Controls */
+    .pagination-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+      padding-top: 14px;
+      border-top: 2px dashed rgba(148, 163, 184, 0.3);
+    }
+
+    .page-btn {
+      min-width: 40px;
+      height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: #EFF6FF;
+      border: 2px solid #3B82F6;
+      color: #1E3A8A;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 4px 10px rgba(59, 130, 246, 0.15);
+      transition: all 0.2s ease;
+    }
+
+    .page-btn:hover {
+      background: #DBEAFE;
+      transform: translateY(-2px);
+    }
+
+    .page-btn.active {
+      background: linear-gradient(180deg, #F59E0B 0%, #D97706 100%);
+      color: #FFFFFF;
+      border-color: #FFFFFF;
+      box-shadow: 0 6px 16px rgba(217, 119, 6, 0.4);
+    }
+
+    .page-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     /* Kids Footer */
     .kids-footer {
       text-align: center;
@@ -751,8 +801,9 @@
       <!-- Category Dropdown Select (Clean & Compact) -->
       <div class="kids-select-wrapper">
         <select id="kidsCategorySelect" class="kids-select">
-          <option value="all">Semua Game (9)</option>
+          <option value="all">Semua Game (10)</option>
           <option value="puzzle">Puzzle &amp; Logika</option>
+          <option value="maze">Labirin &amp; Spasial</option>
           <option value="ketik">Mengetik &amp; Ketangkasan</option>
           <option value="sensorik">Motorik &amp; Sensorik</option>
           <option value="menulis">Latihan Menulis</option>
@@ -787,7 +838,7 @@
         <div class="panel-title">
           <i class="bi bi-controller" style="color: #0284C7;"></i> Game Edukasi Anak
         </div>
-        <span class="panel-badge">9 Game Aktif</span>
+        <span class="panel-badge">10 Game Aktif</span>
       </div>
 
       <!-- Direct Grid (3D Vibrant AI App Icon Squares with Golden Stars) -->
@@ -919,7 +970,25 @@
           </div>
         </div>
 
+      
+        <!-- App 10: Labirin Kecil -->
+        <div class="app-card" data-category="maze" data-key="maze">
+          <div class="app-icon-wrap">
+            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+            <img src="assets/img/app-maze.png" alt="Labirin Kecil App Icon" class="app-icon-img">
+          </div>
+          <div class="app-title-pill">
+            <span class="app-title">Labirin Kecil</span>
+            <div class="app-stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+          </div>
+        </div>
+
       </div>
+
+      <!-- Pagination Bar Container -->
+      <div id="paginationContainer" class="pagination-wrapper"></div>
     </main>
 
     <!-- Kids Footer -->
@@ -1028,7 +1097,84 @@
       const kidsCategorySelect = document.getElementById('kidsCategorySelect');
       const appCards = document.querySelectorAll('#appGrid .app-card');
 
+      /* Replaced category select logic with pagination */
+      
+      // Pagination Logic (Max 9 items per page)
+      const ITEMS_PER_PAGE = 9;
+      let currentPage = 1;
+
+      function renderPagination(matchingCards) {
+        const paginationContainer = document.getElementById('paginationContainer');
+        if (!paginationContainer) return;
+
+        const totalItems = matchingCards.length;
+        const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+        if (totalPages <= 1) {
+          paginationContainer.innerHTML = '';
+          matchingCards.forEach(card => card.style.display = 'flex');
+          return;
+        }
+
+        // Clamp currentPage
+        if (currentPage > totalPages) currentPage = totalPages;
+        if (currentPage < 1) currentPage = 1;
+
+        // Hide/Show items based on current page
+        matchingCards.forEach((card, idx) => {
+          const startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
+          const endIdx = startIdx + ITEMS_PER_PAGE;
+          if (idx >= startIdx && idx < endIdx) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        // Build Pagination Buttons
+        let navHtml = '';
+        navHtml += `<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="changePage(${currentPage - 1})"><i class="bi bi-chevron-left"></i></button>`;
+
+        for (let p = 1; p <= totalPages; p++) {
+          navHtml += `<button class="page-btn ${p === currentPage ? 'active' : ''}" onclick="changePage(${p})">${p}</button>`;
+        }
+
+        navHtml += `<button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''} onclick="changePage(${currentPage + 1})"><i class="bi bi-chevron-right"></i></button>`;
+
+        paginationContainer.innerHTML = navHtml;
+      }
+
+      window.changePage = function(page) {
+        currentPage = page;
+        applyFilterAndPagination();
+      };
+
+      function applyFilterAndPagination() {
+        const selectedCat = kidsCategorySelect ? kidsCategorySelect.value : 'all';
+        const matchingCards = [];
+
+        appCards.forEach(card => {
+          if (selectedCat === 'all' || card.dataset.category === selectedCat) {
+            matchingCards.push(card);
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        renderPagination(matchingCards);
+      }
+
       if (kidsCategorySelect) {
+        kidsCategorySelect.addEventListener('change', () => {
+          currentPage = 1;
+          applyFilterAndPagination();
+        });
+      }
+
+      // Initial Call
+      applyFilterAndPagination();
+
+      if (false && kidsCategorySelect) {
         kidsCategorySelect.addEventListener('change', (e) => {
           const category = e.target.value;
           appCards.forEach(card => {
@@ -1114,6 +1260,15 @@
           previewImg: "assets/img/preview-puzzle.png",
           desc: "Game puzzle potongan gambar karakter hewan lucu. Menyusun kepingan puzzle menjadi gambar utuh hewan jerapah, singa, gajah, dan karakter favorit lainnya!",
           benefits: ["Kemampuan pemecahan masalah", "Persepsi bentuk & spasial", "Fokus, ketelitian & kesabaran"]
+        },
+                maze: {
+          title: "Labirin Kecil",
+          category: "Spasial & Problem Solving",
+          url: "game/labirin-kecil.html",
+          hash: "maze",
+          previewImg: "assets/img/preview-maze.png",
+          desc: "Game petualangan labirin interaktif. Memandu kelinci lucu menemukan jalan keluar melalui lorong labirin yang penuh teka-teki!",
+          benefits: ["Navigasi spasial & pemetaan visual", "Fokus & pemecahan masalah", "Koordinasi motorik halus"]
         },
         jump: {
           title: "Loncat Pipa Emas",
@@ -1205,6 +1360,7 @@
         else if (hash === '#play-sound') launchGame(GAME_DETAILS.sound.url, GAME_DETAILS.sound.title, 'sound');
         else if (hash === '#play-count') launchGame(GAME_DETAILS.count.url, GAME_DETAILS.count.title, 'count');
         else if (hash === '#play-puzzle') launchGame(GAME_DETAILS.puzzle.url, GAME_DETAILS.puzzle.title, 'puzzle');
+        else if (hash === '#play-maze') launchGame(GAME_DETAILS.maze.url, GAME_DETAILS.maze.title, 'maze');
         else if (hash === '#play-jump') launchGame(GAME_DETAILS.jump.url, GAME_DETAILS.jump.title, 'jump');
       }
       window.addEventListener('load', checkHashRoute);
