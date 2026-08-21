@@ -530,6 +530,13 @@ const CURRENT_GAME_KEY = "maze";
     finishScreen.style.display = 'flex';
     document.getElementById('finalSteps').textContent = state.steps;
 
+    // Calculate score points for maze
+    const baseScore = state.size * 25;
+    const stepPenalty = Math.max(0, state.steps - state.size * 2) * 2;
+    const finalScore = Math.max(30, baseScore - stepPenalty);
+
+    submitPortalScore("maze", finalScore);
+
     state.doneLevels.add(state.levelKey);
     const curIdx = LEVEL_ORDER.indexOf(state.levelKey);
     const nextKey = LEVEL_ORDER[curIdx+1];

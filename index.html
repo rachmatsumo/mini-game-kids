@@ -1610,10 +1610,19 @@
       };
 
       function initDefaultLeaderboard() {
-        const existing = localStorage.getItem('mainedu_leaderboard');
-        if (!existing) {
-          localStorage.setItem('mainedu_leaderboard', JSON.stringify(MOCK_SCORES));
-        }
+        fetch('score.json')
+          .then(res => res.json())
+          .then(data => {
+            if (data && typeof data === 'object') {
+              localStorage.setItem('mainedu_leaderboard', JSON.stringify(data));
+            }
+          })
+          .catch(() => {
+            const existing = localStorage.getItem('mainedu_leaderboard');
+            if (!existing) {
+              localStorage.setItem('mainedu_leaderboard', JSON.stringify(MOCK_SCORES));
+            }
+          });
       }
 
       function getLeaderboard() {
@@ -1643,6 +1652,24 @@
 
         localStorage.setItem('mainedu_leaderboard', JSON.stringify(lb));
         console.log('[main-edu Leaderboard] Saved score:', gameKey, playerName, scoreVal);
+
+        // Sync with score.json on server
+        try {
+          fetch('save_score.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(lb)
+          }).catch(err => console.warn('File score.json sync error:', err));
+        } catch(e) {}
+
+        // Sync with score.json on server
+        try {
+          fetch('save_score.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(lb)
+          }).catch(err => console.warn('File score.json sync error:', err));
+        } catch(e) {}
       }
 
       // Render Leaderboard Modal List

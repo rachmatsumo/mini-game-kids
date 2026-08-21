@@ -1,4 +1,4 @@
-const CACHE_NAME = 'main-edu-v12';
+const CACHE_NAME = 'main-edu-v13';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -13,6 +13,7 @@ const ASSETS_TO_CACHE = [
   './game/puzzle-hewan.html',
   './game/labirin-kecil.html',
   './manifest.json',
+  './score.json',
   './assets/img/favicon.svg',
   './assets/img/favicon-portal.png',
   './assets/img/favicon-space.svg',
