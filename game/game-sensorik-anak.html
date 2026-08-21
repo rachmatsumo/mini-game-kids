@@ -235,6 +235,20 @@ tr.new td{background:#FFF6C7}
 </section>
 
 <script>
+
+function submitPortalScore(gameKey, score) {
+  try {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'MAINEDU_SUBMIT_SCORE',
+        gameKey: gameKey,
+        score: Number(score) || 0
+      }, '*');
+    }
+  } catch(e) {}
+}
+
+const CURRENT_GAME_KEY = "garden";
 /* ===== Sprite ===== */
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 const SP={

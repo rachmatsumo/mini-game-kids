@@ -287,6 +287,20 @@
 </div>
 
 <script>
+
+function submitPortalScore(gameKey, score) {
+  try {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'MAINEDU_SUBMIT_SCORE',
+        gameKey: gameKey,
+        score: Number(score) || 0
+      }, '*');
+    }
+  } catch(e) {}
+}
+
+const CURRENT_GAME_KEY = "space";
 (function(){
   const LEVELS = {
     1: { label:'Huruf', sub:'a - z', chars:'abcdefghijklmnopqrstuvwxyz'.split('') },
@@ -668,6 +682,7 @@
   }
 
   function endGame(){
+    submitPortalScore("space", state.score);
     state.running = false;
     clearTimeout(state.spawnTimer);
     sfxGameOver();

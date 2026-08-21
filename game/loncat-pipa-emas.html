@@ -261,6 +261,20 @@
 </div>
 
 <script>
+
+function submitPortalScore(gameKey, score) {
+  try {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'MAINEDU_SUBMIT_SCORE',
+        gameKey: gameKey,
+        score: Number(score) || 0
+      }, '*');
+    }
+  } catch(e) {}
+}
+
+const CURRENT_GAME_KEY = "jump";
 (function(){
   const LEVELS = {
     mudah:  { label:'Mudah',  sub:'target 6',  gravity:.22, flap:-5.2, speed:1.5, gap:215, spacing:290, target:6 },

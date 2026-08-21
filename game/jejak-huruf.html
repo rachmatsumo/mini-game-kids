@@ -660,6 +660,20 @@
   </div>
 
   <script>
+
+function submitPortalScore(gameKey, score) {
+  try {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'MAINEDU_SUBMIT_SCORE',
+        gameKey: gameKey,
+        score: Number(score) || 0
+      }, '*');
+    }
+  } catch(e) {}
+}
+
+const CURRENT_GAME_KEY = "trace";
     (function () {
       const SETS = {
         huruf: { label: 'Huruf', sub: 'A - Z', items: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('') },

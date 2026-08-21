@@ -457,6 +457,93 @@
     }
 
     
+    
+    /* Player Name Pill */
+    .kids-player-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: #EFF6FF;
+      border: 2px solid #3B82F6;
+      color: #1E3A8A;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(59, 130, 246, 0.15);
+      transition: all 0.2s ease;
+      max-width: 140px;
+    }
+
+    .kids-player-pill:hover {
+      background: #DBEAFE;
+      transform: scale(1.04);
+    }
+
+    .kids-player-pill #lblPlayerName {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Leaderboard Item Row */
+    .lb-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      border-radius: 18px;
+      background: #F8FAFC;
+      border: 2px solid #E2E8F0;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
+      transition: transform 0.2s ease;
+    }
+
+    .lb-row.rank-1 {
+      background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+      border-color: #F59E0B;
+    }
+
+    .lb-row.rank-2 {
+      background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%);
+      border-color: #94A3B8;
+    }
+
+    .lb-row.rank-3 {
+      background: linear-gradient(135deg, #FFEDD5 0%, #FED7AA 100%);
+      border-color: #F97316;
+    }
+
+    .lb-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 15px;
+      background: #FFFFFF;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .lb-player-name {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 15px;
+      color: #0F172A;
+    }
+
+    .lb-score-val {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 16px;
+      color: #0284C7;
+    }
+
     /* Pagination Controls */
     .pagination-wrapper {
       display: flex;
@@ -816,8 +903,16 @@
         <i class="bi bi-chevron-down kids-select-arrow"></i>
       </div>
 
-      <!-- Action Buttons -->
+            <!-- Action Buttons -->
       <div class="kids-actions">
+        <button id="btnPlayerName" class="kids-player-pill" title="Ubah Nama Pemain">
+          <i class="bi bi-person-fill" style="color: #2563EB;"></i>
+          <span id="lblPlayerName">Pemain Cilik</span>
+          <i class="bi bi-pencil-fill" style="font-size: 11px; opacity: 0.6;"></i>
+        </button>
+        <button id="btnLeaderboard" class="kids-btn-icon" title="Papan Skor Leaderboard" style="background: linear-gradient(135deg, #F59E0B, #D97706); border-color: #FFFFFF;">
+          <i class="bi bi-trophy-fill" style="color: #FFFFFF;"></i>
+        </button>
         <button id="btnFullscreen" class="kids-btn-icon" title="Layar Penuh HP">
           <i id="fsIcon" class="bi bi-arrows-fullscreen"></i>
         </button>
@@ -825,7 +920,7 @@
           <i class="bi bi-download"></i>
         </button>
       </div>
-    </header>
+</header>
 
     <!-- Cartoon Title Banner (PILIH PERMAINAN) -->
     <div class="cartoon-title-banner">
@@ -1373,6 +1468,173 @@
         }
       });
 
+      
+      // ---------- PLAYER NAME & LEADERBOARD SYSTEM ----------
+      const btnPlayerName = document.getElementById('btnPlayerName');
+      const lblPlayerName = document.getElementById('lblPlayerName');
+      const nameModal = document.getElementById('nameModal');
+      const inputPlayerName = document.getElementById('inputPlayerName');
+      const saveNameBtn = document.getElementById('saveNameBtn');
+
+      const btnLeaderboard = document.getElementById('btnLeaderboard');
+      const leaderboardModal = document.getElementById('leaderboardModal');
+      const lbCloseBtn = document.getElementById('lbCloseBtn');
+      const lbGameSelect = document.getElementById('lbGameSelect');
+      const lbListContainer = document.getElementById('lbListContainer');
+
+      // Initialize Player Name
+      function getPlayerName() {
+        return localStorage.getItem('mainedu_player_name') || 'Pemain Cilik';
+      }
+
+      function setPlayerName(name) {
+        const cleanName = (name || '').trim() || 'Pemain Cilik';
+        localStorage.setItem('mainedu_player_name', cleanName);
+        if (lblPlayerName) lblPlayerName.textContent = cleanName;
+      }
+
+      // Check first visit
+      window.addEventListener('DOMContentLoaded', () => {
+        const saved = localStorage.getItem('mainedu_player_name');
+        if (!saved) {
+          inputPlayerName.value = 'Pemain Cilik';
+          nameModal.classList.add('active');
+        } else {
+          lblPlayerName.textContent = saved;
+        }
+        initDefaultLeaderboard();
+      });
+
+      if (btnPlayerName) {
+        btnPlayerName.addEventListener('click', () => {
+          inputPlayerName.value = getPlayerName();
+          nameModal.classList.add('active');
+        });
+      }
+
+      if (saveNameBtn) {
+        saveNameBtn.addEventListener('click', () => {
+          setPlayerName(inputPlayerName.value);
+          nameModal.classList.remove('active');
+        });
+      }
+
+      // Default Leaderboard Data Initialization
+      const MOCK_SCORES = {
+        space: [{ name: 'Rara', score: 180 }, { name: 'Rayyan', score: 140 }, { name: 'Budi', score: 90 }],
+        garden: [{ name: 'Rayyan', score: 210 }, { name: 'Rara', score: 175 }],
+        trace: [{ name: 'Rara', score: 100 }, { name: 'Siti', score: 80 }],
+        memory: [{ name: 'Rayyan', score: 120 }, { name: 'Rara', score: 100 }],
+        match: [{ name: 'Rara', score: 150 }, { name: 'Budi', score: 110 }],
+        sound: [{ name: 'Rayyan', score: 90 }, { name: 'Rara', score: 80 }],
+        count: [{ name: 'Rara', score: 80 }, { name: 'Rayyan', score: 60 }],
+        jump: [{ name: 'Rayyan', score: 25 }, { name: 'Rara', score: 18 }],
+        puzzle: [{ name: 'Rara', score: 100 }, { name: 'Budi', score: 70 }],
+        maze: [{ name: 'Rayyan', score: 120 }, { name: 'Rara', score: 95 }]
+      };
+
+      function initDefaultLeaderboard() {
+        const existing = localStorage.getItem('mainedu_leaderboard');
+        if (!existing) {
+          localStorage.setItem('mainedu_leaderboard', JSON.stringify(MOCK_SCORES));
+        }
+      }
+
+      function getLeaderboard() {
+        try {
+          return JSON.parse(localStorage.getItem('mainedu_leaderboard')) || MOCK_SCORES;
+        } catch(e) {
+          return MOCK_SCORES;
+        }
+      }
+
+      function saveScoreToLeaderboard(gameKey, scoreVal) {
+        if (!gameKey || typeof scoreVal !== 'number' || isNaN(scoreVal)) return;
+        const playerName = getPlayerName();
+        const lb = getLeaderboard();
+        if (!lb[gameKey]) lb[gameKey] = [];
+
+        // Add entry
+        lb[gameKey].push({
+          name: playerName,
+          score: scoreVal,
+          date: new Date().toLocaleDateString('id-ID')
+        });
+
+        // Sort descending by score & keep top 10
+        lb[gameKey].sort((a, b) => b.score - a.score);
+        lb[gameKey] = lb[gameKey].slice(0, 10);
+
+        localStorage.setItem('mainedu_leaderboard', JSON.stringify(lb));
+        console.log('[main-edu Leaderboard] Saved score:', gameKey, playerName, scoreVal);
+      }
+
+      // Render Leaderboard Modal List
+      function renderLeaderboardList(gameKey) {
+        if (!lbListContainer) return;
+        const lb = getLeaderboard();
+        const list = lb[gameKey] || [];
+
+        if (list.length === 0) {
+          lbListContainer.innerHTML = '<div style="text-align:center; color:#94A3B8; padding:30px 10px; font-weight:700;">Belum ada rekor skor. Jadilah yang pertama! 🏆</div>';
+          return;
+        }
+
+        let html = '';
+        list.forEach((item, idx) => {
+          const rank = idx + 1;
+          let rankClass = '';
+          let badgeIcon = `#${rank}`;
+          if (rank === 1) { rankClass = 'rank-1'; badgeIcon = '🥇'; }
+          else if (rank === 2) { rankClass = 'rank-2'; badgeIcon = '🥈'; }
+          else if (rank === 3) { rankClass = 'rank-3'; badgeIcon = '🥉'; }
+
+          html += `
+            <div class="lb-row ${rankClass}">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div class="lb-badge">${badgeIcon}</div>
+                <div>
+                  <div class="lb-player-name">${item.name}</div>
+                  <div style="font-size:11px; color:#64748B;">${item.date || ''}</div>
+                </div>
+              </div>
+              <div class="lb-score-val">${item.score} <span style="font-size:12px; font-weight:600; color:#64748B;">Poin</span></div>
+            </div>
+          `;
+        });
+
+        lbListContainer.innerHTML = html;
+      }
+
+      if (btnLeaderboard) {
+        btnLeaderboard.addEventListener('click', () => {
+          const defaultKey = kidsCategorySelect ? kidsCategorySelect.value : 'space';
+          const validKey = MOCK_SCORES[defaultKey] ? defaultKey : 'space';
+          if (lbGameSelect) lbGameSelect.value = validKey;
+          renderLeaderboardList(validKey);
+          leaderboardModal.classList.add('active');
+        });
+      }
+
+      if (lbCloseBtn) {
+        lbCloseBtn.addEventListener('click', () => leaderboardModal.classList.remove('active'));
+      }
+
+      if (lbGameSelect) {
+        lbGameSelect.addEventListener('change', (e) => {
+          renderLeaderboardList(e.target.value);
+        });
+      }
+
+      // Listen to postMessage score submissions from game iframes
+      window.addEventListener('message', (event) => {
+        if (event.data && event.data.type === 'MAINEDU_SUBMIT_SCORE') {
+          const { gameKey, score } = event.data;
+          saveScoreToLeaderboard(gameKey, score);
+        }
+      });
+
+
       // PWA Service Worker Registration
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
@@ -1405,6 +1667,50 @@
       }
     })();
   </script>
+
+  <!-- Name Input / Edit Modal -->
+  <div id="nameModal" class="modal-overlay">
+    <div class="modal-card" style="max-width: 380px; padding: 24px; text-align: center;">
+      <div style="font-size: 42px; margin-bottom: 8px;">👤</div>
+      <h3 style="font-family: var(--font-heading); font-size: 22px; color: #0F172A; margin-bottom: 6px;">Halo Pemain Cilik!</h3>
+      <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">Masukkan namamu untuk mencatat rekor di Papan Skor Leaderboard!</p>
+      <input type="text" id="inputPlayerName" maxlength="15" placeholder="Ketik namamu..." style="width: 100%; padding: 12px 16px; border-radius: 16px; border: 2px solid #3B82F6; font-family: var(--font-heading); font-size: 16px; text-align: center; margin-bottom: 16px; outline: none; background: #EFF6FF; color: #1E3A8A;">
+      <button id="saveNameBtn" class="btn-play-large" style="padding: 12px; font-size: 16px;">Simpan Namaku <i class="bi bi-check-circle-fill"></i></button>
+    </div>
+  </div>
+
+  <!-- Leaderboard Modal -->
+  <div id="leaderboardModal" class="modal-overlay">
+    <div class="modal-card" style="max-width: 480px; width: 100%; max-height: 85vh; display: flex; flex-direction: column;">
+      <div style="padding: 20px 24px 14px; border-bottom: 2px dashed rgba(148, 163, 184, 0.3); display: flex; align-items: center; justify-content: space-between;">
+        <h3 style="font-family: var(--font-heading); font-size: 22px; color: #0F172A; display: flex; align-items: center; gap: 8px;">
+          <i class="bi bi-trophy-fill" style="color: #F59E0B;"></i> Papan Skor
+        </h3>
+        <button id="lbCloseBtn" class="modal-preview-close" style="position: static; color: #0F172A; background: #F1F5F9;"><i class="bi bi-x-lg"></i></button>
+      </div>
+
+      <div style="padding: 16px 24px 8px; background: #F8FAFC;">
+        <label style="font-size: 13px; font-weight: 700; color: #475569; display: block; margin-bottom: 6px;">Pilih Permainan:</label>
+        <select id="lbGameSelect" class="kids-select" style="max-width: 100%; width: 100%;">
+          <option value="space">Tembak Huruf Angkasa</option>
+          <option value="garden">Tap Tap Kebun</option>
+          <option value="trace">Jejak Huruf</option>
+          <option value="memory">Kartu Ingatan</option>
+          <option value="match">Cocokkan Huruf</option>
+          <option value="sound">Tebak Suara Hewan</option>
+          <option value="count">Berhitung Jari</option>
+          <option value="jump">Loncat Pipa Emas</option>
+          <option value="puzzle">Puzzle Hewan</option>
+          <option value="maze">Labirin Kecil</option>
+        </select>
+      </div>
+
+      <div id="lbListContainer" style="padding: 16px 24px 24px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 10px;">
+        <!-- Top 10 Scores loaded dynamically -->
+      </div>
+    </div>
+  </div>
+
 </body>
 
 </html>
