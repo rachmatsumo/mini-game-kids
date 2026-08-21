@@ -458,6 +458,50 @@
 
     
     
+    
+    /* Header Responsiveness (Prevent Mobile Overflow Leak) */
+    @media (max-width: 640px) {
+      header.kids-header {
+        gap: 6px;
+        padding: 6px 12px;
+      }
+      .brand-title {
+        display: none;
+      }
+      .kids-select-wrapper {
+        min-width: 85px;
+        max-width: 140px;
+      }
+      .kids-select {
+        padding: 7px 24px 7px 10px;
+        font-size: 12px;
+      }
+      .kids-player-pill {
+        padding: 6px 10px;
+        font-size: 12px;
+        max-width: 100px;
+      }
+      .kids-actions {
+        gap: 4px;
+      }
+      .kids-btn-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 15px;
+        border-radius: 12px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .kids-player-pill #lblPlayerName {
+        display: none;
+      }
+      .kids-player-pill {
+        padding: 6px 8px;
+        max-width: fit-content;
+      }
+    }
+
     /* Player Name Pill */
     .kids-player-pill {
       display: flex;
@@ -1470,19 +1514,6 @@
 
       
       // ---------- PLAYER NAME & LEADERBOARD SYSTEM ----------
-      const btnPlayerName = document.getElementById('btnPlayerName');
-      const lblPlayerName = document.getElementById('lblPlayerName');
-      const nameModal = document.getElementById('nameModal');
-      const inputPlayerName = document.getElementById('inputPlayerName');
-      const saveNameBtn = document.getElementById('saveNameBtn');
-
-      const btnLeaderboard = document.getElementById('btnLeaderboard');
-      const leaderboardModal = document.getElementById('leaderboardModal');
-      const lbCloseBtn = document.getElementById('lbCloseBtn');
-      const lbGameSelect = document.getElementById('lbGameSelect');
-      const lbListContainer = document.getElementById('lbListContainer');
-
-      // Initialize Player Name
       function getPlayerName() {
         return localStorage.getItem('mainedu_player_name') || 'Pemain Cilik';
       }
@@ -1490,34 +1521,79 @@
       function setPlayerName(name) {
         const cleanName = (name || '').trim() || 'Pemain Cilik';
         localStorage.setItem('mainedu_player_name', cleanName);
+        const lblPlayerName = document.getElementById('lblPlayerName');
         if (lblPlayerName) lblPlayerName.textContent = cleanName;
       }
 
-      // Check first visit
-      window.addEventListener('DOMContentLoaded', () => {
+      function initPlayerUI() {
+        const btnPlayerName = document.getElementById('btnPlayerName');
+        const lblPlayerName = document.getElementById('lblPlayerName');
+        const nameModal = document.getElementById('nameModal');
+        const inputPlayerName = document.getElementById('inputPlayerName');
+        const saveNameBtn = document.getElementById('saveNameBtn');
+
+        const btnLeaderboard = document.getElementById('btnLeaderboard');
+        const leaderboardModal = document.getElementById('leaderboardModal');
+        const lbCloseBtn = document.getElementById('lbCloseBtn');
+        const lbGameSelect = document.getElementById('lbGameSelect');
+
         const saved = localStorage.getItem('mainedu_player_name');
         if (!saved) {
-          inputPlayerName.value = 'Pemain Cilik';
-          nameModal.classList.add('active');
+          if (inputPlayerName) inputPlayerName.value = 'Pemain Cilik';
+          if (nameModal) nameModal.classList.add('active');
         } else {
-          lblPlayerName.textContent = saved;
+          if (lblPlayerName) lblPlayerName.textContent = saved;
         }
+
+        if (btnPlayerName) {
+          btnPlayerName.addEventListener('click', () => {
+            const input = document.getElementById('inputPlayerName');
+            const modal = document.getElementById('nameModal');
+            if (input) input.value = getPlayerName();
+            if (modal) modal.classList.add('active');
+          });
+        }
+
+        if (saveNameBtn) {
+          saveNameBtn.addEventListener('click', () => {
+            const input = document.getElementById('inputPlayerName');
+            const modal = document.getElementById('nameModal');
+            if (input) setPlayerName(input.value);
+            if (modal) modal.classList.remove('active');
+          });
+        }
+
+        if (btnLeaderboard) {
+          btnLeaderboard.addEventListener('click', () => {
+            const kidsCategorySelect = document.getElementById('kidsCategorySelect');
+            const defaultKey = kidsCategorySelect ? kidsCategorySelect.value : 'space';
+            const validKey = MOCK_SCORES[defaultKey] ? defaultKey : 'space';
+            const lbGameSelect = document.getElementById('lbGameSelect');
+            const leaderboardModal = document.getElementById('leaderboardModal');
+            if (lbGameSelect) lbGameSelect.value = validKey;
+            renderLeaderboardList(validKey);
+            if (leaderboardModal) leaderboardModal.classList.add('active');
+          });
+        }
+
+        if (lbCloseBtn) {
+          lbCloseBtn.addEventListener('click', () => {
+            const leaderboardModal = document.getElementById('leaderboardModal');
+            if (leaderboardModal) leaderboardModal.classList.remove('active');
+          });
+        }
+
+        if (lbGameSelect) {
+          lbGameSelect.addEventListener('change', (e) => {
+            renderLeaderboardList(e.target.value);
+          });
+        }
+      }
+
+      window.addEventListener('DOMContentLoaded', () => {
         initDefaultLeaderboard();
+        initPlayerUI();
       });
-
-      if (btnPlayerName) {
-        btnPlayerName.addEventListener('click', () => {
-          inputPlayerName.value = getPlayerName();
-          nameModal.classList.add('active');
-        });
-      }
-
-      if (saveNameBtn) {
-        saveNameBtn.addEventListener('click', () => {
-          setPlayerName(inputPlayerName.value);
-          nameModal.classList.remove('active');
-        });
-      }
 
       // Default Leaderboard Data Initialization
       const MOCK_SCORES = {
