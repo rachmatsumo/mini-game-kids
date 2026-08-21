@@ -1647,6 +1647,7 @@
 
       // Render Leaderboard Modal List
       function renderLeaderboardList(gameKey) {
+        const lbListContainer = document.getElementById('lbListContainer');
         if (!lbListContainer) return;
         const lb = getLeaderboard();
         const list = lb[gameKey] || [];
@@ -1682,25 +1683,7 @@
         lbListContainer.innerHTML = html;
       }
 
-      if (btnLeaderboard) {
-        btnLeaderboard.addEventListener('click', () => {
-          const defaultKey = kidsCategorySelect ? kidsCategorySelect.value : 'space';
-          const validKey = MOCK_SCORES[defaultKey] ? defaultKey : 'space';
-          if (lbGameSelect) lbGameSelect.value = validKey;
-          renderLeaderboardList(validKey);
-          leaderboardModal.classList.add('active');
-        });
-      }
 
-      if (lbCloseBtn) {
-        lbCloseBtn.addEventListener('click', () => leaderboardModal.classList.remove('active'));
-      }
-
-      if (lbGameSelect) {
-        lbGameSelect.addEventListener('change', (e) => {
-          renderLeaderboardList(e.target.value);
-        });
-      }
 
       // Listen to postMessage score submissions from game iframes
       window.addEventListener('message', (event) => {
