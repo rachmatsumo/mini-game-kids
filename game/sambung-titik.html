@@ -160,6 +160,27 @@
   }
   @keyframes mascotFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
 
+
+  .mascot-img-wrap {
+    width: 84px;
+    height: 84px;
+    border-radius: 24px;
+    border: 4px solid #FFC93C;
+    box-shadow: 0 10px 25px rgba(255, 201, 60, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.6);
+    overflow: hidden;
+    background: #FFF;
+    display: inline-block;
+    margin-bottom: 8px;
+    animation: mascotFloat 3s ease-in-out infinite;
+  }
+  .mascot-3d-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  @keyframes mascotFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+
 </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
@@ -169,7 +190,7 @@
 
   <!-- MENU -->
   <div id="menuScreen">
-    <div class="mascot mascot-icon" aria-hidden="true"><i class="bi bi-pencil-fill"></i></div>
+    <div class="mascot-img-wrap"><img src="../assets/img/game-thumbnail/app-dots.png" alt="Game Mascot" class="mascot-3d-img"></div>
     <div class="title-wrap">
       <span class="kicker">Latihan Urutan Angka</span>
       <h1>🔗 Sambung Titik</h1>
