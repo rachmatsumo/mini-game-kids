@@ -120,25 +120,35 @@
     }
 
     @keyframes pulseSun {
-      0% { transform: scale(0.96); box-shadow: 0 0 40px rgba(250, 204, 21, 0.7); }
-      100% { transform: scale(1.04); box-shadow: 0 0 70px rgba(250, 204, 21, 0.95); }
+      0% {
+        transform: scale(0.96);
+        box-shadow: 0 0 40px rgba(250, 204, 21, 0.7);
+      }
+
+      100% {
+        transform: scale(1.04);
+        box-shadow: 0 0 70px rgba(250, 204, 21, 0.95);
+      }
     }
 
     .sun-rays {
       position: absolute;
       inset: 0;
-      background: repeating-conic-gradient(
-        from 0deg,
-        rgba(253, 224, 71, 0.25) 0deg 15deg,
-        transparent 15deg 30deg
-      );
+      background: repeating-conic-gradient(from 0deg,
+          rgba(253, 224, 71, 0.25) 0deg 15deg,
+          transparent 15deg 30deg);
       border-radius: 50%;
       animation: spinRays 50s linear infinite;
     }
 
     @keyframes spinRays {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
 
     /* Soft Pastel Rainbow Arch across Sky */
@@ -152,7 +162,7 @@
       border: 26px solid transparent;
       border-top-color: rgba(239, 68, 68, 0.22);
       border-right-color: rgba(249, 115, 22, 0.22);
-      box-shadow: 
+      box-shadow:
         inset 0 0 0 22px rgba(234, 179, 8, 0.22),
         inset 0 0 0 44px rgba(34, 197, 94, 0.22),
         inset 0 0 0 66px rgba(59, 130, 246, 0.22),
@@ -176,7 +186,8 @@
       animation: floatCloud 30s infinite linear, bobCloud 4s ease-in-out infinite alternate;
     }
 
-    .cloud::before, .cloud::after {
+    .cloud::before,
+    .cloud::after {
       content: '';
       position: absolute;
       background: inherit;
@@ -184,30 +195,115 @@
       box-shadow: inherit;
     }
 
-    .cloud1 { width: 160px; height: 50px; top: 10%; left: -180px; animation-duration: 32s, 3.5s; }
-    .cloud1::before { width: 70px; height: 70px; top: -30px; left: 22px; }
-    .cloud1::after { width: 55px; height: 55px; top: -20px; right: 28px; }
+    .cloud1 {
+      width: 160px;
+      height: 50px;
+      top: 10%;
+      left: -180px;
+      animation-duration: 32s, 3.5s;
+    }
 
-    .cloud2 { width: 210px; height: 62px; top: 28%; left: -240px; animation-duration: 42s, 4.5s; animation-delay: 6s, 0.5s; }
-    .cloud2::before { width: 90px; height: 90px; top: -40px; left: 32px; }
-    .cloud2::after { width: 70px; height: 70px; top: -24px; right: 38px; }
+    .cloud1::before {
+      width: 70px;
+      height: 70px;
+      top: -30px;
+      left: 22px;
+    }
 
-    .cloud3 { width: 140px; height: 44px; top: 52%; left: -160px; animation-duration: 26s, 3.8s; animation-delay: 12s, 1s; }
-    .cloud3::before { width: 60px; height: 60px; top: -25px; left: 20px; }
-    .cloud3::after { width: 45px; height: 45px; top: -14px; right: 22px; }
+    .cloud1::after {
+      width: 55px;
+      height: 55px;
+      top: -20px;
+      right: 28px;
+    }
 
-    .cloud4 { width: 180px; height: 54px; top: 72%; left: -200px; animation-duration: 36s, 4.2s; animation-delay: 18s, 1.5s; }
-    .cloud4::before { width: 78px; height: 78px; top: -32px; left: 28px; }
-    .cloud4::after { width: 58px; height: 58px; top: -18px; right: 30px; }
+    .cloud2 {
+      width: 210px;
+      height: 62px;
+      top: 28%;
+      left: -240px;
+      animation-duration: 42s, 4.5s;
+      animation-delay: 6s, 0.5s;
+    }
+
+    .cloud2::before {
+      width: 90px;
+      height: 90px;
+      top: -40px;
+      left: 32px;
+    }
+
+    .cloud2::after {
+      width: 70px;
+      height: 70px;
+      top: -24px;
+      right: 38px;
+    }
+
+    .cloud3 {
+      width: 140px;
+      height: 44px;
+      top: 52%;
+      left: -160px;
+      animation-duration: 26s, 3.8s;
+      animation-delay: 12s, 1s;
+    }
+
+    .cloud3::before {
+      width: 60px;
+      height: 60px;
+      top: -25px;
+      left: 20px;
+    }
+
+    .cloud3::after {
+      width: 45px;
+      height: 45px;
+      top: -14px;
+      right: 22px;
+    }
+
+    .cloud4 {
+      width: 180px;
+      height: 54px;
+      top: 72%;
+      left: -200px;
+      animation-duration: 36s, 4.2s;
+      animation-delay: 18s, 1.5s;
+    }
+
+    .cloud4::before {
+      width: 78px;
+      height: 78px;
+      top: -32px;
+      left: 28px;
+    }
+
+    .cloud4::after {
+      width: 58px;
+      height: 58px;
+      top: -18px;
+      right: 30px;
+    }
 
     @keyframes floatCloud {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(calc(100vw + 350px)); }
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(calc(100vw + 350px));
+      }
     }
 
     @keyframes bobCloud {
-      0% { margin-top: 0px; }
-      100% { margin-top: 8px; }
+      0% {
+        margin-top: 0px;
+      }
+
+      100% {
+        margin-top: 8px;
+      }
     }
 
     /* Floating Sky Sparkles ✨ */
@@ -220,8 +316,15 @@
     }
 
     @keyframes floatSparkle {
-      0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0.4; }
-      100% { transform: translateY(-15px) scale(1.2) rotate(45deg); opacity: 0.95; }
+      0% {
+        transform: translateY(0) scale(0.8) rotate(0deg);
+        opacity: 0.4;
+      }
+
+      100% {
+        transform: translateY(-15px) scale(1.2) rotate(45deg);
+        opacity: 0.95;
+      }
     }
 
     /* Multi-layered Rolling Green Grass Hills at Bottom */
@@ -358,7 +461,8 @@
       overflow: hidden;
     }
 
-    .kids-select:hover, .kids-select:focus {
+    .kids-select:hover,
+    .kids-select:focus {
       background: #DBEAFE;
       border-color: #1D4ED8;
     }
@@ -539,34 +643,40 @@
       transform: scale(1.06);
     }
 
-    
-    
-    
+
+
+
     /* Header Responsiveness (Prevent Mobile Overflow Leak) */
     @media (max-width: 640px) {
       header.kids-header {
         gap: 6px;
         padding: 6px 12px;
       }
+
       .brand-title {
         display: none;
       }
+
       .kids-select-wrapper {
         min-width: 85px;
         max-width: 140px;
       }
+
       .kids-select {
         padding: 7px 24px 7px 10px;
         font-size: 12px;
       }
+
       .kids-player-pill {
         padding: 6px 10px;
         font-size: 12px;
         max-width: 100px;
       }
+
       .kids-actions {
         gap: 4px;
       }
+
       .kids-btn-icon {
         width: 36px;
         height: 36px;
@@ -579,6 +689,7 @@
       .kids-player-pill #lblPlayerName {
         display: none;
       }
+
       .kids-player-pill {
         padding: 6px 8px;
         max-width: fit-content;
@@ -792,8 +903,15 @@
     }
 
     @keyframes heartBeat {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.25); }
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.25);
+      }
     }
 
     /* Played Checkmark Indicator */
@@ -1067,7 +1185,7 @@
         <div class="brand-icon">
           <img src="assets/img/favicon.png" alt="main-edu logo">
         </div>
-        <span class="brand-title">main-edu</span>
+        <span class="brand-title">Main-Edu</span>
       </a>
 
       <!-- Category Dropdown Select (Clean, Simple & Grouped) -->
@@ -1083,14 +1201,15 @@
         <i class="bi bi-chevron-down kids-select-arrow"></i>
       </div>
 
-            <!-- Action Buttons -->
+      <!-- Action Buttons -->
       <div class="kids-actions">
         <button id="btnPlayerName" class="kids-player-pill" title="Ubah Nama Pemain">
           <i class="bi bi-person-fill" style="color: #2563EB;"></i>
           <span id="lblPlayerName">Pemain Cilik</span>
           <i class="bi bi-pencil-fill" style="font-size: 11px; opacity: 0.6;"></i>
         </button>
-        <button id="btnLeaderboard" class="kids-btn-icon" title="Papan Skor Leaderboard" style="background: linear-gradient(135deg, #F59E0B, #D97706); border-color: #FFFFFF;">
+        <button id="btnLeaderboard" class="kids-btn-icon" title="Papan Skor Leaderboard"
+          style="background: linear-gradient(135deg, #F59E0B, #D97706); border-color: #FFFFFF;">
           <i class="bi bi-trophy-fill" style="color: #FFFFFF;"></i>
         </button>
         <button id="btnFullscreen" class="kids-btn-icon" title="Layar Penuh HP">
@@ -1100,7 +1219,7 @@
           <i class="bi bi-download"></i>
         </button>
       </div>
-</header>
+    </header>
 
 
 
@@ -1214,7 +1333,7 @@
           </div>
         </div>
 
-                <!-- App 9: Puzzle Hewan (NEW!) -->
+        <!-- App 9: Puzzle Hewan (NEW!) -->
         <div class="app-card" data-category="puzzle" data-key="puzzle">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
@@ -1242,17 +1361,18 @@
           </div>
         </div>
 
-      
-        
-        
-        
-        
-        
+
+
+
+
+
+
         <!-- App 18: Rapikan Kamar -->
         <div class="app-card" data-category="rapikan_kamar" data-key="rapikan_kamar">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-rapikan-kamar.png" alt="Rapikan Kamar App Icon" class="app-icon-img">
+            <img src="assets/img/game-thumbnail/app-rapikan-kamar.png" alt="Rapikan Kamar App Icon"
+              class="app-icon-img">
           </div>
           <div class="app-title-pill">
             <span class="app-title">Rapikan Kamar</span>
@@ -1294,7 +1414,8 @@
         <div class="app-card" data-category="clock_quiz" data-key="clock_quiz">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-clock-quiz.png" alt="Jam Berapa Sekarang App Icon" class="app-icon-img">
+            <img src="assets/img/game-thumbnail/app-clock-quiz.png" alt="Jam Berapa Sekarang App Icon"
+              class="app-icon-img">
           </div>
           <div class="app-title-pill">
             <span class="app-title">Jam Berapa?</span>
@@ -1308,7 +1429,8 @@
         <div class="app-card" data-category="color_shape_quiz" data-key="color_shape_quiz">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-color-shape-quiz.png" alt="Cerdas Cermat Warna & Bentuk App Icon" class="app-icon-img">
+            <img src="assets/img/game-thumbnail/app-color-shape-quiz.png" alt="Cerdas Cermat Warna & Bentuk App Icon"
+              class="app-icon-img">
           </div>
           <div class="app-title-pill">
             <span class="app-title">Warna & Bentuk</span>
@@ -1322,7 +1444,8 @@
         <div class="app-card" data-category="object_quiz" data-key="object_quiz">
           <div class="app-icon-wrap">
             <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-object-quiz.png" alt="Cerdas Cermat Benda App Icon" class="app-icon-img">
+            <img src="assets/img/game-thumbnail/app-object-quiz.png" alt="Cerdas Cermat Benda App Icon"
+              class="app-icon-img">
           </div>
           <div class="app-title-pill">
             <span class="app-title">Cerdas Cermat Benda</span>
@@ -1382,7 +1505,9 @@
 
     <!-- Kids Footer -->
     <footer class="kids-footer">
-      <p>Made with <i class="bi bi-heart-fill" style="color: #EF4444; animation: heartBeat 1.5s infinite ease-in-out; display: inline-block;"></i> for <strong>Rara &amp; Rayyan</strong></p>
+      <p>Made with <i class="bi bi-heart-fill"
+          style="color: #EF4444; animation: heartBeat 1.5s infinite ease-in-out; display: inline-block;"></i> for
+        <strong>Rara &amp; Rayyan</strong></p>
     </footer>
 
   </div>
@@ -1413,7 +1538,8 @@
       <div class="modal-body-content">
         <div class="modal-title-wrap">
           <h3 id="modalTitle" class="modal-game-title">Nama Game</h3>
-          <span id="modalBadge" style="font-size: 12px; font-weight: 800; padding: 5px 12px; border-radius: 999px; background: #FEF3C7; color: #B45309; border: 1px solid #FCD34D;">Edukasi</span>
+          <span id="modalBadge"
+            style="font-size: 12px; font-weight: 800; padding: 5px 12px; border-radius: 999px; background: #FEF3C7; color: #B45309; border: 1px solid #FCD34D;">Edukasi</span>
         </div>
         <p id="modalDesc" style="font-size: 14px; color: var(--text-muted); line-height: 1.55;"></p>
         <div style="font-size: 13px; color: var(--text-dark);">
@@ -1438,7 +1564,7 @@
           req.call(target, { navigationUI: "hide" }).catch(err => console.warn(err));
         }
         if (screen.orientation && screen.orientation.lock) {
-          screen.orientation.lock("any").catch(() => {});
+          screen.orientation.lock("any").catch(() => { });
         }
       }
 
@@ -1487,7 +1613,7 @@
       const appCards = document.querySelectorAll('#appGrid .app-card');
 
       /* Replaced category select logic with pagination */
-      
+
       // Pagination Logic (8 items per page for perfect 4x2 desktop grid)
       const ITEMS_PER_PAGE = 8;
       let currentPage = 1;
@@ -1541,7 +1667,7 @@
         paginationContainer.innerHTML = navHtml;
       }
 
-      window.changePage = function(page) {
+      window.changePage = function (page) {
         currentPage = page;
         applyFilterAndPagination();
       };
@@ -1561,8 +1687,8 @@
         appCards.forEach(card => {
           const cardCat = card.dataset.category || card.dataset.key;
           const isMatch = selectedCat === 'all' ||
-                          cardCat === selectedCat ||
-                          (CATEGORY_GROUPS[selectedCat] && CATEGORY_GROUPS[selectedCat].includes(cardCat));
+            cardCat === selectedCat ||
+            (CATEGORY_GROUPS[selectedCat] && CATEGORY_GROUPS[selectedCat].includes(cardCat));
 
           if (isMatch) {
             matchingCards.push(card);
@@ -1689,7 +1815,7 @@
           desc: "Game latihan berhitung matematika dasar dengan ilustrasi jemari tangan yang ramah anak. Melatih penjumlahan dan pengurangan visual!",
           benefits: ["Pemahaman penjumlahan & pengurangan dasar", "Visualisasi jumlah jari tangan", "Kepercayaan diri dalam berhitung"]
         },
-                puzzle: {
+        puzzle: {
           title: "Puzzle Hewan",
           category: "Logika & Spasial",
           url: "game/puzzle-hewan.html",
@@ -1698,7 +1824,7 @@
           desc: "Game puzzle potongan gambar karakter hewan lucu. Menyusun kepingan puzzle menjadi gambar utuh hewan jerapah, singa, gajah, dan karakter favorit lainnya!",
           benefits: ["Kemampuan pemecahan masalah", "Persepsi bentuk & spasial", "Fokus, ketelitian & kesabaran"]
         },
-                                                        clock_quiz: {
+        clock_quiz: {
           title: "Jam Berapa Sekarang?",
           category: "Membaca Jam & Waktu",
           url: "game/jam-berapa-sekarang.html",
@@ -1860,7 +1986,7 @@
         }
       });
 
-      
+
       // ---------- PLAYER NAME & LEADERBOARD SYSTEM ----------
       function getPlayerName() {
         return localStorage.getItem('mainedu_player_name') || 'Pemain Cilik';
@@ -1984,7 +2110,7 @@
       function getLeaderboard() {
         try {
           return JSON.parse(localStorage.getItem('mainedu_leaderboard')) || MOCK_SCORES;
-        } catch(e) {
+        } catch (e) {
           return MOCK_SCORES;
         }
       }
@@ -2016,7 +2142,7 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(lb)
           }).catch(err => console.warn('File score.json sync error:', err));
-        } catch(e) {}
+        } catch (e) { }
 
         // Sync with score.json on server
         try {
@@ -2025,7 +2151,7 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(lb)
           }).catch(err => console.warn('File score.json sync error:', err));
-        } catch(e) {}
+        } catch (e) { }
       }
 
       // Render Leaderboard Modal List
@@ -2114,25 +2240,34 @@
   <div id="nameModal" class="modal-overlay">
     <div class="modal-card" style="max-width: 380px; padding: 24px; text-align: center;">
       <div style="font-size: 42px; margin-bottom: 8px;">👤</div>
-      <h3 style="font-family: var(--font-heading); font-size: 22px; color: #0F172A; margin-bottom: 6px;">Halo Pemain Cilik!</h3>
-      <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">Masukkan namamu untuk mencatat rekor di Papan Skor Leaderboard!</p>
-      <input type="text" id="inputPlayerName" maxlength="15" placeholder="Ketik namamu..." style="width: 100%; padding: 12px 16px; border-radius: 16px; border: 2px solid #3B82F6; font-family: var(--font-heading); font-size: 16px; text-align: center; margin-bottom: 16px; outline: none; background: #EFF6FF; color: #1E3A8A;">
-      <button id="saveNameBtn" class="btn-play-large" style="padding: 12px; font-size: 16px;">Simpan Namaku <i class="bi bi-check-circle-fill"></i></button>
+      <h3 style="font-family: var(--font-heading); font-size: 22px; color: #0F172A; margin-bottom: 6px;">Halo Pemain
+        Cilik!</h3>
+      <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">Masukkan namamu untuk mencatat rekor di
+        Papan Skor Leaderboard!</p>
+      <input type="text" id="inputPlayerName" maxlength="15" placeholder="Ketik namamu..."
+        style="width: 100%; padding: 12px 16px; border-radius: 16px; border: 2px solid #3B82F6; font-family: var(--font-heading); font-size: 16px; text-align: center; margin-bottom: 16px; outline: none; background: #EFF6FF; color: #1E3A8A;">
+      <button id="saveNameBtn" class="btn-play-large" style="padding: 12px; font-size: 16px;">Simpan Namaku <i
+          class="bi bi-check-circle-fill"></i></button>
     </div>
   </div>
 
   <!-- Leaderboard Modal -->
   <div id="leaderboardModal" class="modal-overlay">
-    <div class="modal-card" style="max-width: 480px; width: 100%; max-height: 85vh; display: flex; flex-direction: column;">
-      <div style="padding: 20px 24px 14px; border-bottom: 2px dashed rgba(148, 163, 184, 0.3); display: flex; align-items: center; justify-content: space-between;">
-        <h3 style="font-family: var(--font-heading); font-size: 22px; color: #0F172A; display: flex; align-items: center; gap: 8px;">
+    <div class="modal-card"
+      style="max-width: 480px; width: 100%; max-height: 85vh; display: flex; flex-direction: column;">
+      <div
+        style="padding: 20px 24px 14px; border-bottom: 2px dashed rgba(148, 163, 184, 0.3); display: flex; align-items: center; justify-content: space-between;">
+        <h3
+          style="font-family: var(--font-heading); font-size: 22px; color: #0F172A; display: flex; align-items: center; gap: 8px;">
           <i class="bi bi-trophy-fill" style="color: #F59E0B;"></i> Papan Skor
         </h3>
-        <button id="lbCloseBtn" class="modal-preview-close" style="position: static; color: #0F172A; background: #F1F5F9;"><i class="bi bi-x-lg"></i></button>
+        <button id="lbCloseBtn" class="modal-preview-close"
+          style="position: static; color: #0F172A; background: #F1F5F9;"><i class="bi bi-x-lg"></i></button>
       </div>
 
       <div style="padding: 16px 24px 8px; background: #F8FAFC;">
-        <label style="font-size: 13px; font-weight: 700; color: #475569; display: block; margin-bottom: 6px;">Pilih Permainan:</label>
+        <label style="font-size: 13px; font-weight: 700; color: #475569; display: block; margin-bottom: 6px;">Pilih
+          Permainan:</label>
         <select id="lbGameSelect" class="kids-select" style="max-width: 100%; width: 100%;">
           <option value="space">Tembak Huruf Angkasa</option>
           <option value="garden">Tap Tap Kebun</option>
@@ -2155,7 +2290,8 @@
         </select>
       </div>
 
-      <div id="lbListContainer" style="padding: 16px 24px 24px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 10px;">
+      <div id="lbListContainer"
+        style="padding: 16px 24px 24px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 10px;">
         <!-- Top 10 Scores loaded dynamically -->
       </div>
     </div>
