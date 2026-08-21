@@ -144,6 +144,23 @@
       "name": "Rayyan",
       "score": 100,
       "date": "21/08/2026"
+    },
+    {
+      "name": "Rara",
+      "score": 50,
+      "date": "21/8/2026"
+    }
+  ],
+  "quiz": [
+    {
+      "name": "Rayyan",
+      "score": 160,
+      "date": "21/08/2026"
+    },
+    {
+      "name": "Rara",
+      "score": 130,
+      "date": "21/08/2026"
     }
   ]
 }
