@@ -55,7 +55,7 @@
 
   <style>
     :root {
-      --bg-sky: linear-gradient(180deg, #38BDF8 0%, #7DD3FC 45%, #BAE6FD 100%);
+      --bg-sky: linear-gradient(180deg, #0284C7 0%, #0EA5E9 30%, #38BDF8 65%, #BAE6FD 100%);
       --primary: #2563EB;
       --primary-hover: #1D4ED8;
       --accent-yellow: #F59E0B;
@@ -90,8 +90,8 @@
       overflow-x: hidden;
     }
 
-    /* Animated Clouds in Sky */
-    .sky-clouds {
+    /* Sunny World Vibrant Background Elements */
+    .sunny-bg-container {
       position: fixed;
       inset: 0;
       pointer-events: none;
@@ -99,74 +99,166 @@
       overflow: hidden;
     }
 
+    /* Glowing 3D Sun & Rotating Sunrays */
+    .sun-wrap {
+      position: absolute;
+      top: -60px;
+      left: -60px;
+      width: 220px;
+      height: 220px;
+      z-index: 1;
+    }
+
+    .sun-core {
+      position: absolute;
+      inset: 35px;
+      background: radial-gradient(circle, #FFFBEB 20%, #FDE047 50%, #F59E0B 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 50px rgba(250, 204, 21, 0.85), 0 0 100px rgba(245, 158, 11, 0.5);
+      animation: pulseSun 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseSun {
+      0% { transform: scale(0.96); box-shadow: 0 0 40px rgba(250, 204, 21, 0.7); }
+      100% { transform: scale(1.04); box-shadow: 0 0 70px rgba(250, 204, 21, 0.95); }
+    }
+
+    .sun-rays {
+      position: absolute;
+      inset: 0;
+      background: repeating-conic-gradient(
+        from 0deg,
+        rgba(253, 224, 71, 0.25) 0deg 15deg,
+        transparent 15deg 30deg
+      );
+      border-radius: 50%;
+      animation: spinRays 50s linear infinite;
+    }
+
+    @keyframes spinRays {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Soft Pastel Rainbow Arch across Sky */
+    .rainbow-arch {
+      position: absolute;
+      top: -120px;
+      right: -80px;
+      width: 750px;
+      height: 750px;
+      border-radius: 50%;
+      border: 26px solid transparent;
+      border-top-color: rgba(239, 68, 68, 0.22);
+      border-right-color: rgba(249, 115, 22, 0.22);
+      box-shadow: 
+        inset 0 0 0 22px rgba(234, 179, 8, 0.22),
+        inset 0 0 0 44px rgba(34, 197, 94, 0.22),
+        inset 0 0 0 66px rgba(59, 130, 246, 0.22),
+        inset 0 0 0 88px rgba(168, 85, 247, 0.22);
+      transform: rotate(-15deg);
+      opacity: 0.75;
+      filter: blur(2px);
+    }
+
+    /* Fluffy 3D Puffy Clouds with Soft Shadows */
+    .sky-clouds {
+      position: absolute;
+      inset: 0;
+    }
+
     .cloud {
       position: absolute;
-      background: rgba(255, 255, 255, 0.75);
+      background: linear-gradient(180deg, #FFFFFF 0%, #F1F5F9 100%);
       border-radius: 100px;
-      filter: blur(1px);
-      animation: floatCloud 25s infinite linear;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08), inset 0 -4px 6px rgba(203, 213, 225, 0.5);
+      animation: floatCloud 30s infinite linear, bobCloud 4s ease-in-out infinite alternate;
     }
 
     .cloud::before, .cloud::after {
       content: '';
       position: absolute;
-      background: rgba(255, 255, 255, 0.75);
+      background: inherit;
       border-radius: 50%;
+      box-shadow: inherit;
     }
 
-    .cloud1 { width: 140px; height: 45px; top: 12%; left: -160px; animation-duration: 28s; }
-    .cloud1::before { width: 60px; height: 60px; top: -25px; left: 20px; }
-    .cloud1::after { width: 45px; height: 45px; top: -15px; right: 25px; }
+    .cloud1 { width: 160px; height: 50px; top: 10%; left: -180px; animation-duration: 32s, 3.5s; }
+    .cloud1::before { width: 70px; height: 70px; top: -30px; left: 22px; }
+    .cloud1::after { width: 55px; height: 55px; top: -20px; right: 28px; }
 
-    .cloud2 { width: 180px; height: 55px; top: 32%; left: -200px; animation-duration: 38s; animation-delay: 8s; }
-    .cloud2::before { width: 80px; height: 80px; top: -35px; left: 30px; }
-    .cloud2::after { width: 60px; height: 60px; top: -20px; right: 35px; }
+    .cloud2 { width: 210px; height: 62px; top: 28%; left: -240px; animation-duration: 42s, 4.5s; animation-delay: 6s, 0.5s; }
+    .cloud2::before { width: 90px; height: 90px; top: -40px; left: 32px; }
+    .cloud2::after { width: 70px; height: 70px; top: -24px; right: 38px; }
 
-    .cloud3 { width: 120px; height: 40px; top: 60%; left: -140px; animation-duration: 22s; animation-delay: 4s; }
-    .cloud3::before { width: 50px; height: 50px; top: -20px; left: 18px; }
-    .cloud3::after { width: 40px; height: 40px; top: -10px; right: 20px; }
+    .cloud3 { width: 140px; height: 44px; top: 52%; left: -160px; animation-duration: 26s, 3.8s; animation-delay: 12s, 1s; }
+    .cloud3::before { width: 60px; height: 60px; top: -25px; left: 20px; }
+    .cloud3::after { width: 45px; height: 45px; top: -14px; right: 22px; }
+
+    .cloud4 { width: 180px; height: 54px; top: 72%; left: -200px; animation-duration: 36s, 4.2s; animation-delay: 18s, 1.5s; }
+    .cloud4::before { width: 78px; height: 78px; top: -32px; left: 28px; }
+    .cloud4::after { width: 58px; height: 58px; top: -18px; right: 30px; }
 
     @keyframes floatCloud {
       0% { transform: translateX(0); }
-      100% { transform: translateX(calc(100vw + 300px)); }
+      100% { transform: translateX(calc(100vw + 350px)); }
     }
 
-    /* Decorative Green Grass Hills at Bottom */
+    @keyframes bobCloud {
+      0% { margin-top: 0px; }
+      100% { margin-top: 8px; }
+    }
+
+    /* Floating Sky Sparkles ✨ */
+    .sky-sparkle {
+      position: absolute;
+      color: #FDE047;
+      font-size: 18px;
+      opacity: 0.7;
+      animation: floatSparkle 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatSparkle {
+      0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0.4; }
+      100% { transform: translateY(-15px) scale(1.2) rotate(45deg); opacity: 0.95; }
+    }
+
+    /* Multi-layered Rolling Green Grass Hills at Bottom */
     .hills-bg {
       position: fixed;
-      bottom: -30px;
+      bottom: -35px;
       left: 0;
       right: 0;
-      height: 140px;
-      background: linear-gradient(180deg, #4ADE80 0%, #22C55E 60%, #16A34A 100%);
-      border-radius: 50% 50% 0 0 / 40px 40px 0 0;
+      height: 150px;
+      background: linear-gradient(180deg, #22C55E 0%, #16A34A 60%, #15803D 100%);
+      border-radius: 50% 50% 0 0 / 45px 45px 0 0;
       pointer-events: none;
       z-index: 0;
-      box-shadow: inset 0 8px 12px rgba(255, 255, 255, 0.4);
+      box-shadow: inset 0 10px 18px rgba(255, 255, 255, 0.45);
     }
 
     .hills-bg::before {
       content: '';
       position: absolute;
-      top: -35px;
-      left: -10%;
-      width: 65%;
-      height: 100px;
+      top: -40px;
+      left: -12%;
+      width: 68%;
+      height: 115px;
       background: #86EFAC;
       border-radius: 50%;
-      opacity: 0.7;
+      opacity: 0.75;
     }
 
     .hills-bg::after {
       content: '';
       position: absolute;
-      top: -45px;
-      right: -10%;
-      width: 70%;
-      height: 110px;
+      top: -50px;
+      right: -12%;
+      width: 72%;
+      height: 125px;
       background: #4ADE80;
       border-radius: 50%;
-      opacity: 0.8;
+      opacity: 0.85;
     }
 
     /* Main Viewport Container */
@@ -910,11 +1002,22 @@
 
 <body>
 
-  <!-- Floating Clouds & Grass Hills -->
-  <div class="sky-clouds">
-    <div class="cloud cloud1"></div>
-    <div class="cloud cloud2"></div>
-    <div class="cloud cloud3"></div>
+  <!-- Sunny World Background (Sun, Rainbow, Fluffy Clouds & Grass Hills) -->
+  <div class="sunny-bg-container">
+    <div class="sun-wrap">
+      <div class="sun-rays"></div>
+      <div class="sun-core"></div>
+    </div>
+    <div class="rainbow-arch"></div>
+    <div class="sky-clouds">
+      <div class="cloud cloud1"></div>
+      <div class="cloud cloud2"></div>
+      <div class="cloud cloud3"></div>
+      <div class="cloud cloud4"></div>
+    </div>
+    <div class="sky-sparkle" style="top: 15%; left: 25%;">✨</div>
+    <div class="sky-sparkle" style="top: 35%; right: 20%; animation-delay: 2s;">✨</div>
+    <div class="sky-sparkle" style="top: 55%; left: 15%; animation-delay: 4s;">✨</div>
   </div>
   <div class="hills-bg"></div>
 
