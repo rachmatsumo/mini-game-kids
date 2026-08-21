@@ -1,7 +1,7 @@
 {
   "name": "main-edu - Portal Game Edukasi Interaktif",
   "short_name": "main-edu",
-  "description": "Portal game edukasi interaktif anak: Tangkap Huruf, Tap Tap Kebun, Jejak Huruf, Kartu Ingatan, Cocokkan Huruf, Tebak Suara Hewan, Berhitung Jari, Loncat Pipa Emas, Puzzle Hewan, dan Labirin Kecil.",
+  "description": "Portal game edukasi interaktif anak: Tembak Huruf Angkasa, Tap Tap Kebun, Jejak Huruf, Kartu Ingatan, Cocokkan Huruf, Tebak Suara Hewan, Berhitung Jari, Loncat Pipa Emas, Puzzle Hewan, dan Labirin Kecil.",
   "start_url": "./index.html",
   "display": "fullscreen",
   "display_override": ["fullscreen", "standalone", "minimal-ui"],
@@ -38,7 +38,7 @@
   ],
   "shortcuts": [
     {
-      "name": "Tangkap Huruf",
+      "name": "Tembak Huruf Angkasa",
       "short_name": "Mengetik",
       "description": "Game Ketik Luar Angkasa",
       "url": "./game/game-ketik-luar-angkasa.html",
