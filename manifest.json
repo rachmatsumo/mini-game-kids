@@ -1,7 +1,7 @@
 {
   "name": "main-edu - Portal Game Edukasi Interaktif",
   "short_name": "main-edu",
-  "description": "Portal game edukasi interaktif anak: Tembak Huruf Angkasa, Tap Tap Kebun, Jejak Huruf, Kartu Ingatan, Cocokkan Huruf, Tebak Suara Hewan, Berhitung Jari, Loncat Pipa Emas, Puzzle Hewan, Labirin Kecil, Sambung Titik, Cerdas Cermat Hewan, Cerdas Cermat Benda, dan Cerdas Cermat Warna & Bentuk.",
+  "description": "Portal game edukasi interaktif anak: Tembak Huruf Angkasa, Tap Tap Kebun, Jejak Huruf, Kartu Ingatan, Cocokkan Huruf, Tebak Suara Hewan, Berhitung Jari, Loncat Pipa Emas, Puzzle Hewan, Labirin Kecil, Sambung Titik, Cerdas Cermat Hewan, Cerdas Cermat Benda, Cerdas Cermat Warna & Bentuk, dan Jam Berapa Sekarang?.",
   "start_url": "./index.html",
   "display": "fullscreen",
   "display_override": ["fullscreen", "standalone", "minimal-ui"],

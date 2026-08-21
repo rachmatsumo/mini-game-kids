@@ -1072,13 +1072,14 @@
       <!-- Category Dropdown Select (Clean & Compact) -->
       <div class="kids-select-wrapper">
         <select id="kidsCategorySelect" class="kids-select">
-          <option value="all">Semua Game (14)</option>
+          <option value="all">Semua Game (15)</option>
           <option value="puzzle">Puzzle &amp; Logika</option>
           <option value="maze">Labirin &amp; Spasial</option>
           <option value="dots">Sambung Titik &amp; Angka</option>
           <option value="quiz">Kuis &amp; Pengetahuan</option>
           <option value="object_quiz">Kuis Benda &amp; Pengenalan</option>
           <option value="color_shape_quiz">Kuis Warna &amp; Bentuk</option>
+          <option value="clock_quiz">Membaca Jam &amp; Waktu</option>
           <option value="ketik">Mengetik &amp; Ketangkasan</option>
           <option value="sensorik">Motorik &amp; Sensorik</option>
           <option value="menulis">Latihan Menulis</option>
@@ -1118,7 +1119,7 @@
         <div class="panel-title">
           <i class="bi bi-controller" style="color: #0284C7;"></i> Game Edukasi Anak
         </div>
-        <span class="panel-badge">14 Game Aktif</span>
+        <span class="panel-badge">15 Game Aktif</span>
       </div>
 
       <!-- Direct Grid (3D Vibrant AI App Icon Squares with Golden Stars) -->
@@ -1255,6 +1256,21 @@
         
         
         
+        
+        <!-- App 15: Jam Berapa Sekarang? -->
+        <div class="app-card" data-category="clock_quiz" data-key="clock_quiz">
+          <div class="app-icon-wrap">
+            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+            <img src="assets/img/game-thumbnail/app-clock-quiz.png" alt="Jam Berapa Sekarang App Icon" class="app-icon-img">
+          </div>
+          <div class="app-title-pill">
+            <span class="app-title">Jam Berapa?</span>
+            <div class="app-stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+          </div>
+        </div>
+
         <!-- App 14: Cerdas Cermat Warna & Bentuk -->
         <div class="app-card" data-category="color_shape_quiz" data-key="color_shape_quiz">
           <div class="app-icon-wrap">
@@ -1440,7 +1456,7 @@
       /* Replaced category select logic with pagination */
       
       // Pagination Logic (Max 9 items per page)
-      const ITEMS_PER_PAGE = 10;
+      const ITEMS_PER_PAGE = 6;
       let currentPage = 1;
 
       function renderPagination(matchingCards) {
@@ -1609,7 +1625,16 @@
           desc: "Game puzzle potongan gambar karakter hewan lucu. Menyusun kepingan puzzle menjadi gambar utuh hewan jerapah, singa, gajah, dan karakter favorit lainnya!",
           benefits: ["Kemampuan pemecahan masalah", "Persepsi bentuk & spasial", "Fokus, ketelitian & kesabaran"]
         },
-                                                color_shape_quiz: {
+                                                        clock_quiz: {
+          title: "Jam Berapa Sekarang?",
+          category: "Membaca Jam & Waktu",
+          url: "game/jam-berapa-sekarang.html",
+          hash: "clock-quiz",
+          previewImg: "assets/img/game-thumbnail/preview-clock-quiz.png",
+          desc: "Game interaktif belajar membaca jam analog & digital, mengenal jarum pendek dan panjang secara menyenangkan!",
+          benefits: ["Kemampuan membaca jam analog", "Pemahaman konsep waktu & menit", "Fokus & logika matematika awal"]
+        },
+        color_shape_quiz: {
           title: "Cerdas Cermat Warna & Bentuk",
           category: "Kuis Warna & Bentuk",
           url: "game/cerdas-cermat-warna-bentuk.html",
@@ -1744,6 +1769,7 @@
         else if (hash === '#play-sound') launchGame(GAME_DETAILS.sound.url, GAME_DETAILS.sound.title, 'sound');
         else if (hash === '#play-count') launchGame(GAME_DETAILS.count.url, GAME_DETAILS.count.title, 'count');
         else if (hash === '#play-puzzle') launchGame(GAME_DETAILS.puzzle.url, GAME_DETAILS.puzzle.title, 'puzzle');
+        else if (hash === '#play-clock-quiz') launchGame(GAME_DETAILS.clock_quiz.url, GAME_DETAILS.clock_quiz.title, 'clock_quiz');
         else if (hash === '#play-color-shape-quiz') launchGame(GAME_DETAILS.color_shape_quiz.url, GAME_DETAILS.color_shape_quiz.title, 'color_shape_quiz');
         else if (hash === '#play-object-quiz') launchGame(GAME_DETAILS.object_quiz.url, GAME_DETAILS.object_quiz.title, 'object_quiz');
         else if (hash === '#play-quiz') launchGame(GAME_DETAILS.quiz.url, GAME_DETAILS.quiz.title, 'quiz');
@@ -1859,7 +1885,8 @@
         dots: [{ name: 'Rara', score: 150 }, { name: 'Rayyan', score: 100 }],
         quiz: [{ name: 'Rayyan', score: 160 }, { name: 'Rara', score: 130 }],
         object_quiz: [{ name: 'Rara', score: 170 }, { name: 'Rayyan', score: 140 }],
-        color_shape_quiz: [{ name: 'Rayyan', score: 180 }, { name: 'Rara', score: 150 }]
+        color_shape_quiz: [{ name: 'Rayyan', score: 180 }, { name: 'Rara', score: 150 }],
+        clock_quiz: [{ name: 'Rayyan', score: 190 }, { name: 'Rara', score: 160 }]
       };
 
       function initDefaultLeaderboard() {
@@ -2045,6 +2072,7 @@
           <option value="quiz">Cerdas Cermat Hewan</option>
           <option value="object_quiz">Cerdas Cermat Benda</option>
           <option value="color_shape_quiz">Cerdas Cermat Warna &amp; Bentuk</option>
+          <option value="clock_quiz">Jam Berapa Sekarang?</option>
         </select>
       </div>
 

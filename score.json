@@ -186,5 +186,17 @@
       "score": 150,
       "date": "21/08/2026"
     }
+  ],
+  "clock_quiz": [
+    {
+      "name": "Rayyan",
+      "score": 190,
+      "date": "21/08/2026"
+    },
+    {
+      "name": "Rara",
+      "score": 160,
+      "date": "21/08/2026"
+    }
   ]
 }
