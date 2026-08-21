@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>main-edu — Portal Game Edukasi Interaktif Anak</title>
+
+  <!-- Meta SEO -->
+  <meta name="description"
+    content="main-edu: Portal game edukasi interaktif anak dengan tema ceria! Mengetik luar angkasa, motorik kebun, latihan menulis, berhitung jari, dan loncat pipa emas. PWA & Fullscreen Ready!">
+  <link rel="canonical" href="https://main-edu.webkuy.com/">
+  <meta name="theme-color" content="#38BDF8">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="main-edu">
+
+  <!-- Open Graph / Facebook Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://main-edu.webkuy.com/">
+  <meta property="og:title" content="main-edu — Portal Game Edukasi Interaktif Anak">
+  <meta property="og:description"
+    content="main-edu: Portal game edukasi interaktif anak dengan tema ceria! Mengetik luar angkasa, motorik kebun, latihan menulis, berhitung jari, dan loncat pipa emas. PWA & Fullscreen Ready!">
+  <meta property="og:image" content="https://main-edu.webkuy.com/assets/img/thumbnail.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="main-edu">
+  <meta property="og:locale" content="id_ID">
+
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:domain" content="main-edu.webkuy.com">
+  <meta name="twitter:url" content="https://main-edu.webkuy.com/">
+  <meta name="twitter:title" content="main-edu — Portal Game Edukasi Interaktif Anak">
+  <meta name="twitter:description"
+    content="main-edu: Portal game edukasi interaktif anak dengan tema ceria! Mengetik luar angkasa, motorik kebun, latihan menulis, berhitung jari, dan loncat pipa emas. PWA & Fullscreen Ready!">
+  <meta name="twitter:image" content="https://main-edu.webkuy.com/assets/img/thumbnail.png">
+
+  <!-- Favicons & Icons -->
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="alternate icon" type="image/png" href="assets/img/favicon-portal.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&family=Outfit:wght@700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Bootstrap Icons CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <style>
+    :root {
+      --bg-sky: linear-gradient(180deg, #38BDF8 0%, #7DD3FC 45%, #BAE6FD 100%);
+      --primary: #2563EB;
+      --primary-hover: #1D4ED8;
+      --accent-yellow: #F59E0B;
+      --accent-orange: #F97316;
+      --accent-green: #22C55E;
+      --accent-pink: #EC4899;
+      --text-dark: #1E293B;
+      --text-muted: #475569;
+      --font-heading: 'Fredoka', cursive, sans-serif;
+      --font-brand: 'Outfit', sans-serif;
+      --font-body: 'Nunito', sans-serif;
+      --radius-app: 30px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100vh;
+      background: var(--bg-sky);
+      background-attachment: fixed;
+      font-family: var(--font-body);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* Animated Clouds in Sky */
+    .sky-clouds {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .cloud {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.75);
+      border-radius: 100px;
+      filter: blur(1px);
+      animation: floatCloud 25s infinite linear;
+    }
+
+    .cloud::before, .cloud::after {
+      content: '';
+      position: absolute;
+      background: rgba(255, 255, 255, 0.75);
+      border-radius: 50%;
+    }
+
+    .cloud1 { width: 140px; height: 45px; top: 12%; left: -160px; animation-duration: 28s; }
+    .cloud1::before { width: 60px; height: 60px; top: -25px; left: 20px; }
+    .cloud1::after { width: 45px; height: 45px; top: -15px; right: 25px; }
+
+    .cloud2 { width: 180px; height: 55px; top: 32%; left: -200px; animation-duration: 38s; animation-delay: 8s; }
+    .cloud2::before { width: 80px; height: 80px; top: -35px; left: 30px; }
+    .cloud2::after { width: 60px; height: 60px; top: -20px; right: 35px; }
+
+    .cloud3 { width: 120px; height: 40px; top: 60%; left: -140px; animation-duration: 22s; animation-delay: 4s; }
+    .cloud3::before { width: 50px; height: 50px; top: -20px; left: 18px; }
+    .cloud3::after { width: 40px; height: 40px; top: -10px; right: 20px; }
+
+    @keyframes floatCloud {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(calc(100vw + 300px)); }
+    }
+
+    /* Decorative Green Grass Hills at Bottom */
+    .hills-bg {
+      position: fixed;
+      bottom: -30px;
+      left: 0;
+      right: 0;
+      height: 140px;
+      background: linear-gradient(180deg, #4ADE80 0%, #22C55E 60%, #16A34A 100%);
+      border-radius: 50% 50% 0 0 / 40px 40px 0 0;
+      pointer-events: none;
+      z-index: 0;
+      box-shadow: inset 0 8px 12px rgba(255, 255, 255, 0.4);
+    }
+
+    .hills-bg::before {
+      content: '';
+      position: absolute;
+      top: -35px;
+      left: -10%;
+      width: 65%;
+      height: 100px;
+      background: #86EFAC;
+      border-radius: 50%;
+      opacity: 0.7;
+    }
+
+    .hills-bg::after {
+      content: '';
+      position: absolute;
+      top: -45px;
+      right: -10%;
+      width: 70%;
+      height: 110px;
+      background: #4ADE80;
+      border-radius: 50%;
+      opacity: 0.8;
+    }
+
+    /* Main Viewport Container */
+    .app-viewport {
+      position: relative;
+      z-index: 1;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 14px 18px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Top Bright Header Controller Bar */
+    header.kids-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 18px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 3px solid #FFFFFF;
+      border-radius: 999px;
+      box-shadow: 0 10px 25px rgba(14, 165, 233, 0.25);
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+    }
+
+    .brand-icon img {
+      width: 26px;
+      height: 26px;
+    }
+
+    .brand-title {
+      font-family: var(--font-brand);
+      font-weight: 800;
+      font-size: 23px;
+      letter-spacing: -0.02em;
+      color: #0F172A;
+    }
+
+    /* Category Dropdown Select (Bright & Ceria) */
+    .kids-select-wrapper {
+      position: relative;
+      flex: 1;
+      max-width: 240px;
+      min-width: 130px;
+    }
+
+    .kids-select {
+      width: 100%;
+      padding: 9px 34px 9px 14px;
+      border-radius: 999px;
+      background: #EFF6FF;
+      border: 2px solid #3B82F6;
+      color: #1E3A8A;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      outline: none;
+      box-shadow: 0 3px 10px rgba(59, 130, 246, 0.15);
+      transition: all 0.2s ease;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .kids-select:hover, .kids-select:focus {
+      background: #DBEAFE;
+      border-color: #1D4ED8;
+    }
+
+    .kids-select option {
+      background: #FFFFFF;
+      color: #1E293B;
+      font-family: var(--font-body);
+      font-size: 14px;
+      padding: 8px;
+    }
+
+    .kids-select-arrow {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: #2563EB;
+      font-size: 13px;
+    }
+
+    /* Top Right Action Buttons */
+    .kids-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .kids-btn-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #38BDF8, #0284C7);
+      border: 2px solid #FFFFFF;
+      color: #FFFFFF;
+      font-size: 17px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .kids-btn-icon:hover {
+      transform: scale(1.08);
+      background: linear-gradient(135deg, #0284C7, #0369A1);
+    }
+
+    .kids-btn-icon:active {
+      transform: scale(0.92);
+    }
+
+    /* Cartoon Wooden Title Banner (PILIH PERMAINAN) */
+    .cartoon-title-banner {
+      align-self: center;
+      position: relative;
+      background: linear-gradient(180deg, #F59E0B 0%, #D97706 100%);
+      border: 4px solid #FFF;
+      border-radius: 20px;
+      padding: 10px 40px;
+      box-shadow: 0 8px 20px rgba(180, 83, 9, 0.35), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .cartoon-title-banner h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(20px, 4.5vw, 28px);
+      font-weight: 700;
+      color: #FFFFFF;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-shadow: 0 3px 6px rgba(120, 53, 15, 0.6);
+    }
+
+    /* Direct App Launcher Main Panel */
+    .app-launcher-panel {
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 4px solid #FFFFFF;
+      border-radius: 36px;
+      padding: 28px 22px;
+      box-shadow: 0 20px 50px rgba(14, 165, 233, 0.25);
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 2px dashed rgba(148, 163, 184, 0.3);
+    }
+
+    .panel-title {
+      font-family: var(--font-heading);
+      font-size: 22px;
+      font-weight: 700;
+      color: #0F172A;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-badge {
+      font-size: 12px;
+      font-weight: 800;
+      background: #FEF3C7;
+      color: #B45309;
+      padding: 5px 14px;
+      border-radius: 999px;
+      border: 2px solid #FCD34D;
+    }
+
+    /* Pure App Icon Grid Layout */
+    .grid-launcher {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 26px 18px;
+      justify-items: center;
+    }
+
+    @media (min-width: 480px) {
+      .grid-launcher {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px 22px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .grid-launcher {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 36px 28px;
+      }
+    }
+
+    /* Ceria Kid Game App Card Item */
+    .app-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      width: 100%;
+      max-width: 160px;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .app-card:hover {
+      transform: translateY(-8px) scale(1.05);
+    }
+
+    .app-card:active {
+      transform: scale(0.92);
+    }
+
+    /* Golden 3D Ring Frame around AI icons */
+    .app-icon-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radius-app);
+      overflow: hidden;
+      box-shadow: 0 14px 28px rgba(14, 165, 233, 0.25), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+      border: 4px solid #FCD34D;
+      background: #FFFFFF;
+      transition: all 0.25s ease;
+    }
+
+    .app-card:hover .app-icon-wrap {
+      border-color: #F59E0B;
+      box-shadow: 0 20px 40px rgba(245, 158, 11, 0.4), 0 0 0 4px #FDE68A;
+    }
+
+    .app-icon-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .app-card:hover .app-icon-img {
+      transform: scale(1.06);
+    }
+
+    /* Kids Footer */
+    .kids-footer {
+      text-align: center;
+      margin-top: 10px;
+      padding: 10px 24px;
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 600;
+      color: #1E293B;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 999px;
+      border: 2px solid #FFFFFF;
+      box-shadow: 0 6px 18px rgba(14, 165, 233, 0.2);
+      display: inline-block;
+      align-self: center;
+    }
+
+    .kids-footer strong {
+      color: #2563EB;
+      font-weight: 700;
+    }
+
+    @keyframes heartBeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.25); }
+    }
+
+    /* Played Checkmark Indicator */
+    .played-indicator {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #22C55E;
+      color: #FFFFFF;
+      font-size: 14px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+      border: 2px solid #FFFFFF;
+      z-index: 3;
+    }
+
+    .app-card.played .played-indicator {
+      display: flex;
+    }
+
+    /* Title Pill Underneath Icon */
+    .app-title-pill {
+      background: #FFFFFF;
+      border: 2px solid #E2E8F0;
+      border-radius: 16px;
+      padding: 6px 14px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .app-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 15px;
+      color: #0F172A;
+      line-height: 1.2;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Golden 3D Rating Stars ⭐⭐⭐ */
+    .app-stars {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      color: #F59E0B;
+      font-size: 12px;
+    }
+
+    /* Embedded Game Stage Overlay (IFrame Player) */
+    .game-stage {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: #0F172A;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .game-stage.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .stage-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 18px;
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px);
+      z-index: 10;
+    }
+
+    .stage-btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #EF4444, #DC2626);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+    }
+
+    .stage-title {
+      font-family: var(--font-heading);
+      font-size: 17px;
+      font-weight: 700;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stage-frame {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #000;
+    }
+
+    /* Interactive Preview Game Modal Card */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: #FFFFFF;
+      border: 4px solid #FDE68A;
+      border-radius: 32px;
+      max-width: 440px;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+      transform: scale(0.9);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: scale(1);
+    }
+
+    .modal-preview-banner {
+      position: relative;
+      width: 100%;
+      height: 210px;
+      background: #E2E8F0;
+      overflow: hidden;
+    }
+
+    .modal-preview-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-preview-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(15, 23, 42, 0.7);
+      border: 2px solid #FFFFFF;
+      color: #FFFFFF;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(6px);
+      z-index: 2;
+    }
+
+    .modal-body-content {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .modal-title-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .modal-game-title {
+      font-family: var(--font-heading);
+      font-size: 22px;
+      font-weight: 700;
+      color: #0F172A;
+    }
+
+    .btn-play-large {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 24px;
+      border-radius: 20px;
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 700;
+      color: #FFFFFF;
+      background: linear-gradient(180deg, #F59E0B 0%, #D97706 100%);
+      border: 3px solid #FFFFFF;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(217, 119, 6, 0.4);
+      width: 100%;
+      transition: all 0.2s ease;
+    }
+
+    .btn-play-large:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 26px rgba(217, 119, 6, 0.5);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Floating Clouds & Grass Hills -->
+  <div class="sky-clouds">
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+  </div>
+  <div class="hills-bg"></div>
+
+  <div class="app-viewport">
+
+    <!-- Top Bright Header Controller Bar -->
+    <header class="kids-header">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">
+          <img src="assets/img/favicon.svg" alt="main-edu logo">
+        </div>
+        <span class="brand-title">main-edu</span>
+      </a>
+
+      <!-- Category Dropdown Select (Clean & Compact) -->
+      <div class="kids-select-wrapper">
+        <select id="kidsCategorySelect" class="kids-select">
+          <option value="all">🎮 Semua Game (9)</option>
+          <option value="puzzle">🧩 Puzzle &amp; Logika</option>
+          <option value="ketik">🚀 Mengetik</option>
+          <option value="sensorik">🌸 Motorik Sensorik</option>
+          <option value="menulis">✏️ Latihan Menulis</option>
+          <option value="ingatan">🐻 Memori &amp; Ingatan</option>
+          <option value="cocokkan">🧩 Cocokkan Huruf</option>
+          <option value="suara">🔊 Tebak Suara</option>
+          <option value="hitung">🖐️ Berhitung Jari</option>
+          <option value="refleks">🐣 Loncat &amp; Refleks</option>
+        </select>
+        <i class="bi bi-chevron-down kids-select-arrow"></i>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="kids-actions">
+        <button id="btnFullscreen" class="kids-btn-icon" title="Layar Penuh HP">
+          <i id="fsIcon" class="bi bi-arrows-fullscreen"></i>
+        </button>
+        <button id="btnPwaInstall" class="kids-btn-icon" style="display:none;" title="Pasang Aplikasi">
+          <i class="bi bi-download"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Cartoon Title Banner (PILIH PERMAINAN) -->
+    <div class="cartoon-title-banner">
+      <h1>⭐ PILIH PERMAINAN ⭐</h1>
+    </div>
+
+    <!-- Main Direct App Launcher Grid -->
+    <main class="app-launcher-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <i class="bi bi-controller" style="color: #0284C7;"></i> Game Edukasi Anak
+        </div>
+        <span class="panel-badge">9 Game Aktif</span>
+      </div>
+
+      <!-- Direct Grid (3D Vibrant AI App Icon Squares with Golden Stars) -->
+      <div class="grid-launcher" id="appGrid">
+
+        <!-- App 1: Luas Angkasa -->
+        <div class="app-card" data-category="ketik" data-key="space">
+          <div class="app-icon-wrap">
+            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+            <img src="assets/img/app-space.png" alt="Luas Angkasa App Icon" class="app-icon-img">
+          </div>
+          <div class="app-title-pill">
+            <span class="app-title">Luas Angkasa</span>
+            <div class="app-stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- App 2: Tap Tap Kebun -->
+        <div class="app-card" data-category="sensorik" data-key="garden">
+          <div class="app-icon-wrap">
+            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+            <img src="assets/img/app-garden.png" alt="Tap Tap Kebun App Icon" class="app-icon-img">
+          </div>
+          <div class="app-title-pill">
+            <span class="app-title">Tap Tap Kebun</span>
+            <div class="app-stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- App 3: Jejak Huruf -->
+        <div class="app-card" data-category="menulis" data-key="trace">
+          <div class="app-icon-wrap">
+            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+            <img src="assets/img/app-trace.png" alt="Jejak Huruf App Icon" class="app-icon-img">
+          </div>
+          <div class="app-title-pill">
+            <span class="app-title">Jejak Huruf</span>
+            <div class="app-stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- App 4: Kartu Ingatan -->
+        <div class="app-card" data-category="ingatan" data-key="memory">
+          <div class="app-icon-wrap">
+            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+            <img src="assets/img/app-memory.png" alt="Kartu Ingatan App Icon" class="app-icon-img">
+          </div>
+          <div class="app-title-pill">
+            <span class="app-title">Kartu Ingatan</span>
+            <div class="app-stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- App 5: Cocokkan Huruf -->
+        <div class="app-card" data-category="cocokkan" data-key="match">
+          <div class="app-icon-wrap">
+            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+            <img src="assets/img/app-match.png" alt="Cocokkan Huruf App Icon" class="app-icon-img">
+          </div>
+          <div class="app-title-pill">
+            <span class="app-title">Cocokkan Huruf</span>
+            <div class="app-stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- App 6: Tebak Suara -->
+        <div class="app-card" data-category="suara" data-key="sound">
+          <div class="app-icon-wrap">
+            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+            <img src="assets/img/app-sound.png" alt="Tebak Suara App Icon" class="app-icon-img">
+          </div>
+          <div class="app-title-pill">
+            <span class="app-title">Tebak Suara</span>
+            <div class="app-stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- App 7: Berhitung Jari -->
+        <div class="app-card" data-category="hitung" data-key="count">
+          <div class="app-icon-wrap">
+            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+            <img src="assets/img/app-count.png" alt="Berhitung Jari App Icon" class="app-icon-img">
+          </div>
+          <div class="app-title-pill">
+            <span class="app-title">Berhitung Jari</span>
+            <div class="app-stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+          </div>
+        </div>
+
+                <!-- App 9: Puzzle Hewan (NEW!) -->
+        <div class="app-card" data-category="puzzle" data-key="puzzle">
+          <div class="app-icon-wrap">
+            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+            <img src="assets/img/app-puzzle.png" alt="Puzzle Hewan App Icon" class="app-icon-img">
+          </div>
+          <div class="app-title-pill">
+            <span class="app-title">Puzzle Hewan</span>
+            <div class="app-stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- App 8: Loncat Pipa Emas -->
+        <div class="app-card" data-category="refleks" data-key="jump">
+          <div class="app-icon-wrap">
+            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+            <img src="assets/img/app-jump.png" alt="Loncat Pipa Emas App Icon" class="app-icon-img">
+          </div>
+          <div class="app-title-pill">
+            <span class="app-title">Loncat Pipa Emas</span>
+            <div class="app-stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Kids Footer -->
+    <footer class="kids-footer">
+      <p>Made with <i class="bi bi-heart-fill" style="color: #EF4444; animation: heartBeat 1.5s infinite ease-in-out; display: inline-block;"></i> for <strong>Rara &amp; Rayyan</strong></p>
+    </footer>
+
+  </div>
+
+  <!-- Embedded Game Stage Overlay (IFrame Player) -->
+  <div id="gameStage" class="game-stage">
+    <div class="stage-bar">
+      <button id="closeStageBtn" class="stage-btn-back">
+        <i class="bi bi-arrow-left-circle-fill"></i> Menu Utama
+      </button>
+      <div id="stageTitle" class="stage-title">
+        <i class="bi bi-controller"></i> Game Play
+      </div>
+      <button id="stageFsBtn" class="kids-btn-icon" style="width:36px; height:36px; font-size:16px;">
+        <i class="bi bi-fullscreen"></i>
+      </button>
+    </div>
+    <iframe id="gameFrame" class="stage-frame" src="about:blank" allow="autoplay; fullscreen"></iframe>
+  </div>
+
+  <!-- Interactive Preview Game Modal Card -->
+  <div id="gameModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-preview-banner">
+        <img id="modalPreviewImg" src="assets/img/thumbnail.png" alt="Game Preview">
+        <button id="modalClose" class="modal-preview-close"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="modal-body-content">
+        <div class="modal-title-wrap">
+          <h3 id="modalTitle" class="modal-game-title">Nama Game</h3>
+          <span id="modalBadge" style="font-size: 12px; font-weight: 800; padding: 5px 12px; border-radius: 999px; background: #FEF3C7; color: #B45309; border: 1px solid #FCD34D;">Edukasi</span>
+        </div>
+        <p id="modalDesc" style="font-size: 14px; color: var(--text-muted); line-height: 1.55;"></p>
+        <div style="font-size: 13px; color: var(--text-dark);">
+          <strong style="color: #0284C7;"><i class="bi bi-stars"></i> Manfaat Edukasi:</strong>
+          <ul id="modalBenefits" style="padding-left: 18px; margin-top: 4px; color: var(--text-muted);"></ul>
+        </div>
+        <button id="modalLaunchBtn" class="btn-play-large">
+          MAIN SEKARANG <i class="bi bi-play-fill" style="font-size: 24px;"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    (function () {
+      // Android Fullscreen Helper
+      function requestAndroidFullscreen(el) {
+        const target = el || document.documentElement;
+        const req = target.requestFullscreen || target.webkitRequestFullscreen || target.mozRequestFullScreen || target.msRequestFullscreen;
+        if (req) {
+          req.call(target, { navigationUI: "hide" }).catch(err => console.warn(err));
+        }
+        if (screen.orientation && screen.orientation.lock) {
+          screen.orientation.lock("any").catch(() => {});
+        }
+      }
+
+      // Game Stage & Launcher Logic
+      const gameStage = document.getElementById('gameStage');
+      const gameFrame = document.getElementById('gameFrame');
+      const stageTitle = document.getElementById('stageTitle');
+      const closeStageBtn = document.getElementById('closeStageBtn');
+      const stageFsBtn = document.getElementById('stageFsBtn');
+
+      function launchGame(url, title, hashKey) {
+        stageTitle.innerHTML = `<i class="bi bi-controller"></i> ${title}`;
+        gameFrame.src = url;
+        gameStage.classList.add('active');
+        if (hashKey) {
+          window.location.hash = 'play-' + hashKey;
+          const appCard = document.querySelector(`.app-card[data-key="${hashKey}"]`);
+          if (appCard) appCard.classList.add('played');
+        }
+        requestAndroidFullscreen(gameStage);
+      }
+
+      function closeGameStage() {
+        gameStage.classList.remove('active');
+        gameFrame.src = 'about:blank';
+        if (document.fullscreenElement) {
+          document.exitFullscreen().catch(err => console.warn(err));
+        }
+        if (window.location.hash.startsWith('#play-')) {
+          history.replaceState(null, document.title, window.location.pathname + window.location.search);
+        }
+      }
+
+      closeStageBtn.addEventListener('click', closeGameStage);
+
+      stageFsBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          requestAndroidFullscreen(gameStage);
+        } else {
+          document.exitFullscreen().catch(err => console.warn(err));
+        }
+      });
+
+      // Category Filter Dropdown Select
+      const kidsCategorySelect = document.getElementById('kidsCategorySelect');
+      const appCards = document.querySelectorAll('#appGrid .app-card');
+
+      if (kidsCategorySelect) {
+        kidsCategorySelect.addEventListener('change', (e) => {
+          const category = e.target.value;
+          appCards.forEach(card => {
+            if (category === 'all' || card.dataset.category === category) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      }
+
+      // Game Details Data
+      const GAME_DETAILS = {
+        space: {
+          title: "Luas Angkasa",
+          category: "Mengetik & Ketangkasan",
+          url: "game/game-ketik-luar-angkasa.html",
+          hash: "space",
+          previewImg: "assets/img/preview-space.png",
+          desc: "Game ketangkasan mengetik bertema luar angkasa. Pemain memencet tombol huruf atau angka yang jatuh di layar sebelum menyentuh batas tanah.",
+          benefits: ["Kecepatan pengenalan huruf/angka", "Kecepatan mengetik keyboard", "Refleks reaksi visual"]
+        },
+        garden: {
+          title: "Tap Tap Kebun",
+          category: "Motorik & Sensorik",
+          url: "game/game-sensorik-anak.html",
+          hash: "garden",
+          previewImg: "assets/img/preview-garden.png",
+          desc: "Game stimulasi motorik sensorik anak usia dini dengan tema kebun, air laut, dan langit malam. Menyentuh objek hewan atau balon yang melintas.",
+          benefits: ["Koordinasi mata & jemari", "Fokus persepsi visual", "Pengenalan aneka hewan & warna"]
+        },
+        trace: {
+          title: "Jejak Huruf",
+          category: "Latihan Menulis",
+          url: "game/jejak-huruf.html",
+          hash: "trace",
+          previewImg: "assets/img/preview-trace.png",
+          desc: "Aplikasi latihan menulis interaktif. Anak diajak mengikuti panduan titik-titik garis huruf kapital A-Z dan angka 0-9 secara berurutan.",
+          benefits: ["Motorik halus jemari tangan", "Pola ingatan bentuk huruf", "Kemandirian belajar menulis"]
+        },
+        memory: {
+          title: "Kartu Ingatan",
+          category: "Memori & Konsentrasi",
+          url: "game/kartu-ingatan.html",
+          hash: "memory",
+          previewImg: "assets/img/preview-memory.png",
+          desc: "Game memori interaktif. Anak membalik dua kartu untuk mencari pasangan gambar karakter hewan yang sama dengan 3 tingkat kesulitan.",
+          benefits: ["Daya ingat visual jangka pendek", "Fokus & konsentrasi anak", "Pengenalan aneka hewan lucu"]
+        },
+        match: {
+          title: "Cocokkan Huruf",
+          category: "Kapital & Kecil",
+          url: "game/cocokkan-huruf.html",
+          hash: "match",
+          previewImg: "assets/img/preview-match.png",
+          desc: "Game edukasi mencocokkan huruf besar dan kecil. Menggeser chip huruf besar (A-Z) ke slot huruf kecil (a-z) yang sesuai secara interaktif.",
+          benefits: ["Pengenalan pasangan huruf besar & kecil", "Koordinasi motorik drag & drop", "Pemahaman alfabet A-Z"]
+        },
+        sound: {
+          title: "Tebak Suara Hewan",
+          category: "Stimulasi Pendengaran",
+          url: "game/tebak-suara-hewan.html",
+          hash: "sound",
+          previewImg: "assets/img/preview-sound.png",
+          desc: "Game stimulasi pendengaran dan persepsi audio. Anak mendengarkan bunyi tiruan hewan lalu memilih gambar karakter hewan yang cocok.",
+          benefits: ["Kepekaan persepsi pendengaran (auditori)", "Pengenalan aneka suara hewan", "Daya ingat audio & konsentrasi"]
+        },
+        count: {
+          title: "Berhitung Jari",
+          category: "Matematika & Berhitung",
+          url: "game/berhitung-jari.html",
+          hash: "count",
+          previewImg: "assets/img/preview-count.png",
+          desc: "Game latihan berhitung matematika dasar dengan ilustrasi jemari tangan yang ramah anak. Melatih penjumlahan dan pengurangan visual!",
+          benefits: ["Pemahaman penjumlahan & pengurangan dasar", "Visualisasi jumlah jari tangan", "Kepercayaan diri dalam berhitung"]
+        },
+                puzzle: {
+          title: "Puzzle Hewan",
+          category: "Logika & Spasial",
+          url: "game/puzzle-hewan.html",
+          hash: "puzzle",
+          previewImg: "assets/img/preview-puzzle.png",
+          desc: "Game puzzle potongan gambar karakter hewan lucu. Menyusun kepingan puzzle menjadi gambar utuh hewan jerapah, singa, gajah, dan karakter favorit lainnya!",
+          benefits: ["Kemampuan pemecahan masalah", "Persepsi bentuk & spasial", "Fokus, ketelitian & kesabaran"]
+        },
+        jump: {
+          title: "Loncat Pipa Emas",
+          category: "Refleks & Ketepatan Waktu",
+          url: "game/loncat-pipa-emas.html",
+          hash: "jump",
+          previewImg: "assets/img/preview-jump.png",
+          desc: "Game ketangkasan dan refleks waktu. Kontrol burung lucu melewati celah pipa emas dengan sentuhan layar yang pas!",
+          benefits: ["Ketangkasan refleks motorik cepat", "Persepsi ruang & waktu (timing)", "Konsentrasi & kesabaran anak"]
+        }
+      };
+
+      // Interactive Preview Modal Elements
+      const gameModal = document.getElementById('gameModal');
+      const modalPreviewImg = document.getElementById('modalPreviewImg');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalBadge = document.getElementById('modalBadge');
+      const modalDesc = document.getElementById('modalDesc');
+      const modalBenefits = document.getElementById('modalBenefits');
+      const modalLaunchBtn = document.getElementById('modalLaunchBtn');
+      const modalClose = document.getElementById('modalClose');
+
+      let currentModalGame = null;
+
+      // Click App Card -> Open Preview Modal
+      appCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const key = card.dataset.key;
+          const info = GAME_DETAILS[key];
+          if (!info) return;
+
+          currentModalGame = info;
+          modalPreviewImg.src = info.previewImg;
+          modalTitle.textContent = info.title;
+          modalBadge.textContent = info.category;
+          modalDesc.textContent = info.desc;
+          modalBenefits.innerHTML = info.benefits.map(b => `<li>${b}</li>`).join('');
+
+          gameModal.classList.add('active');
+        });
+      });
+
+      modalLaunchBtn.addEventListener('click', () => {
+        if (currentModalGame) {
+          gameModal.classList.remove('active');
+          launchGame(currentModalGame.url, currentModalGame.title, currentModalGame.hash);
+        }
+      });
+
+      modalClose.addEventListener('click', () => gameModal.classList.remove('active'));
+      gameModal.addEventListener('click', (e) => {
+        if (e.target === gameModal) gameModal.classList.remove('active');
+      });
+
+      // Fullscreen Portal Button Header
+      const btnFullscreen = document.getElementById('btnFullscreen');
+      const fsIcon = document.getElementById('fsIcon');
+
+      if (btnFullscreen) {
+        btnFullscreen.addEventListener('click', () => {
+          if (!document.fullscreenElement) {
+            requestAndroidFullscreen(document.documentElement);
+          } else {
+            if (document.exitFullscreen) {
+              document.exitFullscreen().catch(err => console.warn(err));
+            }
+          }
+        });
+      }
+
+      document.addEventListener('fullscreenchange', () => {
+        if (fsIcon) {
+          if (document.fullscreenElement) {
+            fsIcon.className = 'bi bi-fullscreen-exit';
+          } else {
+            fsIcon.className = 'bi bi-arrows-fullscreen';
+          }
+        }
+      });
+
+      // Handle Hash Routing
+      function checkHashRoute() {
+        const hash = window.location.hash;
+        if (hash === '#play-space') launchGame(GAME_DETAILS.space.url, GAME_DETAILS.space.title, 'space');
+        else if (hash === '#play-garden') launchGame(GAME_DETAILS.garden.url, GAME_DETAILS.garden.title, 'garden');
+        else if (hash === '#play-trace') launchGame(GAME_DETAILS.trace.url, GAME_DETAILS.trace.title, 'trace');
+        else if (hash === '#play-memory') launchGame(GAME_DETAILS.memory.url, GAME_DETAILS.memory.title, 'memory');
+        else if (hash === '#play-match') launchGame(GAME_DETAILS.match.url, GAME_DETAILS.match.title, 'match');
+        else if (hash === '#play-sound') launchGame(GAME_DETAILS.sound.url, GAME_DETAILS.sound.title, 'sound');
+        else if (hash === '#play-count') launchGame(GAME_DETAILS.count.url, GAME_DETAILS.count.title, 'count');
+        else if (hash === '#play-puzzle') launchGame(GAME_DETAILS.puzzle.url, GAME_DETAILS.puzzle.title, 'puzzle');
+        else if (hash === '#play-jump') launchGame(GAME_DETAILS.jump.url, GAME_DETAILS.jump.title, 'jump');
+      }
+      window.addEventListener('load', checkHashRoute);
+
+      // Handle ESC key
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (gameStage.classList.contains('active')) closeGameStage();
+          if (gameModal.classList.contains('active')) gameModal.classList.remove('active');
+        }
+      });
+
+      // PWA Service Worker Registration
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('[main-edu PWA] SW registered:', reg.scope))
+            .catch(err => console.warn('[main-edu PWA] SW failed:', err));
+        });
+      }
+
+      // PWA Install Prompt Listener
+      let deferredPrompt;
+      const btnPwaInstall = document.getElementById('btnPwaInstall');
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        if (btnPwaInstall) btnPwaInstall.style.display = 'flex';
+      });
+
+      if (btnPwaInstall) {
+        btnPwaInstall.addEventListener('click', () => {
+          if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(() => {
+              deferredPrompt = null;
+              btnPwaInstall.style.display = 'none';
+            });
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+
+</html>

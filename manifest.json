@@ -1,0 +1,83 @@
+{
+  "name": "main-edu - Portal Game Edukasi Interaktif",
+  "short_name": "main-edu",
+  "description": "Portal game edukasi interaktif anak: Tangkap Huruf, Tap Tap Kebun, Jejak Huruf, Kartu Ingatan, Cocokkan Huruf, Tebak Suara Hewan, Berhitung Jari, Loncat Pipa Emas, dan Puzzle Hewan.",
+  "start_url": "./index.html",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone", "minimal-ui"],
+  "background_color": "#0F172A",
+  "theme_color": "#0F172A",
+  "orientation": "any",
+  "scope": "./",
+  "categories": ["education", "games", "kids"],
+  "icons": [
+    {
+      "src": "assets/img/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Tangkap Huruf",
+      "short_name": "Mengetik",
+      "description": "Game Ketik Luar Angkasa",
+      "url": "./game/game-ketik-luar-angkasa.html",
+      "icons": [{ "src": "assets/img/favicon-space.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Tap Tap Kebun",
+      "short_name": "Sensorik",
+      "description": "Game Motorik & Sensorik Kebun",
+      "url": "./game/game-sensorik-anak.html",
+      "icons": [{ "src": "assets/img/favicon-garden.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Jejak Huruf",
+      "short_name": "Menulis",
+      "description": "Game Menulis & Menelusuri Huruf",
+      "url": "./game/jejak-huruf.html",
+      "icons": [{ "src": "assets/img/favicon-trace.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Kartu Ingatan",
+      "short_name": "Ingatan",
+      "description": "Game Memori & Pasangan Kartu",
+      "url": "./game/kartu-ingatan.html",
+      "icons": [{ "src": "assets/img/favicon-memory.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Cocokkan Huruf",
+      "short_name": "Cocokkan",
+      "description": "Game Mencocokkan Huruf Besar & Kecil",
+      "url": "./game/cocokkan-huruf.html",
+      "icons": [{ "src": "assets/img/favicon-match.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Tebak Suara Hewan",
+      "short_name": "Suara Hewan",
+      "description": "Game Mendengar & Menebak Suara Hewan",
+      "url": "./game/tebak-suara-hewan.html",
+      "icons": [{ "src": "assets/img/favicon-sound.png", "sizes": "192x192" }]
+    }
+  ]
+}

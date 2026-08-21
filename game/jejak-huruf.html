@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta name="description" content="Jejak Huruf - Game latihan menelusuri & menulis huruf dan angka interaktif di main-edu.">
+  <link rel="canonical" href="https://main-edu.webkuy.com/game/jejak-huruf.html">
+  <meta name="theme-color" content="#0F172A">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://main-edu.webkuy.com/game/jejak-huruf.html">
+  <meta property="og:title" content="Jejak Huruf - main-edu">
+  <meta property="og:description" content="Game latihan menelusuri & menulis huruf dan angka interaktif di main-edu.">
+  <meta property="og:image" content="https://main-edu.webkuy.com/assets/img/thumbnail.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://main-edu.webkuy.com/game/jejak-huruf.html">
+  <meta name="twitter:title" content="Jejak Huruf - main-edu">
+  <meta name="twitter:description" content="Game latihan menelusuri & menulis huruf dan angka interaktif di main-edu.">
+  <meta name="twitter:image" content="https://main-edu.webkuy.com/assets/img/thumbnail.png">
+
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon-trace.svg">
+  <link rel="alternate icon" type="image/png" href="../assets/img/favicon-trace.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root {
+      --board: #17271F;
+      --board-mid: #1F3327;
+      --chalk: #F3EFE2;
+      --chalk-dim: #9FB3A4;
+      --coral: #FF8A80;
+      --yellow: #FFD166;
+      --blue: #6FCBFF;
+      --mint: #6FE6B8;
+      --pink: #FF9AD1;
+      --font-display: 'Fredoka', sans-serif;
+      --font-body: 'Nunito', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 0%, var(--board-mid) 0%, var(--board) 68%);
+      font-family: var(--font-body);
+      color: var(--chalk);
+    }
+
+    #stage {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 560px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .dust {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .speck {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      opacity: .35;
+      animation: twinkle 4s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+
+      0%,
+      100% {
+        opacity: .12;
+      }
+
+      50% {
+        opacity: .5;
+      }
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    /* ---------- MENU ---------- */
+    #menuScreen {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+      gap: 20px;
+    }
+
+    #menuScreen>* {
+      animation: menuIn .6s cubic-bezier(.22, .9, .32, 1.1) both;
+    }
+
+    #menuScreen>*:nth-child(1) {
+      animation-delay: .05s;
+    }
+
+    #menuScreen>*:nth-child(2) {
+      animation-delay: .16s;
+    }
+
+    #menuScreen>*:nth-child(3) {
+      animation-delay: .27s;
+    }
+
+    #menuScreen>*:nth-child(4) {
+      animation-delay: .38s;
+    }
+
+    @keyframes menuIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px) scale(.97);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .mascot {
+      position: absolute;
+      top: 5%;
+      left: 9%;
+      font-size: 36px;
+      pointer-events: none;
+      animation: bob 4.5s ease-in-out infinite, menuIn .6s ease .5s both;
+    }
+
+    @keyframes bob {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-6deg);
+      }
+
+      50% {
+        transform: translateY(-12px) rotate(6deg);
+      }
+    }
+
+    .kicker {
+      font-family: var(--font-body);
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: var(--mint);
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(28px, 6vw, 44px);
+      margin: 6px 0 0;
+      color: var(--chalk);
+      text-shadow: 0 0 20px rgba(111, 230, 184, .25);
+    }
+
+    .subtitle {
+      color: var(--chalk-dim);
+      font-size: 15px;
+      max-width: 400px;
+      margin: 6px auto 0;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .02));
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-radius: 20px;
+      padding: 18px 20px;
+      width: min(92vw, 420px);
+    }
+
+    .panel h2 {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      margin: 0 0 12px;
+      color: var(--chalk-dim);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      text-align: left;
+    }
+
+    .set-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .set-btn {
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 15px;
+      color: var(--chalk);
+      background: rgba(255, 255, 255, .05);
+      border: 2px solid rgba(255, 255, 255, .12);
+      border-radius: 14px;
+      padding: 14px 8px;
+      cursor: pointer;
+      transition: all .15s ease;
+    }
+
+    .set-btn small {
+      display: block;
+      font-weight: 700;
+      color: var(--chalk-dim);
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
+    .set-btn:hover {
+      border-color: var(--mint);
+      transform: translateY(-1px);
+    }
+
+    .set-btn.active {
+      background: linear-gradient(135deg, var(--mint), #35B98D);
+      color: #123322;
+      border-color: var(--mint);
+      box-shadow: 0 6px 18px rgba(111, 230, 184, .3);
+    }
+
+    .set-btn.active small {
+      color: #1c3d2c;
+    }
+
+    #startBtn {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 18px;
+      color: #123322;
+      background: linear-gradient(135deg, var(--yellow), #F4B93E);
+      border: none;
+      border-radius: 999px;
+      padding: 14px 40px;
+      cursor: pointer;
+      box-shadow: 0 10px 26px rgba(255, 209, 102, .3);
+      transition: transform .15s ease;
+    }
+
+    #startBtn:hover {
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    #startBtn:active {
+      transform: translateY(0) scale(.98);
+    }
+
+    /* ---------- TRACE SCREEN ---------- */
+    #traceScreen {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      display: none;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    #topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 12px 60px 12px 16px;
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--chalk-dim);
+      flex-wrap: wrap;
+    }
+
+    #backBtn {
+      background: rgba(255, 255, 255, .08);
+      border: none;
+      color: var(--chalk);
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 6px 14px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 12px;
+    }
+
+    #progressLbl {
+      background: rgba(255, 255, 255, .06);
+      border-radius: 999px;
+      padding: 6px 14px;
+    }
+
+    #progressLbl b {
+      color: var(--chalk);
+    }
+
+    #pickerStrip {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 2px 16px 10px;
+      scrollbar-width: none;
+    }
+
+    #pickerStrip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chip {
+      flex: 0 0 auto;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 14px;
+      background: rgba(255, 255, 255, .06);
+      color: var(--chalk-dim);
+      border: 2px solid transparent;
+      cursor: pointer;
+    }
+
+    .chip.current {
+      border-color: var(--yellow);
+      color: var(--chalk);
+      transform: scale(1.08);
+    }
+
+    .chip.done {
+      background: rgba(111, 230, 184, .18);
+      color: var(--mint);
+    }
+
+    .hint-text {
+      text-align: center;
+      font-size: 13px;
+      color: var(--chalk-dim);
+      margin: 0 0 6px;
+      font-weight: 700;
+    }
+
+    #traceArea {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+      padding: 6px 12px;
+    }
+
+    #traceBox {
+      position: relative;
+      width: min(78vw, 340px);
+      aspect-ratio: 1/1;
+      border-radius: 26px;
+      background: linear-gradient(160deg, rgba(255, 255, 255, .05), rgba(0, 0, 0, .15));
+      box-shadow: inset 0 0 0 3px rgba(255, 255, 255, .08), 0 14px 34px rgba(0, 0, 0, .35);
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    #guideCanvas,
+    #drawCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #guideCanvas {
+      pointer-events: none;
+    }
+
+    #controlsRow {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      padding: 10px 16px 20px;
+    }
+
+    .ctrl-btn {
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--chalk);
+      background: rgba(255, 255, 255, .08);
+      border: 2px solid rgba(255, 255, 255, .12);
+      border-radius: 999px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    .ctrl-btn:active {
+      transform: scale(.96);
+    }
+
+    /* celebration overlay */
+    #celebrate {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: rgba(23, 39, 31, .72);
+      backdrop-filter: blur(2px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+      z-index: 5;
+    }
+
+    #celebrate.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .praise-big {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(26px, 7vw, 38px);
+      color: var(--yellow);
+      text-shadow: 0 0 18px rgba(255, 209, 102, .5);
+      animation: praisePop .4s cubic-bezier(.3, 1.2, .4, 1.3);
+    }
+
+    @keyframes praisePop {
+      0% {
+        transform: scale(.5);
+        opacity: 0;
+      }
+
+      60% {
+        transform: scale(1.12);
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    #nextBtn {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 15px;
+      color: #123322;
+      background: linear-gradient(135deg, var(--mint), #35B98D);
+      border: none;
+      border-radius: 999px;
+      padding: 10px 26px;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      top: -10%;
+      width: 9px;
+      height: 14px;
+      border-radius: 2px;
+      animation: confettiFall linear forwards;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(120vh) rotate(540deg);
+        opacity: .15;
+      }
+    }
+
+    #musicToggle {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 30;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid rgba(255, 255, 255, .16);
+      color: var(--chalk);
+      font-size: 17px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .12s ease, background .15s ease;
+    }
+
+    #musicToggle:hover {
+      background: rgba(255, 255, 255, .14);
+    }
+
+    #musicToggle:active {
+      transform: scale(.9);
+    }
+
+    #musicToggle.on {
+      background: linear-gradient(135deg, var(--mint), #35B98D);
+      color: #123322;
+      border-color: transparent;
+    }
+
+    /* ---------- FINISH SCREEN ---------- */
+    #finishScreen {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .secondary-btn {
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--chalk);
+      background: rgba(255, 255, 255, .08);
+      border: 2px solid rgba(255, 255, 255, .14);
+      border-radius: 999px;
+      padding: 12px 26px;
+      cursor: pointer;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .speck {
+        animation: none;
+        opacity: .3;
+      }
+
+      .mascot {
+        animation: none;
+      }
+
+      #menuScreen>* {
+        animation: menuIn .01s linear both;
+      }
+
+      .praise-big {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="stage">
+    <button id="musicToggle" aria-label="Musik latar">🔇</button>
+    <div class="dust" id="dustLayer"></div>
+
+    <!-- MENU -->
+    <div id="menuScreen">
+      <div class="mascot" aria-hidden="true">🖍️</div>
+      <div class="title-wrap">
+        <span class="kicker">Latihan Menulis</span>
+        <h1>✏️ Jejak Huruf</h1>
+        <p class="subtitle">Ikuti titik-titiknya dengan jari untuk membentuk huruf atau angka. Pelan-pelan saja, tidak
+          perlu terburu-buru!</p>
+      </div>
+      <div class="panel">
+        <h2>Pilih yang mau ditelusuri</h2>
+        <div class="set-grid" id="setGrid"></div>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center; align-items:center;">
+        <button id="startBtn">Mulai Menelusuri ✏️</button>
+        <!-- <a href="index.html" class="secondary-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:14px; padding:12px 24px; background:rgba(255,255,255,0.08); border-radius:999px;">🏠 main-edu</a> -->
+      </div>
+    </div>
+
+    <!-- TRACE -->
+    <div id="traceScreen">
+      <div id="topbar">
+        <div style="display:flex; gap:6px; align-items:center;">
+          <button id="backBtn">← Menu</button>
+        </div>
+        <div id="progressLbl"><b id="lblIndex">1</b> / <span id="lblTotal">26</span></div>
+      </div>
+      <div id="pickerStrip"></div>
+      <p class="hint-text">Tarik jarimu mengikuti titik-titiknya ✨</p>
+      <div id="traceArea">
+        <div id="traceBox">
+          <canvas id="guideCanvas"></canvas>
+          <canvas id="drawCanvas"></canvas>
+          <div id="celebrate">
+            <div class="praise-big" id="praiseText">Hebat!</div>
+            <button id="nextBtn">Lanjut ➡️</button>
+          </div>
+        </div>
+      </div>
+      <div id="controlsRow">
+        <button class="ctrl-btn" id="clearBtn">🧹 Hapus</button>
+        <button class="ctrl-btn" id="skipBtn">Lewati ⏭️</button>
+      </div>
+    </div>
+
+    <!-- FINISH -->
+    <div id="finishScreen">
+      <span class="kicker" style="color:var(--mint)">Selesai!</span>
+      <h1 style="font-size:clamp(24px,5vw,36px)">🎉 Semua berhasil ditelusuri!</h1>
+      <p class="subtitle">Kamu hebat sudah menyelesaikan semuanya.</p>
+      <div class="btn-row">
+        <button class="secondary-btn" id="restartBtn">🔁 Ulangi</button>
+        <button class="secondary-btn" id="menuBtn2"
+          style="background:linear-gradient(135deg,var(--mint),#35B98D); color:#123322; border:none;">✏️ Menu
+          Game</button>
+        <!-- <a href="index.html" class="secondary-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;">🏠 Portal main-edu</a> -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const SETS = {
+        huruf: { label: 'Huruf', sub: 'A - Z', items: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('') },
+        angka: { label: 'Angka', sub: '0 - 9', items: '0123456789'.split('') },
+      };
+      const PRAISE = ['Hebat!', 'Pintar!', 'Bagus Sekali!', 'Kamu Jago!', 'Asyik!', 'Keren!', 'Mantap!'];
+      const TRAIL_COLORS = ['#FF8A80', '#FFD166', '#6FCBFF', '#6FE6B8', '#FF9AD1'];
+
+      const menuScreen = document.getElementById('menuScreen');
+      const traceScreen = document.getElementById('traceScreen');
+      const finishScreen = document.getElementById('finishScreen');
+      const setGrid = document.getElementById('setGrid');
+      const traceBox = document.getElementById('traceBox');
+      const guideCanvas = document.getElementById('guideCanvas');
+      const drawCanvas = document.getElementById('drawCanvas');
+      const gctx = guideCanvas.getContext('2d');
+      const dctx = drawCanvas.getContext('2d');
+      const pickerStrip = document.getElementById('pickerStrip');
+      const celebrate = document.getElementById('celebrate');
+      const praiseText = document.getElementById('praiseText');
+
+      let state = {
+        setKey: 'huruf',
+        index: 0,
+        sizePx: 340,
+        checkpoints: [],
+        visitedCount: 0,
+        needed: 1,
+        done: false,
+        drawing: false,
+        lastPt: null,
+        doneIndices: new Set(),
+        trailColor: TRAIL_COLORS[0],
+        celebrateTimer: null,
+      };
+
+      // dust specks
+      const dustLayer = document.getElementById('dustLayer');
+      for (let i = 0; i < 40; i++) {
+        const s = document.createElement('div');
+        s.className = 'speck';
+        const size = Math.random() * 2 + 1;
+        s.style.width = s.style.height = size + 'px';
+        s.style.left = Math.random() * 100 + '%';
+        s.style.top = Math.random() * 100 + '%';
+        s.style.animationDelay = (Math.random() * 4) + 's';
+        dustLayer.appendChild(s);
+      }
+
+      // ---------- sound effects (synthesized, no audio files needed) ----------
+      let audioCtx = null;
+      function ensureAudio() {
+        if (!audioCtx) {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (!AC) return null;
+          audioCtx = new AC();
+        }
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        return audioCtx;
+      }
+      function playTone({ freq = 440, freqEnd = null, duration = 0.12, type = 'sine', volume = 0.15, delay = 0 }) {
+        const ctx = ensureAudio();
+        if (!ctx) return;
+        const t0 = ctx.currentTime + delay;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, t0);
+        if (freqEnd !== null) {
+          osc.frequency.exponentialRampToValueAtTime(Math.max(freqEnd, 1), t0 + duration);
+        }
+        gain.gain.setValueAtTime(0.0001, t0);
+        gain.gain.linearRampToValueAtTime(volume, t0 + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t0 + duration);
+        osc.connect(gain).connect(ctx.destination);
+        osc.start(t0);
+        osc.stop(t0 + duration + 0.03);
+      }
+      let lastTickTime = 0;
+      function sfxTick(progressRatio) {
+        const now = performance.now();
+        if (now - lastTickTime < 55) return;
+        lastTickTime = now;
+        const freq = 480 + Math.min(progressRatio, 1) * 420;
+        playTone({ freq, duration: 0.08, type: 'sine', volume: 0.1 });
+      }
+      function sfxCelebrate() {
+        [523, 659, 784, 1046].forEach((f, i) => playTone({ freq: f, duration: 0.16, type: 'triangle', volume: 0.16, delay: i * 0.09 }));
+      }
+      function sfxClick() { playTone({ freq: 600, duration: 0.05, type: 'square', volume: 0.06 }); }
+
+      // ---------- background music (procedural loop, toggleable) ----------
+      let musicOn = false;
+      let musicTimer = null;
+      let musicGain = null;
+      let musicStep = 0;
+      const MUSIC_PATTERN = [523.25, null, 659.25, 587.33, null, 783.99, 659.25, null, 523.25, null, 440.00, null];
+      const musicToggleBtn = document.getElementById('musicToggle');
+
+      function ensureMusicGain() {
+        const ctx = ensureAudio();
+        if (!ctx) return null;
+        if (!musicGain) {
+          musicGain = ctx.createGain();
+          musicGain.gain.value = 0.0001;
+          musicGain.connect(ctx.destination);
+        }
+        return musicGain;
+      }
+      function playMusicNote(freq) {
+        const ctx = ensureAudio();
+        const gainBus = ensureMusicGain();
+        if (!ctx || !gainBus) return;
+        const t0 = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, t0);
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(0.045, t0 + 0.06);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.5);
+        osc.connect(g).connect(gainBus);
+        osc.start(t0);
+        osc.stop(t0 + 0.55);
+      }
+      function startMusic() {
+        const ctx = ensureAudio();
+        const gainBus = ensureMusicGain();
+        if (!ctx || !gainBus || musicTimer) return;
+        gainBus.gain.cancelScheduledValues(ctx.currentTime);
+        gainBus.gain.linearRampToValueAtTime(1, ctx.currentTime + 0.6);
+        musicStep = 0;
+        const stepMs = 420;
+        musicTimer = setInterval(() => {
+          const note = MUSIC_PATTERN[musicStep % MUSIC_PATTERN.length];
+          if (note) playMusicNote(note);
+          musicStep++;
+        }, stepMs);
+      }
+      function stopMusic() {
+        if (musicTimer) { clearInterval(musicTimer); musicTimer = null; }
+        if (musicGain) {
+          const ctx = ensureAudio();
+          musicGain.gain.cancelScheduledValues(ctx.currentTime);
+          musicGain.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + 0.3);
+        }
+      }
+      function updateMusicBtn() {
+        musicToggleBtn.textContent = musicOn ? '🔊' : '🔇';
+        musicToggleBtn.classList.toggle('on', musicOn);
+      }
+      musicToggleBtn.onclick = () => {
+        musicOn = !musicOn;
+        if (musicOn) { ensureAudio(); startMusic(); } else { stopMusic(); }
+        updateMusicBtn();
+      };
+
+      // build set buttons
+      Object.entries(SETS).forEach(([key, cfg]) => {
+        const btn = document.createElement('button');
+        btn.className = 'set-btn' + (key === state.setKey ? ' active' : '');
+        btn.innerHTML = cfg.label + '<small>' + cfg.sub + '</small>';
+        btn.onclick = () => {
+          sfxClick();
+          state.setKey = key;
+          [...setGrid.children].forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        };
+        setGrid.appendChild(btn);
+      });
+
+      function currentItems() { return SETS[state.setKey].items; }
+
+      function buildPickerStrip() {
+        pickerStrip.innerHTML = '';
+        currentItems().forEach((ch, i) => {
+          const chip = document.createElement('div');
+          chip.className = 'chip';
+          chip.textContent = ch;
+          chip.onclick = () => {
+            clearTimeout(state.celebrateTimer);
+            hideCelebration();
+            state.index = i;
+            buildLetter(state.index);
+            updatePickerHighlight();
+          };
+          pickerStrip.appendChild(chip);
+        });
+      }
+
+      function updatePickerHighlight() {
+        [...pickerStrip.children].forEach((chip, i) => {
+          chip.classList.toggle('current', i === state.index);
+          chip.classList.toggle('done', state.doneIndices.has(i));
+        });
+        const cur = pickerStrip.children[state.index];
+        if (cur) cur.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+        document.getElementById('lblIndex').textContent = state.index + 1;
+        document.getElementById('lblTotal').textContent = currentItems().length;
+      }
+
+      function initCanvasSizing() {
+        const rect = traceBox.getBoundingClientRect();
+        const sizePx = Math.round(rect.width);
+        state.sizePx = sizePx;
+        const dpr = window.devicePixelRatio || 1;
+        [guideCanvas, drawCanvas].forEach(cv => {
+          cv.width = sizePx * dpr;
+          cv.height = sizePx * dpr;
+        });
+        gctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        dctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function zhangSuenThin(grid, w, h) {
+        function idx(x, y) { return y * w + x; }
+        function get(g, x, y) {
+          if (x < 0 || y < 0 || x >= w || y >= h) return 0;
+          return g[idx(x, y)];
+        }
+        let g = grid;
+        let changed = true;
+        while (changed) {
+          changed = false;
+          for (const step of [1, 2]) {
+            const toRemove = [];
+            for (let y = 1; y < h - 1; y++) {
+              for (let x = 1; x < w - 1; x++) {
+                if (!get(g, x, y)) continue;
+                const p2 = get(g, x, y - 1), p3 = get(g, x + 1, y - 1), p4 = get(g, x + 1, y),
+                  p5 = get(g, x + 1, y + 1), p6 = get(g, x, y + 1), p7 = get(g, x - 1, y + 1),
+                  p8 = get(g, x - 1, y), p9 = get(g, x - 1, y - 1);
+                const n = [p2, p3, p4, p5, p6, p7, p8, p9];
+                const B = n.reduce((a, b) => a + b, 0);
+                if (B < 2 || B > 6) continue;
+                let A = 0;
+                for (let k = 0; k < 8; k++) { if (n[k] === 0 && n[(k + 1) % 8] === 1) A++; }
+                if (A !== 1) continue;
+                if (step === 1) {
+                  if (p2 * p4 * p6 !== 0) continue;
+                  if (p4 * p6 * p8 !== 0) continue;
+                } else {
+                  if (p2 * p4 * p8 !== 0) continue;
+                  if (p2 * p6 * p8 !== 0) continue;
+                }
+                toRemove.push(idx(x, y));
+              }
+            }
+            if (toRemove.length) { changed = true; for (const i of toRemove) g[i] = 0; }
+          }
+        }
+        return g;
+      }
+
+      function computeCheckpoints(char, sizePx) {
+        const workRes = 200;
+        const scale = sizePx / workRes;
+        const off = document.createElement('canvas');
+        off.width = workRes; off.height = workRes;
+        const octx = off.getContext('2d');
+        octx.clearRect(0, 0, workRes, workRes);
+        octx.fillStyle = '#000';
+        octx.textAlign = 'center';
+        octx.textBaseline = 'middle';
+        octx.font = `700 ${Math.floor(workRes * 0.72)}px Fredoka, sans-serif`;
+        octx.fillText(char, workRes / 2, workRes / 2 + workRes * 0.02);
+        const img = octx.getImageData(0, 0, workRes, workRes).data;
+
+        let grid = new Uint8Array(workRes * workRes);
+        for (let i = 0; i < workRes * workRes; i++) { grid[i] = img[i * 4 + 3] > 128 ? 1 : 0; }
+        grid = zhangSuenThin(grid, workRes, workRes);
+
+        const skelPixels = [];
+        for (let y = 0; y < workRes; y++) {
+          for (let x = 0; x < workRes; x++) {
+            if (grid[y * workRes + x]) skelPixels.push({ x: x * scale, y: y * scale });
+          }
+        }
+
+        const minDist = sizePx * 0.045;
+        const minDist2 = minDist * minDist;
+        const checkpoints = [];
+        for (const p of skelPixels) {
+          let ok = true;
+          for (const c of checkpoints) {
+            const dx = p.x - c.x, dy = p.y - c.y;
+            if (dx * dx + dy * dy < minDist2) { ok = false; break; }
+          }
+          if (ok) checkpoints.push({ x: p.x, y: p.y, visited: false });
+        }
+        return { checkpoints };
+      }
+
+      function drawGuide(char) {
+        const sizePx = state.sizePx;
+        gctx.clearRect(0, 0, sizePx, sizePx);
+        // faint silhouette for context
+        gctx.globalAlpha = 0.13;
+        gctx.fillStyle = '#F3EFE2';
+        gctx.textAlign = 'center'; gctx.textBaseline = 'middle';
+        gctx.font = `700 ${Math.floor(sizePx * 0.72)}px Fredoka, sans-serif`;
+        gctx.fillText(char, sizePx / 2, sizePx / 2 + sizePx * 0.02);
+        gctx.globalAlpha = 1;
+        // checkpoints
+        state.checkpoints.forEach(cp => drawCheckpoint(cp));
+      }
+
+      function drawCheckpoint(cp) {
+        const sizePx = state.sizePx;
+        const r = cp.visited ? sizePx * 0.026 : sizePx * 0.016;
+        gctx.beginPath();
+        gctx.arc(cp.x, cp.y, r, 0, Math.PI * 2);
+        if (cp.visited) {
+          gctx.fillStyle = state.trailColor;
+          gctx.shadowColor = state.trailColor;
+          gctx.shadowBlur = 10;
+        } else {
+          gctx.fillStyle = 'rgba(243,239,226,0.55)';
+          gctx.shadowBlur = 0;
+        }
+        gctx.fill();
+        gctx.shadowBlur = 0;
+      }
+
+      function buildLetter(i) {
+        clearTimeout(state.celebrateTimer);
+        hideCelebration();
+        const char = currentItems()[i];
+        initCanvasSizing();
+        const { checkpoints } = computeCheckpoints(char, state.sizePx);
+        state.checkpoints = checkpoints;
+        state.visitedCount = 0;
+        state.needed = Math.ceil(checkpoints.length * 0.88);
+        state.done = false;
+        state.trailColor = TRAIL_COLORS[i % TRAIL_COLORS.length];
+        dctx.clearRect(0, 0, state.sizePx, state.sizePx);
+        drawGuide(char);
+      }
+
+      function localPoint(evt) {
+        const rect = drawCanvas.getBoundingClientRect();
+        return { x: evt.clientX - rect.left, y: evt.clientY - rect.top };
+      }
+
+      function strokeSegment(p0, p1) {
+        dctx.lineCap = 'round';
+        dctx.lineJoin = 'round';
+        dctx.lineWidth = state.sizePx * 0.055;
+        dctx.strokeStyle = state.trailColor;
+        dctx.beginPath();
+        dctx.moveTo(p0.x, p0.y);
+        dctx.lineTo(p1.x, p1.y);
+        dctx.stroke();
+      }
+
+      function checkHits(p) {
+        const hitR = state.sizePx * 0.042;
+        const hitR2 = hitR * hitR;
+        let newHit = false;
+        for (const cp of state.checkpoints) {
+          if (cp.visited) continue;
+          const dx = p.x - cp.x, dy = p.y - cp.y;
+          if (dx * dx + dy * dy < hitR2) {
+            cp.visited = true;
+            state.visitedCount++;
+            drawCheckpoint(cp);
+            newHit = true;
+          }
+        }
+        if (newHit) sfxTick(state.visitedCount / state.needed);
+        if (newHit && !state.done && state.visitedCount >= state.needed) {
+          state.done = true;
+          state.doneIndices.add(state.index);
+          updatePickerHighlight();
+          showCelebration();
+        }
+      }
+
+      function pointerDown(e) {
+        if (state.done) return;
+        state.drawing = true;
+        state.lastPt = localPoint(e);
+        checkHits(state.lastPt);
+        e.preventDefault();
+      }
+      function pointerMove(e) {
+        if (!state.drawing || state.done) return;
+        const p = localPoint(e);
+        const last = state.lastPt;
+        const dist = Math.hypot(p.x - last.x, p.y - last.y);
+        const steps = Math.max(1, Math.floor(dist / 4));
+        for (let s = 1; s <= steps; s++) {
+          const ip = { x: last.x + (p.x - last.x) * (s / steps), y: last.y + (p.y - last.y) * (s / steps) };
+          checkHits(ip);
+        }
+        strokeSegment(last, p);
+        state.lastPt = p;
+        e.preventDefault();
+      }
+      function pointerUp() { state.drawing = false; state.lastPt = null; }
+
+      drawCanvas.addEventListener('pointerdown', pointerDown);
+      drawCanvas.addEventListener('pointermove', pointerMove);
+      window.addEventListener('pointerup', pointerUp);
+      drawCanvas.addEventListener('pointercancel', pointerUp);
+      drawCanvas.addEventListener('pointerleave', pointerUp);
+
+      function showCelebration() {
+        sfxCelebrate();
+        praiseText.textContent = PRAISE[Math.floor(Math.random() * PRAISE.length)];
+        celebrate.classList.add('show');
+        spawnConfetti();
+        state.celebrateTimer = setTimeout(goNext, 1700);
+      }
+      function hideCelebration() {
+        celebrate.classList.remove('show');
+        celebrate.querySelectorAll('.confetti-piece').forEach(el => el.remove());
+      }
+      function spawnConfetti() {
+        for (let i = 0; i < 16; i++) {
+          const piece = document.createElement('div');
+          piece.className = 'confetti-piece';
+          piece.style.left = (Math.random() * 100) + '%';
+          piece.style.background = TRAIL_COLORS[i % TRAIL_COLORS.length];
+          piece.style.animationDuration = (1 + Math.random() * .8) + 's';
+          piece.style.animationDelay = (Math.random() * .3) + 's';
+          celebrate.appendChild(piece);
+          setTimeout(() => piece.remove(), 2200);
+        }
+      }
+
+      function goNext() {
+        clearTimeout(state.celebrateTimer);
+        hideCelebration();
+        state.index++;
+        if (state.index >= currentItems().length) {
+          traceScreen.style.display = 'none';
+          finishScreen.style.display = 'flex';
+        } else {
+          buildLetter(state.index);
+          updatePickerHighlight();
+        }
+      }
+
+      document.getElementById('nextBtn').onclick = () => { sfxClick(); goNext(); };
+      document.getElementById('skipBtn').onclick = () => { sfxClick(); goNext(); };
+      document.getElementById('clearBtn').onclick = () => {
+        sfxClick();
+        dctx.clearRect(0, 0, state.sizePx, state.sizePx);
+        state.checkpoints.forEach(cp => cp.visited = false);
+        state.visitedCount = 0;
+        state.done = false;
+        drawGuide(currentItems()[state.index]);
+      };
+
+      function startGame() {
+        ensureAudio();
+        state.index = 0;
+        state.doneIndices = new Set();
+        menuScreen.style.display = 'none';
+        finishScreen.style.display = 'none';
+        traceScreen.style.display = 'flex';
+        buildPickerStrip();
+        requestAnimationFrame(() => {
+          buildLetter(0);
+          updatePickerHighlight();
+        });
+      }
+
+      function backToMenu() {
+        clearTimeout(state.celebrateTimer);
+        traceScreen.style.display = 'none';
+        finishScreen.style.display = 'none';
+        menuScreen.style.display = 'flex';
+      }
+
+      document.getElementById('startBtn').onclick = startGame;
+      document.getElementById('backBtn').onclick = () => { sfxClick(); backToMenu(); };
+      document.getElementById('restartBtn').onclick = () => { sfxClick(); startGame(); };
+      document.getElementById('menuBtn2').onclick = () => { sfxClick(); backToMenu(); };
+
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          if (traceScreen.style.display === 'flex') {
+            buildLetter(state.index);
+          }
+        }, 250);
+      });
+
+      document.querySelectorAll('a[href="index.html"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+          if (window.parent && typeof window.parent.closeGameStage === 'function') {
+            e.preventDefault();
+            window.parent.closeGameStage();
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+
+</html>

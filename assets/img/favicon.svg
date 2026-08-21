@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <rect width="100" height="100" rx="24" fill="url(#bgGrad)"/>
+  <rect x="5" y="5" width="90" height="90" rx="20" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+  
+  <!-- Star accent -->
+  <path d="M78 22 L81 29 L88 30 L83 35 L84 42 L78 38 L72 42 L73 35 L68 30 L75 29 Z" fill="#FDE047"/>
+  
+  <!-- Gamepad Emblem -->
+  <g filter="url(#shadow)">
+    <rect x="20" y="34" width="60" height="36" rx="14" fill="#FFFFFF"/>
+    <!-- D-pad left -->
+    <path d="M 32 46 h 4 v -4 h 4 v 4 h 4 v 4 h -4 v 4 h -4 v -4 h -4 z" fill="#4F46E5"/>
+    <!-- Action buttons right -->
+    <circle cx="62" cy="45" r="3.5" fill="#EF4444"/>
+    <circle cx="68" cy="51" r="3.5" fill="#22C55E"/>
+    <circle cx="56" cy="51" r="3.5" fill="#EAB308"/>
+    <circle cx="62" cy="57" r="3.5" fill="#3B82F6"/>
+  </g>
+</svg>

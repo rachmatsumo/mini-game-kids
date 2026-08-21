@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Puzzle Hewan — main-edu</title>
+<meta name="theme-color" content="#FFF0E8">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-top:#FFF0E8;
+    --bg-bottom:#E6F7EF;
+    --ink:#2E4034;
+    --dim:#66806F;
+    --panel-bg:rgba(255,255,255,.62);
+    --coral:#FF7F66;
+    --gold:#FFC94D;
+    --teal:#37B6A0;
+    --sky:#5AA9E6;
+    --purple:#9B7FE0;
+    --pink:#FF8FC0;
+    --lime:#8CC63F;
+    --orange:#FFA23C;
+    --font-display:'Fredoka', sans-serif;
+    --font-body:'Nunito', sans-serif;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none;}
+  html,body{margin:0; padding:0; height:100%; overflow:hidden;
+    background:linear-gradient(165deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+    background-image:
+      linear-gradient(90deg, rgba(46,64,52,.04) 1px, transparent 1px),
+      linear-gradient(rgba(46,64,52,.04) 1px, transparent 1px),
+      linear-gradient(165deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+    background-size: 56px 56px, 56px 56px, 100% 100%;
+    font-family:var(--font-body); color:var(--ink); touch-action:none;}
+  #stage{position:relative; width:100%; height:100vh; min-height:560px; display:flex; flex-direction:column; overflow:hidden;}
+  [hidden]{display:none !important;}
+
+  #musicToggle{
+    position:absolute; top:14px; right:14px; z-index:30;
+    width:40px; height:40px; border-radius:50%;
+    background:rgba(46,64,52,.08); border:1px solid rgba(46,64,52,.14);
+    color:var(--ink); font-size:17px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:transform .12s ease, background .15s ease;
+  }
+  #musicToggle:hover{ background:rgba(46,64,52,.16); }
+  #musicToggle:active{ transform:scale(.9); }
+  #musicToggle.on{ background:linear-gradient(135deg, var(--teal), #279183); color:#fff; border-color:transparent; }
+
+  /* ---------- MENU ---------- */
+  #menuScreen{position:relative; z-index:2; flex:1; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; padding:24px; gap:20px;}
+  #menuScreen > *{ animation:menuIn .6s cubic-bezier(.22,.9,.32,1.1) both; }
+  #menuScreen > *:nth-child(1){ animation-delay:.05s; }
+  #menuScreen > *:nth-child(2){ animation-delay:.16s; }
+  #menuScreen > *:nth-child(3){ animation-delay:.27s; }
+  #menuScreen > *:nth-child(4){ animation-delay:.38s; }
+  @keyframes menuIn{0%{opacity:0; transform:translateY(20px) scale(.97);} 100%{opacity:1; transform:translateY(0) scale(1);}}
+
+  .mascot{position:absolute; top:6%; left:8%; font-size:38px; pointer-events:none;
+    animation:bob 4.2s ease-in-out infinite, menuIn .6s ease .5s both;}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-6deg);} 50%{transform:translateY(-12px) rotate(6deg);}}
+
+  .kicker{font-family:var(--font-body); font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    font-size:12px; color:#C2612E;}
+  h1{font-family:var(--font-display); font-weight:700; font-size:clamp(28px,6vw,44px); margin:6px 0 0; color:var(--ink);}
+  .subtitle{color:var(--dim); font-size:15px; max-width:400px; margin:6px auto 0; font-weight:700;}
+
+  .panel{background:var(--panel-bg); border:1px solid rgba(46,64,52,.08); border-radius:20px;
+    padding:18px 20px; width:min(92vw,420px); backdrop-filter:blur(6px);
+    box-shadow:0 10px 26px rgba(46,64,52,.08);}
+  .panel h2{font-family:var(--font-display); font-size:13px; font-weight:600; margin:0 0 12px;
+    color:var(--dim); text-transform:uppercase; letter-spacing:.08em; text-align:left;}
+  .level-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
+  .level-btn{position:relative; font-family:var(--font-body); font-weight:800; font-size:14px; color:var(--ink);
+    background:rgba(255,255,255,.7); border:2px solid rgba(46,64,52,.1); border-radius:14px;
+    padding:12px 6px; cursor:pointer; transition:all .15s ease;}
+  .level-btn small{display:block; font-weight:700; color:var(--dim); font-size:11px; margin-top:3px;}
+  .level-btn:hover{border-color:var(--teal); transform:translateY(-1px);}
+  .level-btn.active{background:linear-gradient(135deg, var(--teal), #279183); color:#fff; border-color:transparent;
+    box-shadow:0 6px 18px rgba(55,182,160,.35);}
+  .level-btn.active small{color:#E9FBF7;}
+  .level-btn.level-done::after{
+    content:'✓'; position:absolute; top:-6px; right:-6px; width:18px; height:18px; border-radius:50%;
+    background:var(--coral); color:#fff; font-size:11px; font-weight:800; display:flex;
+    align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(0,0,0,.2);
+  }
+
+  #startBtn{font-family:var(--font-display); font-weight:600; font-size:18px; color:#3A2400;
+    background:linear-gradient(135deg, var(--gold), #F0A93A); border:none; border-radius:999px;
+    padding:14px 40px; cursor:pointer; box-shadow:0 10px 26px rgba(255,201,77,.4); transition:transform .15s ease;}
+  #startBtn:hover{transform:translateY(-2px) scale(1.02);}
+  #startBtn:active{transform:translateY(0) scale(.98);}
+
+  /* ---------- GAME ---------- */
+  #gameScreen{position:relative; z-index:2; flex:1; display:none; flex-direction:column; min-height:0;}
+  #topbar{display:flex; align-items:center; justify-content:space-between; gap:8px;
+    padding:12px 60px 8px 16px; font-family:var(--font-body); font-weight:800; font-size:13px;
+    color:var(--dim); flex-wrap:wrap;}
+  #backBtn{background:rgba(46,64,52,.08); border:none; color:var(--ink); font-weight:800;
+    border-radius:999px; padding:6px 14px; cursor:pointer; font-family:var(--font-body); font-size:12px;}
+  .stat{background:rgba(255,255,255,.65); border-radius:999px; padding:6px 14px;}
+  .stat b{color:var(--ink);}
+
+  .hint-text{text-align:center; font-size:13px; color:var(--dim); margin:4px 0 8px; font-weight:700;}
+
+  #boardWrap{flex:1; display:flex; align-items:center; justify-content:center; min-height:0; padding:6px 16px 20px;}
+  #playArea{position:relative; width:min(90vw, 420px);}
+
+  .slot{
+    position:absolute; border-radius:16px; display:flex; align-items:center; justify-content:center;
+    background:rgba(255,255,255,.55); border:2px dashed rgba(46,64,52,.3); font-size:30px;
+    filter:brightness(0) opacity(.68);
+  }
+  .slot.filled{ border-style:solid; border-color:transparent; }
+
+  .chip{
+    position:absolute; border-radius:16px; display:flex; align-items:center; justify-content:center;
+    font-size:32px; cursor:grab; box-shadow:0 6px 14px rgba(46,64,52,.22); touch-action:none; z-index:2;
+  }
+  .chip.dragging{ cursor:grabbing; z-index:10; box-shadow:0 12px 22px rgba(46,64,52,.32); transform:scale(1.06); }
+  .chip.locked{ cursor:default; z-index:1; }
+  .chip.matched{ box-shadow:0 0 0 3px #fff, 0 0 0 6px var(--gold), 0 8px 16px rgba(46,64,52,.22); }
+  .chip.shake{ animation:shakeChip .35s ease; }
+  @keyframes shakeChip{
+    0%,100%{ transform:translateX(0); }
+    25%{ transform:translateX(-6px); }
+    75%{ transform:translateX(6px); }
+  }
+
+  /* ---------- FINISH ---------- */
+  #finishScreen{position:relative; z-index:2; flex:1; display:none; flex-direction:column;
+    align-items:center; justify-content:center; gap:12px; text-align:center; padding:24px;}
+  .btn-row{display:flex; gap:12px; flex-wrap:wrap; justify-content:center;}
+  .secondary-btn{font-family:var(--font-body); font-weight:800; font-size:14px; color:var(--ink);
+    background:rgba(255,255,255,.7); border:2px solid rgba(46,64,52,.12); border-radius:999px;
+    padding:12px 26px; cursor:pointer;}
+  .score-big{font-family:var(--font-display); font-size:44px; font-weight:700; color:#C2612E;}
+
+  @media (prefers-reduced-motion: reduce){
+    .mascot{animation:none;}
+    #menuScreen > *{animation:menuIn .01s linear both;}
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <button id="musicToggle" aria-label="Musik latar">🔇</button>
+
+  <!-- MENU -->
+  <div id="menuScreen">
+    <div class="mascot" aria-hidden="true">🐾</div>
+    <div class="title-wrap">
+      <span class="kicker">Latihan Mengenal Bentuk</span>
+      <h1>🧩 Puzzle Hewan</h1>
+      <p class="subtitle">Seret hewan berwarna ke bayangan hitam yang bentuknya sama.</p>
+    </div>
+    <div class="panel">
+      <h2>Pilih Level</h2>
+      <div class="level-grid" id="levelGrid"></div>
+    </div>
+    <button id="startBtn">Mulai Bermain 🧩</button>
+  </div>
+
+  <!-- GAME -->
+  <div id="gameScreen">
+    <div id="topbar">
+      <button id="backBtn">← Menu</button>
+      <div class="stat">Percobaan <b id="lblMoves">0</b></div>
+      <div class="stat">Cocok <b id="lblMatched">0</b>/<span id="lblTotal">0</span></div>
+    </div>
+    <p class="hint-text">Cocokkan hewannya dengan bayangannya 🕵️</p>
+    <div id="boardWrap"><div id="playArea"></div></div>
+  </div>
+
+  <!-- FINISH -->
+  <div id="finishScreen">
+    <span class="kicker" id="finishKicker">Selesai!</span>
+    <h1 id="finishTitle" style="font-size:clamp(24px,5vw,36px)">🎉 Semua hewan cocok!</h1>
+    <div class="score-big" id="finalMoves">0</div>
+    <p class="subtitle">kali percobaan</p>
+    <div class="btn-row">
+      <button class="secondary-btn" id="nextLevelBtn" hidden style="background:linear-gradient(135deg,var(--gold),#F0A93A); color:#3A2400; border:none;">Lanjut Level Berikutnya ➡️</button>
+    </div>
+    <div class="btn-row">
+      <button class="secondary-btn" id="restartBtn">🔁 Ulangi Level Ini</button>
+      <button class="secondary-btn" id="menuBtn2" style="background:linear-gradient(135deg,var(--teal),#279183); color:#fff; border:none;">🏠 Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const LEVELS = {
+    mudah:  { label:'Mudah',  sub:'4 pasang', pairs:4 },
+    sedang: { label:'Sedang', sub:'6 pasang', pairs:6 },
+    sulit:  { label:'Sulit',  sub:'8 pasang', pairs:8 },
+  };
+  const LEVEL_ORDER = ['mudah', 'sedang', 'sulit'];
+  const ANIMALS = ['🐘','🦒','🐊','🦓','🦁','🐢','🦉','🐙','🦋','🐝','🐬','🦈','🐿️','🦔','🐴','🦆'];
+  const CHIP_COLORS = ['#FF7F66','#FFC94D','#37B6A0','#5AA9E6','#9B7FE0','#FF8FC0','#8CC63F','#FFA23C'];
+
+  const menuScreen = document.getElementById('menuScreen');
+  const gameScreen = document.getElementById('gameScreen');
+  const finishScreen = document.getElementById('finishScreen');
+  const levelGrid = document.getElementById('levelGrid');
+  const playArea = document.getElementById('playArea');
+
+  let state = {
+    levelKey: 'mudah',
+    totalPairs: 4,
+    matchedCount: 0,
+    moves: 0,
+    doneLevels: new Set(),
+    slotEls: [],
+  };
+
+  // ---------- sound effects ----------
+  let audioCtx = null;
+  function ensureAudio(){
+    if(!audioCtx){
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if(!AC) return null;
+      audioCtx = new AC();
+    }
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+    return audioCtx;
+  }
+  function playTone({freq=440, freqEnd=null, duration=0.12, type='sine', volume=0.15, delay=0}){
+    const ctx = ensureAudio();
+    if(!ctx) return;
+    const t0 = ctx.currentTime + delay;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, t0);
+    if(freqEnd !== null){ osc.frequency.exponentialRampToValueAtTime(Math.max(freqEnd,1), t0+duration); }
+    gain.gain.setValueAtTime(0.0001, t0);
+    gain.gain.linearRampToValueAtTime(volume, t0+0.01);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0+duration);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(t0);
+    osc.stop(t0+duration+0.03);
+  }
+  function sfxPickup(){ playTone({freq:440, duration:0.06, type:'triangle', volume:0.09}); }
+  function sfxMatch(){ [660,880,1108].forEach((f,i)=>playTone({freq:f, duration:0.14, type:'triangle', volume:0.15, delay:i*0.08})); }
+  function sfxMismatch(){ playTone({freq:300, duration:0.12, type:'sine', volume:0.1}); playTone({freq:220, duration:0.18, type:'sine', volume:0.1, delay:0.1}); }
+  function sfxFinish(){ [523,659,784,1046].forEach((f,i)=>playTone({freq:f, duration:0.16, type:'triangle', volume:0.16, delay:i*0.09})); }
+  function sfxClick(){ playTone({freq:600, duration:0.05, type:'square', volume:0.06}); }
+
+  // ---------- background music ----------
+  let musicOn = false;
+  let musicTimer = null;
+  let musicGain = null;
+  let musicStep = 0;
+  const MUSIC_PATTERN = [392.00, null, 440.00, 493.88, null, 440.00, 349.23, null, 392.00, null, null, null];
+  const musicToggleBtn = document.getElementById('musicToggle');
+
+  function ensureMusicGain(){
+    const ctx = ensureAudio();
+    if(!ctx) return null;
+    if(!musicGain){
+      musicGain = ctx.createGain();
+      musicGain.gain.value = 0.0001;
+      musicGain.connect(ctx.destination);
+    }
+    return musicGain;
+  }
+  function playMusicNote(freq){
+    const ctx = ensureAudio();
+    const gainBus = ensureMusicGain();
+    if(!ctx || !gainBus) return;
+    const t0 = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const g = ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(freq, t0);
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.linearRampToValueAtTime(0.045, t0+0.06);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0+0.5);
+    osc.connect(g).connect(gainBus);
+    osc.start(t0);
+    osc.stop(t0+0.55);
+  }
+  function startMusic(){
+    const ctx = ensureAudio();
+    const gainBus = ensureMusicGain();
+    if(!ctx || !gainBus || musicTimer) return;
+    gainBus.gain.cancelScheduledValues(ctx.currentTime);
+    gainBus.gain.linearRampToValueAtTime(1, ctx.currentTime+0.6);
+    musicStep = 0;
+    musicTimer = setInterval(()=>{
+      const note = MUSIC_PATTERN[musicStep % MUSIC_PATTERN.length];
+      if(note) playMusicNote(note);
+      musicStep++;
+    }, 460);
+  }
+  function stopMusic(){
+    if(musicTimer){ clearInterval(musicTimer); musicTimer=null; }
+    if(musicGain){
+      const ctx = ensureAudio();
+      musicGain.gain.cancelScheduledValues(ctx.currentTime);
+      musicGain.gain.linearRampToValueAtTime(0.0001, ctx.currentTime+0.3);
+    }
+  }
+  function updateMusicBtn(){
+    musicToggleBtn.textContent = musicOn ? '🔊' : '🔇';
+    musicToggleBtn.classList.toggle('on', musicOn);
+  }
+  musicToggleBtn.onclick = () => {
+    musicOn = !musicOn;
+    if(musicOn){ ensureAudio(); startMusic(); } else { stopMusic(); }
+    updateMusicBtn();
+  };
+
+  // ---------- menu ----------
+  function buildLevelGrid(){
+    levelGrid.innerHTML = '';
+    Object.entries(LEVELS).forEach(([key, cfg]) => {
+      const btn = document.createElement('button');
+      btn.className = 'level-btn' + (key===state.levelKey ? ' active':'') + (state.doneLevels.has(key) ? ' level-done':'');
+      btn.innerHTML = cfg.label + '<small>' + cfg.sub + '</small>';
+      btn.onclick = () => {
+        sfxClick();
+        state.levelKey = key;
+        [...levelGrid.children].forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+      };
+      levelGrid.appendChild(btn);
+    });
+  }
+  buildLevelGrid();
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+  }
+
+  function updateStats(){
+    document.getElementById('lblMoves').textContent = state.moves;
+    document.getElementById('lblMatched').textContent = state.matchedCount;
+    document.getElementById('lblTotal').textContent = state.totalPairs;
+  }
+
+  function buildRound(){
+    const cfg = LEVELS[state.levelKey];
+    state.totalPairs = cfg.pairs;
+    state.matchedCount = 0;
+    state.moves = 0;
+    state.slotEls = [];
+    playArea.innerHTML = '';
+
+    const animals = shuffle(ANIMALS).slice(0, cfg.pairs);
+    const leftOrder = shuffle(animals.map((_, i) => i));
+    const rightOrder = shuffle(animals.map((_, i) => i));
+
+    const rowH = 64, gap = 12;
+    const containerW = playArea.clientWidth || 340;
+    const chipW = containerW * 0.34;
+    const leftX = containerW * 0.03;
+    const rightX = containerW - chipW - containerW * 0.03;
+    playArea.style.height = (animals.length*(rowH+gap) - gap) + 'px';
+
+    animals.forEach((animal, i) => {
+      const slotRow = rightOrder.indexOf(i);
+      const slot = document.createElement('div');
+      slot.className = 'slot';
+      slot.textContent = animal;
+      slot.dataset.pair = i;
+      slot.dataset.filled = '0';
+      slot.style.left = rightX+'px';
+      slot.style.top = (slotRow*(rowH+gap))+'px';
+      slot.style.width = chipW+'px';
+      slot.style.height = (rowH-6)+'px';
+      playArea.appendChild(slot);
+      state.slotEls.push(slot);
+    });
+
+    animals.forEach((animal, i) => {
+      const homeRow = leftOrder.indexOf(i);
+      const homeX = leftX, homeY = homeRow*(rowH+gap);
+      const chip = document.createElement('div');
+      chip.className = 'chip';
+      chip.textContent = animal;
+      chip.dataset.pair = i;
+      chip.style.left = homeX+'px';
+      chip.style.top = homeY+'px';
+      chip.style.width = chipW+'px';
+      chip.style.height = (rowH-6)+'px';
+      chip.style.background = CHIP_COLORS[i % CHIP_COLORS.length] + '33';
+      playArea.appendChild(chip);
+      makeDraggable(chip, i, homeX, homeY);
+    });
+
+    updateStats();
+  }
+
+  function makeDraggable(chip, pairIndex, homeX, homeY){
+    let dragging = false, offsetX = 0, offsetY = 0;
+
+    chip.addEventListener('pointerdown', (e) => {
+      if(chip.classList.contains('locked')) return;
+      dragging = true;
+      chip.setPointerCapture(e.pointerId);
+      chip.style.transition = 'none';
+      chip.classList.add('dragging');
+      const rect = chip.getBoundingClientRect();
+      offsetX = e.clientX - rect.left;
+      offsetY = e.clientY - rect.top;
+      sfxPickup();
+      e.preventDefault();
+    });
+
+    chip.addEventListener('pointermove', (e) => {
+      if(!dragging) return;
+      const areaRect = playArea.getBoundingClientRect();
+      const x = e.clientX - areaRect.left - offsetX;
+      const y = e.clientY - areaRect.top - offsetY;
+      chip.style.left = x+'px';
+      chip.style.top = y+'px';
+    });
+
+    function endDrag(e){
+      if(!dragging) return;
+      dragging = false;
+      chip.classList.remove('dragging');
+
+      const chipRect = chip.getBoundingClientRect();
+      const cx = chipRect.left + chipRect.width/2;
+      const cy = chipRect.top + chipRect.height/2;
+      let landedSlot = null;
+      for(const slot of state.slotEls){
+        if(slot.dataset.filled === '1') continue;
+        const r = slot.getBoundingClientRect();
+        if(cx>=r.left && cx<=r.right && cy>=r.top && cy<=r.bottom){ landedSlot = slot; break; }
+      }
+
+      if(landedSlot){
+        state.moves++;
+        updateStats();
+        const targetPair = Number(landedSlot.dataset.pair);
+        if(targetPair === pairIndex){
+          const areaRect = playArea.getBoundingClientRect();
+          const slotRect = landedSlot.getBoundingClientRect();
+          chip.style.transition = 'left .25s ease, top .25s ease, transform .25s ease';
+          chip.style.left = (slotRect.left-areaRect.left)+'px';
+          chip.style.top = (slotRect.top-areaRect.top)+'px';
+          chip.classList.add('locked','matched');
+          landedSlot.dataset.filled = '1';
+          landedSlot.classList.add('filled');
+          sfxMatch();
+          state.matchedCount++;
+          updateStats();
+          if(state.matchedCount >= state.totalPairs){
+            setTimeout(showFinish, 500);
+          }
+        } else {
+          bounceBack();
+          sfxMismatch();
+        }
+      } else {
+        bounceBack();
+      }
+    }
+    function bounceBack(){
+      chip.style.transition = 'left .3s cubic-bezier(.34,1.4,.64,1), top .3s cubic-bezier(.34,1.4,.64,1)';
+      chip.style.left = homeX+'px';
+      chip.style.top = homeY+'px';
+      chip.classList.add('shake');
+      setTimeout(()=>chip.classList.remove('shake'), 400);
+    }
+
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function showFinish(){
+    sfxFinish();
+    gameScreen.style.display = 'none';
+    finishScreen.style.display = 'flex';
+    document.getElementById('finalMoves').textContent = state.moves;
+
+    state.doneLevels.add(state.levelKey);
+    const curIdx = LEVEL_ORDER.indexOf(state.levelKey);
+    const nextKey = LEVEL_ORDER[curIdx+1];
+    const nextBtn = document.getElementById('nextLevelBtn');
+    const kicker = document.getElementById('finishKicker');
+    const title = document.getElementById('finishTitle');
+
+    if(nextKey){
+      kicker.textContent = 'Level ' + LEVELS[state.levelKey].label + ' Selesai!';
+      title.textContent = '🎉 Semua hewan cocok!';
+      nextBtn.hidden = false;
+      nextBtn.textContent = 'Lanjut ke Level ' + LEVELS[nextKey].label + ' ➡️';
+      nextBtn.onclick = () => { sfxClick(); state.levelKey = nextKey; startGame(); };
+    } else {
+      kicker.textContent = 'Semua Level Selesai!';
+      title.textContent = '🏆 Kamu Jago Puzzle Hewan!';
+      nextBtn.hidden = true;
+    }
+  }
+
+  function startGame(){
+    ensureAudio();
+    menuScreen.style.display = 'none';
+    finishScreen.style.display = 'none';
+    gameScreen.style.display = 'flex';
+    requestAnimationFrame(buildRound);
+  }
+  function backToMenu(){
+    gameScreen.style.display = 'none';
+    finishScreen.style.display = 'none';
+    menuScreen.style.display = 'flex';
+    buildLevelGrid();
+  }
+
+  document.getElementById('startBtn').onclick = startGame;
+  document.getElementById('backBtn').onclick = () => { sfxClick(); backToMenu(); };
+  document.getElementById('restartBtn').onclick = () => { sfxClick(); startGame(); };
+  document.getElementById('menuBtn2').onclick = () => { sfxClick(); backToMenu(); };
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if(gameScreen.style.display === 'flex') buildRound();
+    }, 250);
+  });
+})();
+</script>
+</body>
+</html>
