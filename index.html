@@ -1025,12 +1025,13 @@
       <!-- Category Dropdown Select (Clean & Compact) -->
       <div class="kids-select-wrapper">
         <select id="kidsCategorySelect" class="kids-select">
-          <option value="all">Semua Game (13)</option>
+          <option value="all">Semua Game (14)</option>
           <option value="puzzle">Puzzle &amp; Logika</option>
           <option value="maze">Labirin &amp; Spasial</option>
           <option value="dots">Sambung Titik &amp; Angka</option>
           <option value="quiz">Kuis &amp; Pengetahuan</option>
           <option value="object_quiz">Kuis Benda &amp; Pengenalan</option>
+          <option value="color_shape_quiz">Kuis Warna &amp; Bentuk</option>
           <option value="ketik">Mengetik &amp; Ketangkasan</option>
           <option value="sensorik">Motorik &amp; Sensorik</option>
           <option value="menulis">Latihan Menulis</option>
@@ -1070,7 +1071,7 @@
         <div class="panel-title">
           <i class="bi bi-controller" style="color: #0284C7;"></i> Game Edukasi Anak
         </div>
-        <span class="panel-badge">13 Game Aktif</span>
+        <span class="panel-badge">14 Game Aktif</span>
       </div>
 
       <!-- Direct Grid (3D Vibrant AI App Icon Squares with Golden Stars) -->
@@ -1206,6 +1207,21 @@
         
         
         
+        
+        <!-- App 14: Cerdas Cermat Warna & Bentuk -->
+        <div class="app-card" data-category="color_shape_quiz" data-key="color_shape_quiz">
+          <div class="app-icon-wrap">
+            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+            <img src="assets/img/game-thumbnail/app-color-shape-quiz.png" alt="Cerdas Cermat Warna & Bentuk App Icon" class="app-icon-img">
+          </div>
+          <div class="app-title-pill">
+            <span class="app-title">Warna & Bentuk</span>
+            <div class="app-stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+          </div>
+        </div>
+
         <!-- App 13: Cerdas Cermat Benda -->
         <div class="app-card" data-category="object_quiz" data-key="object_quiz">
           <div class="app-icon-wrap">
@@ -1508,7 +1524,16 @@
           desc: "Game puzzle potongan gambar karakter hewan lucu. Menyusun kepingan puzzle menjadi gambar utuh hewan jerapah, singa, gajah, dan karakter favorit lainnya!",
           benefits: ["Kemampuan pemecahan masalah", "Persepsi bentuk & spasial", "Fokus, ketelitian & kesabaran"]
         },
-                                        object_quiz: {
+                                                color_shape_quiz: {
+          title: "Cerdas Cermat Warna & Bentuk",
+          category: "Kuis Warna & Bentuk",
+          url: "game/cerdas-cermat-warna-bentuk.html",
+          hash: "color-shape-quiz",
+          previewImg: "assets/img/game-thumbnail/preview-color-shape-quiz.png",
+          desc: "Kuis cerdas cermat seru melatih persepsi visual anak dalam mengenali aneka warna dan bentuk geometri!",
+          benefits: ["Persepsi visual & pengenalan warna", "Diskriminasi bentuk geometri", "Kecepatan merespon & fokus"]
+        },
+        object_quiz: {
           title: "Cerdas Cermat Benda",
           category: "Kuis Benda & Pengenalan",
           url: "game/cerdas-cermat-benda.html",
@@ -1634,6 +1659,7 @@
         else if (hash === '#play-sound') launchGame(GAME_DETAILS.sound.url, GAME_DETAILS.sound.title, 'sound');
         else if (hash === '#play-count') launchGame(GAME_DETAILS.count.url, GAME_DETAILS.count.title, 'count');
         else if (hash === '#play-puzzle') launchGame(GAME_DETAILS.puzzle.url, GAME_DETAILS.puzzle.title, 'puzzle');
+        else if (hash === '#play-color-shape-quiz') launchGame(GAME_DETAILS.color_shape_quiz.url, GAME_DETAILS.color_shape_quiz.title, 'color_shape_quiz');
         else if (hash === '#play-object-quiz') launchGame(GAME_DETAILS.object_quiz.url, GAME_DETAILS.object_quiz.title, 'object_quiz');
         else if (hash === '#play-quiz') launchGame(GAME_DETAILS.quiz.url, GAME_DETAILS.quiz.title, 'quiz');
         else if (hash === '#play-dots') launchGame(GAME_DETAILS.dots.url, GAME_DETAILS.dots.title, 'dots');
@@ -1747,7 +1773,8 @@
         maze: [{ name: 'Rayyan', score: 120 }, { name: 'Rara', score: 95 }],
         dots: [{ name: 'Rara', score: 150 }, { name: 'Rayyan', score: 100 }],
         quiz: [{ name: 'Rayyan', score: 160 }, { name: 'Rara', score: 130 }],
-        object_quiz: [{ name: 'Rara', score: 170 }, { name: 'Rayyan', score: 140 }]
+        object_quiz: [{ name: 'Rara', score: 170 }, { name: 'Rayyan', score: 140 }],
+        color_shape_quiz: [{ name: 'Rayyan', score: 180 }, { name: 'Rara', score: 150 }]
       };
 
       function initDefaultLeaderboard() {
@@ -1932,6 +1959,7 @@
           <option value="dots">Sambung Titik</option>
           <option value="quiz">Cerdas Cermat Hewan</option>
           <option value="object_quiz">Cerdas Cermat Benda</option>
+          <option value="color_shape_quiz">Cerdas Cermat Warna &amp; Bentuk</option>
         </select>
       </div>
 
