@@ -1069,28 +1069,15 @@
         <span class="brand-title">main-edu</span>
       </a>
 
-      <!-- Category Dropdown Select (Clean & Compact) -->
+      <!-- Category Dropdown Select (Clean, Simple & Grouped) -->
       <div class="kids-select-wrapper">
         <select id="kidsCategorySelect" class="kids-select">
           <option value="all">Semua Game (18)</option>
-          <option value="rapikan_kamar">Rapikan Kamar</option>
-          <option value="logika">Game Logika</option>
-          <option value="piano">Piano Mini &amp; Musik</option>
-          <option value="puzzle">Puzzle &amp; Logika</option>
-          <option value="maze">Labirin &amp; Spasial</option>
-          <option value="dots">Sambung Titik &amp; Angka</option>
-          <option value="quiz">Kuis &amp; Pengetahuan</option>
-          <option value="object_quiz">Kuis Benda &amp; Pengenalan</option>
-          <option value="color_shape_quiz">Kuis Warna &amp; Bentuk</option>
-          <option value="clock_quiz">Membaca Jam &amp; Waktu</option>
-          <option value="ketik">Mengetik &amp; Ketangkasan</option>
-          <option value="sensorik">Motorik &amp; Sensorik</option>
-          <option value="menulis">Latihan Menulis</option>
-          <option value="ingatan">Memori &amp; Ingatan</option>
-          <option value="cocokkan">Cocokkan Huruf</option>
-          <option value="suara">Tebak Suara Hewan</option>
-          <option value="hitung">Berhitung Jari</option>
-          <option value="refleks">Loncat &amp; Refleks</option>
+          <option value="cerdas_cermat">Cerdas Cermat &amp; Kuis</option>
+          <option value="logika_puzzle">Logika &amp; Puzzle</option>
+          <option value="motorik_keterampilan">Motorik &amp; Kerapian</option>
+          <option value="memori_bahasa">Memori &amp; Bahasa</option>
+          <option value="musik_refleks">Musik &amp; Refleks</option>
         </select>
         <i class="bi bi-chevron-down kids-select-arrow"></i>
       </div>
@@ -1558,12 +1545,25 @@
         applyFilterAndPagination();
       };
 
+      const CATEGORY_GROUPS = {
+        cerdas_cermat: ['quiz', 'object_quiz', 'color_shape_quiz', 'clock_quiz'],
+        logika_puzzle: ['logika', 'puzzle', 'maze', 'dots'],
+        motorik_keterampilan: ['rapikan_kamar', 'ketik', 'sensorik', 'menulis'],
+        memori_bahasa: ['ingatan', 'cocokkan', 'suara'],
+        musik_refleks: ['piano', 'hitung', 'refleks']
+      };
+
       function applyFilterAndPagination() {
         const selectedCat = kidsCategorySelect ? kidsCategorySelect.value : 'all';
         const matchingCards = [];
 
         appCards.forEach(card => {
-          if (selectedCat === 'all' || card.dataset.category === selectedCat) {
+          const cardCat = card.dataset.category || card.dataset.key;
+          const isMatch = selectedCat === 'all' ||
+                          cardCat === selectedCat ||
+                          (CATEGORY_GROUPS[selectedCat] && CATEGORY_GROUPS[selectedCat].includes(cardCat));
+
+          if (isMatch) {
             matchingCards.push(card);
           } else {
             card.style.display = 'none';
