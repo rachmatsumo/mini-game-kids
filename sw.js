@@ -1,4 +1,4 @@
-const CACHE_NAME = 'main-edu-v22';
+const CACHE_NAME = 'main-edu-v23';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -20,6 +20,7 @@ const ASSETS_TO_CACHE = [
   './game/piano-mini.html',
   './game/game-logika.html',
   './game/rapikan-kamar.html',
+  './game/belajar-membaca.html',
   './manifest.json',
   './score.json',
   './assets/img/favicon.svg',
@@ -45,6 +46,8 @@ const ASSETS_TO_CACHE = [
   './assets/img/game-thumbnail/app-piano.webp',
   './assets/img/game-thumbnail/app-logika.webp',
   './assets/img/game-thumbnail/app-rapikan-kamar.webp',
+  './assets/img/game-thumbnail/app-read.webp',
+  './assets/img/game-thumbnail/preview-read.webp',
   './assets/img/thumbnail.png',
   './assets/img/thumbnail.webp'
 ];
