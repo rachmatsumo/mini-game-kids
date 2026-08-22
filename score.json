@@ -1,238 +1,243 @@
 {
-  "space": [
-    {
-      "name": "Rara",
-      "score": 180,
-      "date": "21/08/2026"
-    },
-    {
-      "name": "Rayyan",
-      "score": 140,
-      "date": "21/08/2026"
-    },
-    {
-      "name": "Budi",
-      "score": 90,
-      "date": "21/08/2026"
-    }
-  ],
-  "garden": [
-    {
-      "name": "Rayyan",
-      "score": 210,
-      "date": "21/08/2026"
-    },
-    {
-      "name": "Rara",
-      "score": 175,
-      "date": "21/08/2026"
-    }
-  ],
-  "trace": [
-    {
-      "name": "Rara",
-      "score": 100,
-      "date": "21/08/2026"
-    },
-    {
-      "name": "Siti",
-      "score": 80,
-      "date": "21/08/2026"
-    }
-  ],
-  "memory": [
-    {
-      "name": "Rayyan",
-      "score": 120,
-      "date": "21/08/2026"
-    },
-    {
-      "name": "Rara",
-      "score": 100,
-      "date": "21/08/2026"
-    }
-  ],
-  "match": [
-    {
-      "name": "Rara",
-      "score": 150,
-      "date": "21/08/2026"
-    },
-    {
-      "name": "Budi",
-      "score": 110,
-      "date": "21/08/2026"
-    }
-  ],
-  "sound": [
-    {
-      "name": "Rayyan",
-      "score": 90,
-      "date": "21/08/2026"
-    },
-    {
-      "name": "Rara",
-      "score": 80,
-      "date": "21/08/2026"
-    }
-  ],
-  "count": [
-    {
-      "name": "Rara",
-      "score": 80,
-      "date": "21/08/2026"
-    },
-    {
-      "name": "Rayyan",
-      "score": 60,
-      "date": "21/08/2026"
-    }
-  ],
-  "jump": [
-    {
-      "name": "Rayyan",
-      "score": 25,
-      "date": "21/08/2026"
-    },
-    {
-      "name": "Rara",
-      "score": 18,
-      "date": "21/08/2026"
-    }
-  ],
-  "puzzle": [
-    {
-      "name": "Rara",
-      "score": 100,
-      "date": "21/08/2026"
-    },
-    {
-      "name": "Budi",
-      "score": 70,
-      "date": "21/08/2026"
-    }
-  ],
-  "maze": [
-    {
-      "name": "Rara",
-      "score": 121,
-      "date": "21/8/2026"
-    },
-    {
-      "name": "Rayyan",
-      "score": 120,
-      "date": "21/08/2026"
-    },
-    {
-      "name": "Rara",
-      "score": 113,
-      "date": "21/8/2026"
-    },
-    {
-      "name": "Rara",
-      "score": 95,
-      "date": "21/08/2026"
-    }
-  ],
-  "dots": [
-    {
-      "name": "Rara",
-      "score": 150,
-      "date": "21/08/2026"
-    },
-    {
-      "name": "Rayyan",
-      "score": 100,
-      "date": "21/08/2026"
-    },
-    {
-      "name": "Rara",
-      "score": 50,
-      "date": "21/8/2026"
-    }
-  ],
-  "quiz": [
-    {
-      "name": "Rayyan",
-      "score": 160,
-      "date": "21/08/2026"
-    },
-    {
-      "name": "Rara",
-      "score": 130,
-      "date": "21/08/2026"
-    }
-  ],
-  "object_quiz": [
-    {
-      "name": "Rara",
-      "score": 170,
-      "date": "21/08/2026"
-    },
-    {
-      "name": "Rayyan",
-      "score": 140,
-      "date": "21/08/2026"
-    }
-  ],
-  "color_shape_quiz": [
-    {
-      "name": "Rayyan",
-      "score": 180,
-      "date": "21/08/2026"
-    },
-    {
-      "name": "Rara",
-      "score": 150,
-      "date": "21/08/2026"
-    }
-  ],
-  "clock_quiz": [
-    {
-      "name": "Rayyan",
-      "score": 190,
-      "date": "21/08/2026"
-    },
-    {
-      "name": "Rara",
-      "score": 160,
-      "date": "21/08/2026"
-    }
-  ],
-  "piano": [
-    {
-      "name": "Rayyan",
-      "score": 150,
-      "date": "21/08/2026"
-    },
-    {
-      "name": "Rara",
-      "score": 120,
-      "date": "21/08/2026"
-    }
-  ],
-  "logika": [
-    {
-      "name": "Rayyan",
-      "score": 180,
-      "date": "21/08/2026"
-    },
-    {
-      "name": "Rara",
-      "score": 150,
-      "date": "21/08/2026"
-    }
-  ],
-  "rapikan_kamar": [
-    {
-      "name": "Rayyan",
-      "score": 160,
-      "date": "21/08/2026"
-    },
-    {
-      "name": "Rara",
-      "score": 130,
-      "date": "21/08/2026"
-    }
-  ]
+    "space": [
+        {
+            "name": "Rara",
+            "score": 180,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Rayyan",
+            "score": 140,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Budi",
+            "score": 90,
+            "date": "21\/08\/2026"
+        }
+    ],
+    "garden": [
+        {
+            "name": "Rayyan",
+            "score": 210,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Rara",
+            "score": 175,
+            "date": "21\/08\/2026"
+        }
+    ],
+    "trace": [
+        {
+            "name": "Rara",
+            "score": 100,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Siti",
+            "score": 80,
+            "date": "21\/08\/2026"
+        }
+    ],
+    "memory": [
+        {
+            "name": "Rayyan",
+            "score": 120,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Rara",
+            "score": 100,
+            "date": "21\/08\/2026"
+        }
+    ],
+    "match": [
+        {
+            "name": "Rara",
+            "score": 150,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Budi",
+            "score": 110,
+            "date": "21\/08\/2026"
+        }
+    ],
+    "sound": [
+        {
+            "name": "Rayyan",
+            "score": 90,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Rara",
+            "score": 80,
+            "date": "21\/08\/2026"
+        }
+    ],
+    "count": [
+        {
+            "name": "Rara",
+            "score": 80,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Rayyan",
+            "score": 60,
+            "date": "21\/08\/2026"
+        }
+    ],
+    "jump": [
+        {
+            "name": "Rayyan",
+            "score": 25,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Rara",
+            "score": 18,
+            "date": "21\/08\/2026"
+        }
+    ],
+    "puzzle": [
+        {
+            "name": "Rara",
+            "score": 100,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Budi",
+            "score": 70,
+            "date": "21\/08\/2026"
+        }
+    ],
+    "maze": [
+        {
+            "name": "Rara",
+            "score": 121,
+            "date": "21\/8\/2026"
+        },
+        {
+            "name": "Rayyan",
+            "score": 120,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Rara",
+            "score": 113,
+            "date": "21\/8\/2026"
+        },
+        {
+            "name": "Rara",
+            "score": 95,
+            "date": "21\/08\/2026"
+        }
+    ],
+    "dots": [
+        {
+            "name": "Rara",
+            "score": 150,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Rayyan",
+            "score": 100,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Rara",
+            "score": 50,
+            "date": "21\/8\/2026"
+        }
+    ],
+    "quiz": [
+        {
+            "name": "Rayyan",
+            "score": 160,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Rara",
+            "score": 130,
+            "date": "21\/08\/2026"
+        }
+    ],
+    "object_quiz": [
+        {
+            "name": "Rara",
+            "score": 170,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Rayyan",
+            "score": 140,
+            "date": "21\/08\/2026"
+        }
+    ],
+    "color_shape_quiz": [
+        {
+            "name": "Rayyan",
+            "score": 180,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Rara",
+            "score": 150,
+            "date": "21\/08\/2026"
+        }
+    ],
+    "clock_quiz": [
+        {
+            "name": "Rayyan",
+            "score": 190,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Rara",
+            "score": 160,
+            "date": "21\/08\/2026"
+        }
+    ],
+    "piano": [
+        {
+            "name": "Rayyan",
+            "score": 150,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Rara",
+            "score": 120,
+            "date": "21\/08\/2026"
+        }
+    ],
+    "logika": [
+        {
+            "name": "Rayyan",
+            "score": 180,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Rara",
+            "score": 150,
+            "date": "21\/08\/2026"
+        }
+    ],
+    "rapikan_kamar": [
+        {
+            "name": "Rayyan",
+            "score": 160,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Rara",
+            "score": 130,
+            "date": "21\/08\/2026"
+        },
+        {
+            "name": "Rara",
+            "score": 100,
+            "date": "22\/8\/2026"
+        }
+    ]
 }
