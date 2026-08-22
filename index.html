@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>main-edu — Portal Game Edukasi Interaktif Anak</title>
 
   <!-- Meta SEO -->
@@ -341,12 +342,23 @@
     }
 
     @keyframes floatBalloon {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(calc(100vw + 160px)); }
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(calc(100vw + 160px));
+      }
     }
+
     @keyframes bobBalloon {
-      0% { margin-top: 0px; }
-      100% { margin-top: 18px; }
+      0% {
+        margin-top: 0px;
+      }
+
+      100% {
+        margin-top: 18px;
+      }
     }
 
     /* Floating Kite SVG */
@@ -356,12 +368,17 @@
       right: 8%;
       z-index: 2;
       animation: floatKite 5s ease-in-out infinite alternate;
-      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15));
+      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15));
     }
 
     @keyframes floatKite {
-      0% { transform: translateY(0) rotate(-5deg); }
-      100% { transform: translateY(-20px) rotate(8deg); }
+      0% {
+        transform: translateY(0) rotate(-5deg);
+      }
+
+      100% {
+        transform: translateY(-20px) rotate(8deg);
+      }
     }
 
     /* Translucent Sky Floating Bubbles */
@@ -373,16 +390,60 @@
       animation: floatBubbleUp 14s infinite linear;
       pointer-events: none;
     }
-    .bg-bubble.b1 { width: 34px; height: 34px; left: 8%; bottom: -40px; animation-duration: 16s; }
-    .bg-bubble.b2 { width: 22px; height: 22px; left: 45%; bottom: -40px; animation-duration: 12s; animation-delay: 3s; }
-    .bg-bubble.b3 { width: 42px; height: 42px; right: 15%; bottom: -40px; animation-duration: 18s; animation-delay: 6s; }
-    .bg-bubble.b4 { width: 28px; height: 28px; right: 38%; bottom: -40px; animation-duration: 14s; animation-delay: 9s; }
+
+    .bg-bubble.b1 {
+      width: 34px;
+      height: 34px;
+      left: 8%;
+      bottom: -40px;
+      animation-duration: 16s;
+    }
+
+    .bg-bubble.b2 {
+      width: 22px;
+      height: 22px;
+      left: 45%;
+      bottom: -40px;
+      animation-duration: 12s;
+      animation-delay: 3s;
+    }
+
+    .bg-bubble.b3 {
+      width: 42px;
+      height: 42px;
+      right: 15%;
+      bottom: -40px;
+      animation-duration: 18s;
+      animation-delay: 6s;
+    }
+
+    .bg-bubble.b4 {
+      width: 28px;
+      height: 28px;
+      right: 38%;
+      bottom: -40px;
+      animation-duration: 14s;
+      animation-delay: 9s;
+    }
 
     @keyframes floatBubbleUp {
-      0% { transform: translateY(0) scale(0.8); opacity: 0; }
-      20% { opacity: 0.75; }
-      80% { opacity: 0.75; }
-      100% { transform: translateY(-105vh) scale(1.2); opacity: 0; }
+      0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 0;
+      }
+
+      20% {
+        opacity: 0.75;
+      }
+
+      80% {
+        opacity: 0.75;
+      }
+
+      100% {
+        transform: translateY(-105vh) scale(1.2);
+        opacity: 0;
+      }
     }
 
     /* Hill Flowers */
@@ -392,14 +453,38 @@
       z-index: 3;
       animation: swayFlower 3s ease-in-out infinite alternate;
     }
-    .hill-flower.f1 { left: 12%; top: -14px; }
-    .hill-flower.f2 { left: 32%; top: -18px; animation-delay: 0.8s; }
-    .hill-flower.f3 { right: 28%; top: -20px; animation-delay: 1.5s; }
-    .hill-flower.f4 { right: 10%; top: -12px; animation-delay: 0.4s; }
+
+    .hill-flower.f1 {
+      left: 12%;
+      top: -14px;
+    }
+
+    .hill-flower.f2 {
+      left: 32%;
+      top: -18px;
+      animation-delay: 0.8s;
+    }
+
+    .hill-flower.f3 {
+      right: 28%;
+      top: -20px;
+      animation-delay: 1.5s;
+    }
+
+    .hill-flower.f4 {
+      right: 10%;
+      top: -12px;
+      animation-delay: 0.4s;
+    }
 
     @keyframes swayFlower {
-      0% { transform: rotate(-8deg); }
-      100% { transform: rotate(8deg); }
+      0% {
+        transform: rotate(-8deg);
+      }
+
+      100% {
+        transform: rotate(8deg);
+      }
     }
 
     /* Multi-layered Rolling Green Grass Hills at Bottom */
@@ -458,7 +543,10 @@
     }
 
     /* Hide Fullscreen Button in PWA App Mode */
-    @media (display-mode: standalone), (display-mode: fullscreen), (display-mode: minimal-ui) {
+    @media (display-mode: standalone),
+    (display-mode: fullscreen),
+    (display-mode: minimal-ui) {
+
       #btnFullscreen,
       #stageFsBtn {
         display: none !important;
@@ -1105,8 +1193,15 @@
     }
 
     @keyframes gridFadeIn {
-      0% { opacity: 0; transform: translateY(6px); }
-      100% { opacity: 1; transform: translateY(0); }
+      0% {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* Kids Footer */
@@ -1176,7 +1271,7 @@
       padding: 6px 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
       width: 100%;
-      min-height: 52px;
+      min-height: 35px;
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -1188,7 +1283,7 @@
     .app-title {
       font-family: var(--font-heading);
       font-weight: 700;
-      font-size: 13.5px;
+      font-size: 10.5px;
       color: #0F172A;
       line-height: 1.25;
       display: -webkit-box;
@@ -1202,7 +1297,7 @@
 
     /* Golden 3D Rating Stars ⭐⭐⭐ */
     .app-stars {
-      display: flex;
+      display: none;
       align-items: center;
       gap: 2px;
       color: #F59E0B;
@@ -1418,17 +1513,18 @@
     <!-- Floating Hot Air Balloon SVG -->
     <div class="hot-air-balloon">
       <svg width="64" height="84" viewBox="0 0 64 84" fill="none">
-        <path d="M32 0C14.3 0 0 14.3 0 32C0 44.5 10 57.5 24 64V70H40V64C54 57.5 64 44.5 64 32C64 14.3 49.7 0 32 0Z" fill="url(#balloonGrad)"/>
-        <path d="M20 0C12 12 12 52 20 64H44C52 52 52 12 44 0H20Z" fill="rgba(255,255,255,0.3)"/>
-        <rect x="26" y="72" width="12" height="10" rx="3" fill="#B45309"/>
-        <line x1="26" y1="70" x2="28" y2="72" stroke="#78350F" stroke-width="2"/>
-        <line x1="38" y1="70" x2="36" y2="72" stroke="#78350F" stroke-width="2"/>
+        <path d="M32 0C14.3 0 0 14.3 0 32C0 44.5 10 57.5 24 64V70H40V64C54 57.5 64 44.5 64 32C64 14.3 49.7 0 32 0Z"
+          fill="url(#balloonGrad)" />
+        <path d="M20 0C12 12 12 52 20 64H44C52 52 52 12 44 0H20Z" fill="rgba(255,255,255,0.3)" />
+        <rect x="26" y="72" width="12" height="10" rx="3" fill="#B45309" />
+        <line x1="26" y1="70" x2="28" y2="72" stroke="#78350F" stroke-width="2" />
+        <line x1="38" y1="70" x2="36" y2="72" stroke="#78350F" stroke-width="2" />
         <defs>
           <linearGradient id="balloonGrad" x1="0" y1="0" x2="64" y2="64">
-            <stop offset="0%" stop-color="#FF5964"/>
-            <stop offset="33%" stop-color="#FFD166"/>
-            <stop offset="66%" stop-color="#06D6A0"/>
-            <stop offset="100%" stop-color="#118AB2"/>
+            <stop offset="0%" stop-color="#FF5964" />
+            <stop offset="33%" stop-color="#FFD166" />
+            <stop offset="66%" stop-color="#06D6A0" />
+            <stop offset="100%" stop-color="#118AB2" />
           </linearGradient>
         </defs>
       </svg>
@@ -1437,10 +1533,10 @@
     <!-- Floating Kite SVG -->
     <div class="sky-kite">
       <svg width="44" height="58" viewBox="0 0 44 58" fill="none">
-        <path d="M22 0L44 26L22 48L0 26L22 0Z" fill="#EC4899"/>
-        <path d="M22 0L44 26H22V0Z" fill="#F472B6"/>
-        <path d="M0 26L22 48V26H0Z" fill="#3B82F6"/>
-        <path d="M22 48C28 54 18 58 24 64" stroke="#FDE047" stroke-width="2" stroke-linecap="round"/>
+        <path d="M22 0L44 26L22 48L0 26L22 0Z" fill="#EC4899" />
+        <path d="M22 0L44 26H22V0Z" fill="#F472B6" />
+        <path d="M0 26L22 48V26H0Z" fill="#3B82F6" />
+        <path d="M22 48C28 54 18 58 24 64" stroke="#FDE047" stroke-width="2" stroke-linecap="round" />
       </svg>
     </div>
 
@@ -1520,8 +1616,10 @@
     <!-- Collapsible Search Bar -->
     <div id="searchBarWrap" class="search-bar-wrap">
       <i class="bi bi-search search-bar-icon"></i>
-      <input id="gameSearchInput" class="search-bar-input" type="text" placeholder="Cari nama game, mis. 'puzzle', 'huruf'..." autocomplete="off">
-      <button id="searchBarClear" class="search-bar-clear" title="Bersihkan pencarian"><i class="bi bi-x-lg"></i></button>
+      <input id="gameSearchInput" class="search-bar-input" type="text"
+        placeholder="Cari nama game, mis. 'puzzle', 'huruf'..." autocomplete="off">
+      <button id="searchBarClear" class="search-bar-clear" title="Bersihkan pencarian"><i
+          class="bi bi-x-lg"></i></button>
     </div>
 
     <!-- Main Direct App Launcher Grid -->
@@ -1544,285 +1642,287 @@
       <div class="grid-scroll-wrap" id="gridScrollWrap">
         <div class="grid-launcher" id="appGrid">
 
-        <!-- App 19: Belajar Membaca -->
-        <div class="app-card is-new" data-category="memori_bahasa" data-key="read" tabindex="0" role="button">
-          <span class="app-new-badge">BARU</span>
-          <div class="app-icon-wrap">
-            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-read.webp" alt="Belajar Membaca App Icon" class="app-icon-img">
-          </div>
-          <div class="app-title-pill">
-            <span class="app-title">Belajar Membaca</span>
-            <div class="app-stars">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-            </div>
-          </div>
-        </div>
-
-        <!-- App 1: Luas Angkasa -->
-        <div class="app-card" data-category="ketik" data-key="space" tabindex="0" role="button">
-          <div class="app-icon-wrap">
-            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-space.webp" alt="Tembak Huruf Angkasa App Icon" class="app-icon-img">
-          </div>
-          <div class="app-title-pill">
-            <span class="app-title">Tembak Huruf Angkasa</span>
-            <div class="app-stars">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-            </div>
-          </div>
-        </div>
-
-        <!-- App 2: Tap Tap Kebun -->
-        <div class="app-card" data-category="sensorik" data-key="garden" tabindex="0" role="button">
-          <div class="app-icon-wrap">
-            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-garden.webp" alt="Tap Tap Kebun App Icon" class="app-icon-img">
-          </div>
-          <div class="app-title-pill">
-            <span class="app-title">Tap Tap Kebun</span>
-            <div class="app-stars">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-            </div>
-          </div>
-        </div>
-
-        <!-- App 3: Jejak Huruf -->
-        <div class="app-card" data-category="menulis" data-key="trace" tabindex="0" role="button">
-          <div class="app-icon-wrap">
-            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-trace.webp" alt="Jejak Huruf App Icon" class="app-icon-img">
-          </div>
-          <div class="app-title-pill">
-            <span class="app-title">Jejak Huruf</span>
-            <div class="app-stars">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-            </div>
-          </div>
-        </div>
-
-        <!-- App 4: Kartu Ingatan -->
-        <div class="app-card" data-category="ingatan" data-key="memory" tabindex="0" role="button">
-          <div class="app-icon-wrap">
-            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-memory.webp" alt="Kartu Ingatan App Icon" class="app-icon-img">
-          </div>
-          <div class="app-title-pill">
-            <span class="app-title">Kartu Ingatan</span>
-            <div class="app-stars">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-            </div>
-          </div>
-        </div>
-
-        <!-- App 5: Cocokkan Huruf -->
-        <div class="app-card" data-category="cocokkan" data-key="match" tabindex="0" role="button">
-          <div class="app-icon-wrap">
-            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-match.webp" alt="Cocokkan Huruf App Icon" class="app-icon-img">
-          </div>
-          <div class="app-title-pill">
-            <span class="app-title">Cocokkan Huruf</span>
-            <div class="app-stars">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-            </div>
-          </div>
-        </div>
-
-        <!-- App 6: Tebak Suara -->
-        <div class="app-card" data-category="suara" data-key="sound" tabindex="0" role="button">
-          <div class="app-icon-wrap">
-            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-sound.webp" alt="Tebak Suara App Icon" class="app-icon-img">
-          </div>
-          <div class="app-title-pill">
-            <span class="app-title">Tebak Suara Hewan</span>
-            <div class="app-stars">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-            </div>
-          </div>
-        </div>
-
-        <!-- App 7: Berhitung Jari -->
-        <div class="app-card" data-category="hitung" data-key="count" tabindex="0" role="button">
-          <div class="app-icon-wrap">
-            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-count.webp" alt="Berhitung Jari App Icon" class="app-icon-img">
-          </div>
-          <div class="app-title-pill">
-            <span class="app-title">Berhitung Jari</span>
-            <div class="app-stars">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-            </div>
-          </div>
-        </div>
-
-        <!-- App 9: Puzzle Hewan (NEW!) -->
-        <div class="app-card is-new" data-category="puzzle" data-key="puzzle" tabindex="0" role="button">
-          <div class="app-icon-wrap">
+          <!-- App 19: Belajar Membaca -->
+          <div class="app-card is-new" data-category="memori_bahasa" data-key="read" tabindex="0" role="button">
             <span class="app-new-badge">BARU</span>
-            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-puzzle.webp" alt="Puzzle Hewan App Icon" class="app-icon-img">
-          </div>
-          <div class="app-title-pill">
-            <span class="app-title">Puzzle Hewan</span>
-            <div class="app-stars">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            <div class="app-icon-wrap">
+              <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+              <img src="assets/img/game-thumbnail/app-read.webp" alt="Belajar Membaca App Icon" class="app-icon-img">
+            </div>
+            <div class="app-title-pill">
+              <span class="app-title">Belajar Membaca</span>
+              <div class="app-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- App 8: Loncat Pipa Emas -->
-        <div class="app-card" data-category="refleks" data-key="jump" tabindex="0" role="button">
-          <div class="app-icon-wrap">
-            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-jump.webp" alt="Loncat Pipa Emas App Icon" class="app-icon-img">
-          </div>
-          <div class="app-title-pill">
-            <span class="app-title">Loncat Pipa Emas</span>
-            <div class="app-stars">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+          <!-- App 1: Luas Angkasa -->
+          <div class="app-card" data-category="ketik" data-key="space" tabindex="0" role="button">
+            <div class="app-icon-wrap">
+              <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+              <img src="assets/img/game-thumbnail/app-space.webp" alt="Tembak Huruf Angkasa App Icon"
+                class="app-icon-img">
+            </div>
+            <div class="app-title-pill">
+              <span class="app-title">Tembak Huruf Angkasa</span>
+              <div class="app-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
             </div>
           </div>
-        </div>
 
-
-
-
-
-
-
-        <!-- App 18: Rapikan Kamar -->
-        <div class="app-card" data-category="rapikan_kamar" data-key="rapikan_kamar" tabindex="0" role="button">
-          <div class="app-icon-wrap">
-            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-rapikan-kamar.webp" alt="Rapikan Kamar App Icon"
-              class="app-icon-img">
-          </div>
-          <div class="app-title-pill">
-            <span class="app-title">Rapikan Kamar</span>
-            <div class="app-stars">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+          <!-- App 2: Tap Tap Kebun -->
+          <div class="app-card" data-category="sensorik" data-key="garden" tabindex="0" role="button">
+            <div class="app-icon-wrap">
+              <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+              <img src="assets/img/game-thumbnail/app-garden.webp" alt="Tap Tap Kebun App Icon" class="app-icon-img">
+            </div>
+            <div class="app-title-pill">
+              <span class="app-title">Tap Tap Kebun</span>
+              <div class="app-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- App 17: Game Logika -->
-        <div class="app-card" data-category="logika" data-key="logika" tabindex="0" role="button">
-          <div class="app-icon-wrap">
-            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-logika.webp" alt="Game Logika App Icon" class="app-icon-img">
-          </div>
-          <div class="app-title-pill">
-            <span class="app-title">Game Logika</span>
-            <div class="app-stars">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+          <!-- App 3: Jejak Huruf -->
+          <div class="app-card" data-category="menulis" data-key="trace" tabindex="0" role="button">
+            <div class="app-icon-wrap">
+              <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+              <img src="assets/img/game-thumbnail/app-trace.webp" alt="Jejak Huruf App Icon" class="app-icon-img">
+            </div>
+            <div class="app-title-pill">
+              <span class="app-title">Jejak Huruf</span>
+              <div class="app-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- App 16: Piano Mini -->
-        <div class="app-card" data-category="piano" data-key="piano" tabindex="0" role="button">
-          <div class="app-icon-wrap">
-            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-piano.webp" alt="Piano Mini App Icon" class="app-icon-img">
-          </div>
-          <div class="app-title-pill">
-            <span class="app-title">Piano Mini</span>
-            <div class="app-stars">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+          <!-- App 4: Kartu Ingatan -->
+          <div class="app-card" data-category="ingatan" data-key="memory" tabindex="0" role="button">
+            <div class="app-icon-wrap">
+              <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+              <img src="assets/img/game-thumbnail/app-memory.webp" alt="Kartu Ingatan App Icon" class="app-icon-img">
+            </div>
+            <div class="app-title-pill">
+              <span class="app-title">Kartu Ingatan</span>
+              <div class="app-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- App 15: Jam Berapa Sekarang? -->
-        <div class="app-card" data-category="clock_quiz" data-key="clock_quiz" tabindex="0" role="button">
-          <div class="app-icon-wrap">
-            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-clock-quiz.webp" alt="Jam Berapa Sekarang App Icon"
-              class="app-icon-img">
-          </div>
-          <div class="app-title-pill">
-            <span class="app-title">Jam Berapa?</span>
-            <div class="app-stars">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+          <!-- App 5: Cocokkan Huruf -->
+          <div class="app-card" data-category="cocokkan" data-key="match" tabindex="0" role="button">
+            <div class="app-icon-wrap">
+              <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+              <img src="assets/img/game-thumbnail/app-match.webp" alt="Cocokkan Huruf App Icon" class="app-icon-img">
+            </div>
+            <div class="app-title-pill">
+              <span class="app-title">Cocokkan Huruf</span>
+              <div class="app-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- App 14: Cerdas Cermat Warna & Bentuk -->
-        <div class="app-card" data-category="color_shape_quiz" data-key="color_shape_quiz" tabindex="0" role="button">
-          <div class="app-icon-wrap">
-            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-color-shape-quiz.webp" alt="Cerdas Cermat Warna & Bentuk App Icon"
-              class="app-icon-img">
-          </div>
-          <div class="app-title-pill">
-            <span class="app-title">Warna & Bentuk</span>
-            <div class="app-stars">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+          <!-- App 6: Tebak Suara -->
+          <div class="app-card" data-category="suara" data-key="sound" tabindex="0" role="button">
+            <div class="app-icon-wrap">
+              <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+              <img src="assets/img/game-thumbnail/app-sound.webp" alt="Tebak Suara App Icon" class="app-icon-img">
+            </div>
+            <div class="app-title-pill">
+              <span class="app-title">Tebak Suara Hewan</span>
+              <div class="app-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- App 13: Cerdas Cermat Benda -->
-        <div class="app-card" data-category="object_quiz" data-key="object_quiz" tabindex="0" role="button">
-          <div class="app-icon-wrap">
-            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-object-quiz.webp" alt="Cerdas Cermat Benda App Icon"
-              class="app-icon-img">
-          </div>
-          <div class="app-title-pill">
-            <span class="app-title">Cerdas Cermat Benda</span>
-            <div class="app-stars">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+          <!-- App 7: Berhitung Jari -->
+          <div class="app-card" data-category="hitung" data-key="count" tabindex="0" role="button">
+            <div class="app-icon-wrap">
+              <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+              <img src="assets/img/game-thumbnail/app-count.webp" alt="Berhitung Jari App Icon" class="app-icon-img">
+            </div>
+            <div class="app-title-pill">
+              <span class="app-title">Berhitung Jari</span>
+              <div class="app-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- App 12: Cerdas Cermat Hewan -->
-        <div class="app-card" data-category="quiz" data-key="quiz" tabindex="0" role="button">
-          <div class="app-icon-wrap">
-            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-quiz.webp" alt="Cerdas Cermat Hewan App Icon" class="app-icon-img">
-          </div>
-          <div class="app-title-pill">
-            <span class="app-title">Cerdas Cermat Hewan</span>
-            <div class="app-stars">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+          <!-- App 9: Puzzle Hewan (NEW!) -->
+          <div class="app-card is-new" data-category="puzzle" data-key="puzzle" tabindex="0" role="button">
+            <div class="app-icon-wrap">
+              <span class="app-new-badge">BARU</span>
+              <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+              <img src="assets/img/game-thumbnail/app-puzzle.webp" alt="Puzzle Hewan App Icon" class="app-icon-img">
+            </div>
+            <div class="app-title-pill">
+              <span class="app-title">Puzzle Hewan</span>
+              <div class="app-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- App 11: Sambung Titik -->
-        <div class="app-card" data-category="dots" data-key="dots" tabindex="0" role="button">
-          <div class="app-icon-wrap">
-            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-dots.webp" alt="Sambung Titik App Icon" class="app-icon-img">
-          </div>
-          <div class="app-title-pill">
-            <span class="app-title">Sambung Titik</span>
-            <div class="app-stars">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+          <!-- App 8: Loncat Pipa Emas -->
+          <div class="app-card" data-category="refleks" data-key="jump" tabindex="0" role="button">
+            <div class="app-icon-wrap">
+              <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+              <img src="assets/img/game-thumbnail/app-jump.webp" alt="Loncat Pipa Emas App Icon" class="app-icon-img">
+            </div>
+            <div class="app-title-pill">
+              <span class="app-title">Loncat Pipa Emas</span>
+              <div class="app-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- App 10: Labirin Kecil -->
-        <div class="app-card" data-category="maze" data-key="maze" tabindex="0" role="button">
-          <div class="app-icon-wrap">
-            <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
-            <img src="assets/img/game-thumbnail/app-maze.webp" alt="Labirin Kecil App Icon" class="app-icon-img">
-          </div>
-          <div class="app-title-pill">
-            <span class="app-title">Labirin Kecil</span>
-            <div class="app-stars">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+
+
+
+
+
+
+          <!-- App 18: Rapikan Kamar -->
+          <div class="app-card" data-category="rapikan_kamar" data-key="rapikan_kamar" tabindex="0" role="button">
+            <div class="app-icon-wrap">
+              <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+              <img src="assets/img/game-thumbnail/app-rapikan-kamar.webp" alt="Rapikan Kamar App Icon"
+                class="app-icon-img">
+            </div>
+            <div class="app-title-pill">
+              <span class="app-title">Rapikan Kamar</span>
+              <div class="app-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
             </div>
           </div>
-        </div>
 
-      </div>
+          <!-- App 17: Game Logika -->
+          <div class="app-card" data-category="logika" data-key="logika" tabindex="0" role="button">
+            <div class="app-icon-wrap">
+              <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+              <img src="assets/img/game-thumbnail/app-logika.webp" alt="Game Logika App Icon" class="app-icon-img">
+            </div>
+            <div class="app-title-pill">
+              <span class="app-title">Game Logika</span>
+              <div class="app-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- App 16: Piano Mini -->
+          <div class="app-card" data-category="piano" data-key="piano" tabindex="0" role="button">
+            <div class="app-icon-wrap">
+              <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+              <img src="assets/img/game-thumbnail/app-piano.webp" alt="Piano Mini App Icon" class="app-icon-img">
+            </div>
+            <div class="app-title-pill">
+              <span class="app-title">Piano Mini</span>
+              <div class="app-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- App 15: Jam Berapa Sekarang? -->
+          <div class="app-card" data-category="clock_quiz" data-key="clock_quiz" tabindex="0" role="button">
+            <div class="app-icon-wrap">
+              <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+              <img src="assets/img/game-thumbnail/app-clock-quiz.webp" alt="Jam Berapa Sekarang App Icon"
+                class="app-icon-img">
+            </div>
+            <div class="app-title-pill">
+              <span class="app-title">Jam Berapa?</span>
+              <div class="app-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- App 14: Cerdas Cermat Warna & Bentuk -->
+          <div class="app-card" data-category="color_shape_quiz" data-key="color_shape_quiz" tabindex="0" role="button">
+            <div class="app-icon-wrap">
+              <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+              <img src="assets/img/game-thumbnail/app-color-shape-quiz.webp" alt="Cerdas Cermat Warna & Bentuk App Icon"
+                class="app-icon-img">
+            </div>
+            <div class="app-title-pill">
+              <span class="app-title">Warna & Bentuk</span>
+              <div class="app-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- App 13: Cerdas Cermat Benda -->
+          <div class="app-card" data-category="object_quiz" data-key="object_quiz" tabindex="0" role="button">
+            <div class="app-icon-wrap">
+              <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+              <img src="assets/img/game-thumbnail/app-object-quiz.webp" alt="Cerdas Cermat Benda App Icon"
+                class="app-icon-img">
+            </div>
+            <div class="app-title-pill">
+              <span class="app-title">Cerdas Cermat Benda</span>
+              <div class="app-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- App 12: Cerdas Cermat Hewan -->
+          <div class="app-card" data-category="quiz" data-key="quiz" tabindex="0" role="button">
+            <div class="app-icon-wrap">
+              <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+              <img src="assets/img/game-thumbnail/app-quiz.webp" alt="Cerdas Cermat Hewan App Icon"
+                class="app-icon-img">
+            </div>
+            <div class="app-title-pill">
+              <span class="app-title">Cerdas Cermat Hewan</span>
+              <div class="app-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- App 11: Sambung Titik -->
+          <div class="app-card" data-category="dots" data-key="dots" tabindex="0" role="button">
+            <div class="app-icon-wrap">
+              <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+              <img src="assets/img/game-thumbnail/app-dots.webp" alt="Sambung Titik App Icon" class="app-icon-img">
+            </div>
+            <div class="app-title-pill">
+              <span class="app-title">Sambung Titik</span>
+              <div class="app-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- App 10: Labirin Kecil -->
+          <div class="app-card" data-category="maze" data-key="maze" tabindex="0" role="button">
+            <div class="app-icon-wrap">
+              <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+              <img src="assets/img/game-thumbnail/app-maze.webp" alt="Labirin Kecil App Icon" class="app-icon-img">
+            </div>
+            <div class="app-title-pill">
+              <span class="app-title">Labirin Kecil</span>
+              <div class="app-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
 
       <!-- Pagination Bar Container -->
@@ -1833,7 +1933,8 @@
     <footer class="kids-footer">
       <p>Made with <i class="bi bi-heart-fill"
           style="color: #EF4444; animation: heartBeat 1.5s infinite ease-in-out; display: inline-block;"></i> for
-        <strong>Rara &amp; Rayyan</strong></p>
+        <strong>Rara &amp; Rayyan</strong>
+      </p>
     </footer>
 
   </div>
@@ -2330,9 +2431,9 @@
 
       // Hide fullscreen buttons when opened as PWA app
       const isStandalonePWA = window.matchMedia('(display-mode: standalone)').matches ||
-                              window.matchMedia('(display-mode: fullscreen)').matches ||
-                              window.navigator.standalone === true ||
-                              document.referrer.includes('android-app://');
+        window.matchMedia('(display-mode: fullscreen)').matches ||
+        window.navigator.standalone === true ||
+        document.referrer.includes('android-app://');
 
       if (isStandalonePWA) {
         if (btnFullscreen) btnFullscreen.style.display = 'none';
