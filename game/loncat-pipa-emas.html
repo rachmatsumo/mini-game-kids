@@ -778,7 +778,7 @@ const CURRENT_GAME_KEY = "jump";
       kicker.textContent = 'Level ' + LEVELS[state.levelKey].label + ' Selesai!';
       title.textContent = '🎉 Kamu berhasil!';
       nextBtn.hidden = false;
-      nextBtn.textContent = 'Lanjut ke Level ' + LEVELS[nextKey].label + ' <i class="bi bi-arrow-right-short"></i>';
+      nextBtn.innerHTML = 'Lanjut ke Level ' + LEVELS[nextKey].label + ' <i class="bi bi-arrow-right-short"></i>';
       nextBtn.onclick = () => { sfxClick(); state.levelKey = nextKey; startGame(); };
     } else {
       kicker.textContent = 'Semua Level Selesai!';

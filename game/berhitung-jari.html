@@ -692,13 +692,13 @@ const CURRENT_GAME_KEY = "count";
 
     if(nextKey){
       kicker.textContent = 'Level ' + LEVELS[state.levelKey].label + ' Selesai!';
-      title.textContent = '<i class="bi bi-trophy-fill" style="color: #F59E0B;"></i> Semua Soal Selesai!';
+      title.innerHTML = '<i class="bi bi-trophy-fill" style="color: #F59E0B;"></i> Semua Soal Selesai!';
       nextBtn.hidden = false;
-      nextBtn.textContent = 'Lanjut ke Level ' + LEVELS[nextKey].label + ' <i class="bi bi-arrow-right-short"></i>';
+      nextBtn.innerHTML = 'Lanjut ke Level ' + LEVELS[nextKey].label + ' <i class="bi bi-arrow-right-short"></i>';
       nextBtn.onclick = () => { sfxClick(); state.levelKey = nextKey; startGame(); };
     } else {
       kicker.textContent = 'Semua Level Selesai!';
-      title.textContent = '<i class="bi bi-trophy-fill" style="color:#FFC93C"></i> Kamu Jago Berhitung!';
+      title.innerHTML = '<i class="bi bi-trophy-fill" style="color:#FFC93C"></i> Kamu Jago Berhitung!';
       nextBtn.hidden = true;
     }
   }
