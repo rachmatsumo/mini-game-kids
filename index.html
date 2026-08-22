@@ -90,6 +90,8 @@
       background-attachment: fixed;
       font-family: var(--font-body);
       color: var(--text-dark);
+      touch-action: pan-y;
+      -webkit-overflow-scrolling: touch;
     }
 
     /* Sunny World Vibrant Background Elements */
@@ -769,13 +771,26 @@
       flex: 1;
       min-height: 0;
       overflow-y: auto !important;
-      -webkit-overflow-scrolling: touch;
+      -webkit-overflow-scrolling: touch !important;
+      touch-action: pan-y !important;
+      overscroll-behavior-y: contain;
       padding: 6px 8px 24px;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 20px 14px;
       justify-items: center;
       align-content: start;
+    }
+
+    .app-viewport,
+    .app-launcher-panel,
+    .app-card,
+    .modal-card,
+    .modal-overlay,
+    .modal-body-content,
+    #lbListContainer {
+      touch-action: pan-y;
+      -webkit-overflow-scrolling: touch;
     }
 
     @media (min-width: 480px) {
@@ -873,8 +888,35 @@
 
 
 
-    /* Header Responsiveness (Prevent Mobile Overflow Leak) */
+    /* Header & Mobile Touch Responsiveness (Smooth Y-Scrolling for iOS/iPhone) */
     @media (max-width: 640px) {
+      html, body {
+        height: auto;
+        min-height: 100dvh;
+        overflow-y: auto !important;
+        overflow-x: hidden;
+        touch-action: pan-y;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .app-viewport {
+        height: auto;
+        min-height: 100dvh;
+        overflow: visible;
+        touch-action: pan-y;
+      }
+
+      .app-launcher-panel {
+        height: auto;
+        overflow: visible;
+        touch-action: pan-y;
+      }
+
+      .grid-launcher {
+        overflow-y: visible !important;
+        touch-action: pan-y !important;
+      }
+
       header.kids-header {
         gap: 4px;
         padding: 6px 10px;
