@@ -265,6 +265,9 @@ const CURRENT_GAME_KEY = "piano";
   };
 
   // ---------- sound engine ----------
+  // iOS Safari creates AudioContext in 'suspended' state and resume() is async;
+  // starting oscillators before the resume promise settles can be silently dropped.
+  // Every play path below waits for a confirmed 'running' state first.
   let audioCtx = null;
   function ensureAudio(){
     if(!audioCtx){
@@ -272,14 +275,18 @@ const CURRENT_GAME_KEY = "piano";
       if(!AC) return null;
       audioCtx = new AC();
     }
-    if(audioCtx.state === 'suspended') audioCtx.resume();
     return audioCtx;
   }
 
-  function unlockAudio(){
+  function withRunningAudio(cb){
     const ctx = ensureAudio();
-    if(ctx){
-      if(ctx.state === 'suspended') ctx.resume();
+    if(!ctx) return;
+    if(ctx.state === 'running'){ cb(ctx); return; }
+    ctx.resume().then(() => cb(ctx)).catch(() => {});
+  }
+
+  function unlockAudio(){
+    withRunningAudio((ctx) => {
       try {
         const buf = ctx.createBuffer(1, 1, 22050);
         const src = ctx.createBufferSource();
@@ -287,52 +294,51 @@ const CURRENT_GAME_KEY = "piano";
         src.connect(ctx.destination);
         src.start(0);
       } catch(e){}
-    }
+    });
   }
 
   ['touchstart', 'touchend', 'mousedown', 'pointerdown', 'click'].forEach(evt => {
     window.addEventListener(evt, unlockAudio, { capture: true, passive: true });
   });
   function playNoteTone(freq){
-    const ctx = ensureAudio();
-    if(!ctx) return;
-    if(ctx.state === 'suspended') ctx.resume();
-    const t0 = ctx.currentTime;
-    const osc = ctx.createOscillator();
-    const osc2 = ctx.createOscillator();
-    const gain = ctx.createGain();
-    const gain2 = ctx.createGain();
-    osc.type = 'triangle'; osc.frequency.setValueAtTime(freq, t0);
-    osc2.type = 'sine'; osc2.frequency.setValueAtTime(freq*2, t0);
-    gain.gain.setValueAtTime(0.35, t0);
-    gain.gain.exponentialRampToValueAtTime(0.0001, t0+1.2);
-    gain2.gain.setValueAtTime(0.12, t0);
-    gain2.gain.exponentialRampToValueAtTime(0.0001, t0+0.6);
-    osc.connect(gain).connect(ctx.destination);
-    osc2.connect(gain2).connect(ctx.destination);
-    osc.start(t0); osc.stop(t0+1.25);
-    osc2.start(t0); osc2.stop(t0+0.65);
+    withRunningAudio((ctx) => {
+      const t0 = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const osc2 = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const gain2 = ctx.createGain();
+      osc.type = 'triangle'; osc.frequency.setValueAtTime(freq, t0);
+      osc2.type = 'sine'; osc2.frequency.setValueAtTime(freq*2, t0);
+      gain.gain.setValueAtTime(0.35, t0);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t0+1.2);
+      gain2.gain.setValueAtTime(0.12, t0);
+      gain2.gain.exponentialRampToValueAtTime(0.0001, t0+0.6);
+      osc.connect(gain).connect(ctx.destination);
+      osc2.connect(gain2).connect(ctx.destination);
+      osc.start(t0); osc.stop(t0+1.25);
+      osc2.start(t0); osc2.stop(t0+0.65);
+    });
   }
   function sfxClick(){
-    const ctx = ensureAudio(); if(!ctx) return;
-    if(ctx.state === 'suspended') ctx.resume();
-    const t0 = ctx.currentTime;
-    const osc = ctx.createOscillator(); const g = ctx.createGain();
-    osc.type='square'; osc.frequency.setValueAtTime(600,t0);
-    g.gain.setValueAtTime(0.0001,t0); g.gain.linearRampToValueAtTime(0.06,t0+0.01);
-    g.gain.exponentialRampToValueAtTime(0.0001,t0+0.06);
-    osc.connect(g).connect(ctx.destination); osc.start(t0); osc.stop(t0+0.08);
+    withRunningAudio((ctx) => {
+      const t0 = ctx.currentTime;
+      const osc = ctx.createOscillator(); const g = ctx.createGain();
+      osc.type='square'; osc.frequency.setValueAtTime(600,t0);
+      g.gain.setValueAtTime(0.0001,t0); g.gain.linearRampToValueAtTime(0.06,t0+0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001,t0+0.06);
+      osc.connect(g).connect(ctx.destination); osc.start(t0); osc.stop(t0+0.08);
+    });
   }
   function sfxFanfare(){
-    [523,659,784,1046,1318].forEach((f,i)=>{
-      const ctx = ensureAudio(); if(!ctx) return;
-      if(ctx.state === 'suspended') ctx.resume();
-      const t0 = ctx.currentTime + i*0.09;
-      const osc = ctx.createOscillator(); const g = ctx.createGain();
-      osc.type='triangle'; osc.frequency.setValueAtTime(f,t0);
-      g.gain.setValueAtTime(0.0001,t0); g.gain.linearRampToValueAtTime(0.17,t0+0.01);
-      g.gain.exponentialRampToValueAtTime(0.0001,t0+0.2);
-      osc.connect(g).connect(ctx.destination); osc.start(t0); osc.stop(t0+0.22);
+    withRunningAudio((ctx) => {
+      [523,659,784,1046,1318].forEach((f,i)=>{
+        const t0 = ctx.currentTime + i*0.09;
+        const osc = ctx.createOscillator(); const g = ctx.createGain();
+        osc.type='triangle'; osc.frequency.setValueAtTime(f,t0);
+        g.gain.setValueAtTime(0.0001,t0); g.gain.linearRampToValueAtTime(0.17,t0+0.01);
+        g.gain.exponentialRampToValueAtTime(0.0001,t0+0.2);
+        osc.connect(g).connect(ctx.destination); osc.start(t0); osc.stop(t0+0.22);
+      });
     });
   }
 
