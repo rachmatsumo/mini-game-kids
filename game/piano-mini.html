@@ -296,6 +296,7 @@ const CURRENT_GAME_KEY = "piano";
   function playNoteTone(freq){
     const ctx = ensureAudio();
     if(!ctx) return;
+    if(ctx.state === 'suspended') ctx.resume();
     const t0 = ctx.currentTime;
     const osc = ctx.createOscillator();
     const osc2 = ctx.createOscillator();
@@ -303,19 +304,18 @@ const CURRENT_GAME_KEY = "piano";
     const gain2 = ctx.createGain();
     osc.type = 'triangle'; osc.frequency.setValueAtTime(freq, t0);
     osc2.type = 'sine'; osc2.frequency.setValueAtTime(freq*2, t0);
-    gain.gain.setValueAtTime(0.0001, t0);
-    gain.gain.linearRampToValueAtTime(0.22, t0+0.012);
-    gain.gain.exponentialRampToValueAtTime(0.0001, t0+0.85);
-    gain2.gain.setValueAtTime(0.0001, t0);
-    gain2.gain.linearRampToValueAtTime(0.05, t0+0.012);
-    gain2.gain.exponentialRampToValueAtTime(0.0001, t0+0.5);
+    gain.gain.setValueAtTime(0.35, t0);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0+1.2);
+    gain2.gain.setValueAtTime(0.12, t0);
+    gain2.gain.exponentialRampToValueAtTime(0.0001, t0+0.6);
     osc.connect(gain).connect(ctx.destination);
     osc2.connect(gain2).connect(ctx.destination);
-    osc.start(t0); osc.stop(t0+0.9);
-    osc2.start(t0); osc2.stop(t0+0.55);
+    osc.start(t0); osc.stop(t0+1.25);
+    osc2.start(t0); osc2.stop(t0+0.65);
   }
   function sfxClick(){
     const ctx = ensureAudio(); if(!ctx) return;
+    if(ctx.state === 'suspended') ctx.resume();
     const t0 = ctx.currentTime;
     const osc = ctx.createOscillator(); const g = ctx.createGain();
     osc.type='square'; osc.frequency.setValueAtTime(600,t0);
@@ -326,12 +326,13 @@ const CURRENT_GAME_KEY = "piano";
   function sfxFanfare(){
     [523,659,784,1046,1318].forEach((f,i)=>{
       const ctx = ensureAudio(); if(!ctx) return;
+      if(ctx.state === 'suspended') ctx.resume();
       const t0 = ctx.currentTime + i*0.09;
       const osc = ctx.createOscillator(); const g = ctx.createGain();
       osc.type='triangle'; osc.frequency.setValueAtTime(f,t0);
       g.gain.setValueAtTime(0.0001,t0); g.gain.linearRampToValueAtTime(0.17,t0+0.01);
-      g.gain.exponentialRampToValueAtTime(0.0001,t0+0.18);
-      osc.connect(g).connect(ctx.destination); osc.start(t0); osc.stop(t0+0.2);
+      g.gain.exponentialRampToValueAtTime(0.0001,t0+0.2);
+      osc.connect(g).connect(ctx.destination); osc.start(t0); osc.stop(t0+0.22);
     });
   }
 
@@ -347,13 +348,24 @@ const CURRENT_GAME_KEY = "piano";
   // ---------- piano keys ----------
   function buildPiano(){
     pianoRow.innerHTML = '';
-    NOTES.forEach((note, i) => {
+    NOTES.forEach((note) => {
       const key = document.createElement('button');
       key.className = 'key';
       key.dataset.name = note.name;
       key.style.background = `linear-gradient(180deg, ${note.color}, ${note.dark})`;
       key.innerHTML = `<span class="ring"></span><span>${note.name}</span>`;
-      key.addEventListener('pointerdown', (e) => { e.preventDefault(); pressKey(note, key); });
+      
+      let touched = false;
+      key.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        touched = true;
+        pressKey(note, key);
+      }, { passive: false });
+
+      key.addEventListener('mousedown', (e) => {
+        if (touched) { touched = false; return; }
+        pressKey(note, key);
+      });
       pianoRow.appendChild(key);
     });
   }
