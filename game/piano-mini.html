@@ -275,6 +275,24 @@ const CURRENT_GAME_KEY = "piano";
     if(audioCtx.state === 'suspended') audioCtx.resume();
     return audioCtx;
   }
+
+  function unlockAudio(){
+    const ctx = ensureAudio();
+    if(ctx){
+      if(ctx.state === 'suspended') ctx.resume();
+      try {
+        const buf = ctx.createBuffer(1, 1, 22050);
+        const src = ctx.createBufferSource();
+        src.buffer = buf;
+        src.connect(ctx.destination);
+        src.start(0);
+      } catch(e){}
+    }
+  }
+
+  ['touchstart', 'touchend', 'mousedown', 'pointerdown', 'click'].forEach(evt => {
+    window.addEventListener(evt, unlockAudio, { capture: true, passive: true });
+  });
   function playNoteTone(freq){
     const ctx = ensureAudio();
     if(!ctx) return;

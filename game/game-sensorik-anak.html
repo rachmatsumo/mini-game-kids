@@ -407,6 +407,22 @@ buildEnv('menu');
 /* ===== Suara ===== */
 let AC=null;
 function ac(){if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();return AC;}
+function unlockAudio(){
+  const a = ac();
+  if(a){
+    if(a.state === 'suspended') a.resume();
+    try {
+      const buf = a.createBuffer(1, 1, 22050);
+      const src = a.createBufferSource();
+      src.buffer = buf;
+      src.connect(a.destination);
+      src.start(0);
+    } catch(e){}
+  }
+}
+['touchstart', 'touchend', 'mousedown', 'pointerdown', 'click'].forEach(evt => {
+  window.addEventListener(evt, unlockAudio, { capture: true, passive: true });
+});
 function tone(f,dur,type='sine',vol=.25,slide=0){const a=ac(),o=a.createOscillator(),g=a.createGain(),t=a.currentTime;o.type=type;o.frequency.setValueAtTime(f,t);if(slide)o.frequency.exponentialRampToValueAtTime(Math.max(40,f+slide),t+dur);g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);o.connect(g).connect(a.destination);o.start(t);o.stop(t+dur);}
 const SFX={pop(){tone(600+Math.random()*400,.12,'square',.18,300)},combo(n){[0,1,2].forEach(i=>setTimeout(()=>tone(520*Math.pow(1.25,i+Math.min(n,4)),.15,'triangle',.2),i*70))},tick(){tone(900,.06,'sine',.12)},start(){[523,659,784,1047].forEach((f,i)=>setTimeout(()=>tone(f,.2,'triangle',.22),i*110))},end(){[784,659,784,1047,1319].forEach((f,i)=>setTimeout(()=>tone(f,.35,'triangle',.22),i*160))},miss(){tone(160,.12,'sawtooth',.08,-60)},bad(){tone(220,.35,'sawtooth',.25,-150);setTimeout(()=>tone(150,.4,'square',.2,-100),120)}};
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'main-edu-v23';
+const CACHE_NAME = 'main-edu-v24';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
