@@ -1,4 +1,4 @@
-const CACHE_NAME = 'main-edu-v18';
+const CACHE_NAME = 'main-edu-v20';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -17,58 +17,43 @@ const ASSETS_TO_CACHE = [
   './game/cerdas-cermat-benda.html',
   './game/cerdas-cermat-warna-bentuk.html',
   './game/jam-berapa-sekarang.html',
+  './game/piano-mini.html',
+  './game/game-logika.html',
+  './game/rapikan-kamar.html',
   './manifest.json',
   './score.json',
   './assets/img/favicon.svg',
-  './assets/img/favicon-portal.png',
-  './assets/img/favicon-space.svg',
-  './assets/img/favicon-space.png',
-  './assets/img/favicon-garden.svg',
-  './assets/img/favicon-garden.png',
-  './assets/img/favicon-trace.svg',
-  './assets/img/favicon-trace.png',
-  './assets/img/favicon-memory.svg',
-  './assets/img/favicon-memory.png',
-  './assets/img/favicon-match.svg',
-  './assets/img/favicon-match.png',
-  './assets/img/favicon-sound.svg',
-  './assets/img/favicon-sound.png',
+  './assets/img/favicon.png',
   './assets/img/icon-192.png',
   './assets/img/icon-512.png',
   './assets/img/apple-touch-icon.png',
-  './assets/img/game-thumbnail/preview-space.png',
-  './assets/img/game-thumbnail/preview-garden.png',
-  './assets/img/game-thumbnail/preview-trace.png',
-  './assets/img/game-thumbnail/preview-memory.png',
-  './assets/img/game-thumbnail/preview-match.png',
-  './assets/img/game-thumbnail/preview-sound.png',
-  './assets/img/game-thumbnail/app-count.png',
-  './assets/img/game-thumbnail/app-jump.png',
-  './assets/img/game-thumbnail/app-puzzle.png',
-  './assets/img/game-thumbnail/app-maze.png',
-  './assets/img/game-thumbnail/app-dots.png',
-  './assets/img/game-thumbnail/app-quiz.png',
-  './assets/img/game-thumbnail/app-object-quiz.png',
-  './assets/img/game-thumbnail/app-color-shape-quiz.png',
-  './assets/img/game-thumbnail/app-clock-quiz.png',
-  './assets/img/game-thumbnail/preview-count.png',
-  './assets/img/game-thumbnail/preview-jump.png',
-  './assets/img/game-thumbnail/preview-puzzle.png',
-  './assets/img/game-thumbnail/preview-maze.png',
-  './assets/img/game-thumbnail/preview-dots.png',
-  './assets/img/game-thumbnail/preview-quiz.png',
-  './assets/img/game-thumbnail/preview-object-quiz.png',
-  './assets/img/game-thumbnail/preview-color-shape-quiz.png',
-  './assets/img/game-thumbnail/preview-clock-quiz.png',
+  './assets/img/game-thumbnail/app-space.webp',
+  './assets/img/game-thumbnail/app-garden.webp',
+  './assets/img/game-thumbnail/app-trace.webp',
+  './assets/img/game-thumbnail/app-memory.webp',
+  './assets/img/game-thumbnail/app-match.webp',
+  './assets/img/game-thumbnail/app-sound.webp',
+  './assets/img/game-thumbnail/app-count.webp',
+  './assets/img/game-thumbnail/app-jump.webp',
+  './assets/img/game-thumbnail/app-puzzle.webp',
+  './assets/img/game-thumbnail/app-maze.webp',
+  './assets/img/game-thumbnail/app-dots.webp',
+  './assets/img/game-thumbnail/app-quiz.webp',
+  './assets/img/game-thumbnail/app-object-quiz.webp',
+  './assets/img/game-thumbnail/app-color-shape-quiz.webp',
+  './assets/img/game-thumbnail/app-clock-quiz.webp',
+  './assets/img/game-thumbnail/app-piano.webp',
+  './assets/img/game-thumbnail/app-logika.webp',
+  './assets/img/game-thumbnail/app-rapikan-kamar.webp',
   './assets/img/thumbnail.png',
-  'https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&family=Outfit:wght@600;700;800&display=swap'
+  './assets/img/thumbnail.webp'
 ];
 
 // Install Event
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[SW] Caching app shell & assets from assets/img...');
+      console.log('[SW] Caching app shell v20...');
       return cache.addAll(ASSETS_TO_CACHE).catch((err) => {
         console.warn('[SW] Cache addAll failed, caching individually:', err);
         return Promise.all(
@@ -81,7 +66,7 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activate Event
+// Activate Event - Purge old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -97,41 +82,42 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch Event - Stale While Revalidate
+// Fetch Event - Network First for HTML, Cache First for static assets
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        fetch(event.request)
-          .then((networkResponse) => {
-            if (networkResponse && networkResponse.status === 200) {
-              caches.open(CACHE_NAME).then((cache) => {
-                cache.put(event.request, networkResponse.clone());
-              });
-            }
-          })
-          .catch(() => {});
-        return cachedResponse;
-      }
+  const url = new URL(event.request.url);
 
-      return fetch(event.request)
+  // Network First for HTML pages to ensure updates reflect immediately
+  if (event.request.mode === 'navigate' || event.request.headers.get('accept')?.includes('text/html')) {
+    event.respondWith(
+      fetch(event.request)
         .then((networkResponse) => {
-          if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-            return networkResponse;
+          if (networkResponse && networkResponse.status === 200) {
+            const copy = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
           }
-          const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
           return networkResponse;
         })
-        .catch(() => {
-          if (event.request.headers.get('accept') && event.request.headers.get('accept').includes('text/html')) {
-            return caches.match('./index.html');
+        .catch(() => caches.match(event.request).then((res) => res || caches.match('./index.html')))
+    );
+    return;
+  }
+
+  // Stale-While-Revalidate for other static assets
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      const fetchPromise = fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, networkResponse.clone());
+            });
           }
-        });
+          return networkResponse;
+        })
+        .catch(() => {});
+      return cachedResponse || fetchPromise;
     })
   );
 });
