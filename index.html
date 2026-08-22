@@ -766,14 +766,20 @@
       border: 2px solid #FCD34D;
     }
 
-    /* Pure App Icon Grid Layout (Scrollable Inner Container) */
-    .grid-launcher {
+    /* Scroll Wrapper for WebKit iOS Compatibility */
+    .grid-scroll-wrap {
       flex: 1;
       min-height: 0;
+      height: 100%;
       overflow-y: auto !important;
       -webkit-overflow-scrolling: touch !important;
       touch-action: pan-y !important;
       overscroll-behavior-y: contain;
+      box-sizing: border-box;
+    }
+
+    /* Pure App Icon Grid Layout */
+    .grid-launcher {
       padding: 6px 8px 24px;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -1530,7 +1536,8 @@
       </div>
 
       <!-- Direct Grid (3D Vibrant AI App Icon Squares with Golden Stars) -->
-      <div class="grid-launcher" id="appGrid">
+      <div class="grid-scroll-wrap" id="gridScrollWrap">
+        <div class="grid-launcher" id="appGrid">
 
         <!-- App 1: Luas Angkasa -->
         <div class="app-card" data-category="ketik" data-key="space" tabindex="0" role="button">
@@ -1796,6 +1803,7 @@
         </div>
 
       </div>
+      </div>
 
       <!-- Pagination Bar Container -->
       <div id="paginationContainer" class="pagination-wrapper"></div>
@@ -1912,16 +1920,20 @@
 
       /* Replaced category select logic with pagination */
 
-      // Pagination Logic (8 items per page for perfect 4x2 desktop grid)
-      const ITEMS_PER_PAGE = 8;
+      // Pagination Logic (Responsive: 4 items/page on mobile 2x2 grid, 8 items/page on desktop 4x2 grid)
+      function getItemsPerPage() {
+        return window.innerWidth < 640 ? 4 : 8;
+      }
+
       let currentPage = 1;
 
       function renderPagination(matchingCards) {
         const paginationContainer = document.getElementById('paginationContainer');
         if (!paginationContainer) return;
 
+        const itemsPerPage = getItemsPerPage();
         const totalItems = matchingCards.length;
-        const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
 
         if (totalPages <= 1) {
           paginationContainer.style.display = 'none';
@@ -1936,9 +1948,9 @@
         if (currentPage > totalPages) currentPage = totalPages;
         if (currentPage < 1) currentPage = 1;
 
-        // Hide/Show items based on current page (10 items per page)
-        const startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
-        const endIdx = startIdx + ITEMS_PER_PAGE;
+        // Hide/Show items based on current page
+        const startIdx = (currentPage - 1) * itemsPerPage;
+        const endIdx = startIdx + itemsPerPage;
 
         matchingCards.forEach((card, idx) => {
           if (idx >= startIdx && idx < endIdx) {
@@ -1949,9 +1961,12 @@
         });
 
         // Reset scroll position to top when page changes
+        const gridScrollWrap = document.getElementById('gridScrollWrap');
+        if (gridScrollWrap) {
+          gridScrollWrap.scrollTop = 0;
+        }
         const appGrid = document.getElementById('appGrid');
         if (appGrid) {
-          appGrid.scrollTop = 0;
           appGrid.style.animation = 'none';
           void appGrid.offsetWidth;
           appGrid.style.animation = '';
