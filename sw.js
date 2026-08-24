@@ -1,4 +1,4 @@
-const CACHE_NAME = 'main-edu-v26';
+const CACHE_NAME = 'main-edu-v27';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -21,6 +21,7 @@ const ASSETS_TO_CACHE = [
   './game/game-logika.html',
   './game/rapikan-kamar.html',
   './game/belajar-membaca.html',
+  './game/jual-eskrim.html',
   './manifest.json',
   './score.json',
   './assets/img/favicon.svg',
@@ -48,6 +49,8 @@ const ASSETS_TO_CACHE = [
   './assets/img/game-thumbnail/app-rapikan-kamar.webp',
   './assets/img/game-thumbnail/app-read.webp',
   './assets/img/game-thumbnail/preview-read.webp',
+  './assets/img/game-thumbnail/app-icecream.webp',
+  './assets/img/game-thumbnail/preview-icecream.webp',
   './assets/img/thumbnail.png',
   './assets/img/thumbnail.webp'
 ];
@@ -56,7 +59,7 @@ const ASSETS_TO_CACHE = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[SW] Caching app shell v26...');
+      console.log('[SW] Caching app shell v27...');
       return cache.addAll(ASSETS_TO_CACHE).catch((err) => {
         console.warn('[SW] Cache addAll failed, caching individually:', err);
         return Promise.all(

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Jual Es Krim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+  :root{
+    --bg-top:#FFE8F0;
+    --bg-bottom:#E0F7FF;
+    --ink:#4A2E3A;
+    --dim:#8A6E7A;
+    --panel-bg:rgba(255,255,255,.68);
+    --gold:#FFC93C;
+    --coral:#FF6F8F;
+    --teal:#3FBFAE;
+    --cone:#D89142;
+    --cone-dark:#B06E27;
+    --font-display:'Fredoka', sans-serif;
+    --font-body:'Nunito', sans-serif;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none;}
+  html,body{margin:0; padding:0; height:100%; overflow:hidden;
+    background:linear-gradient(165deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+    font-family:var(--font-body); color:var(--ink);}
+  #stage{position:relative; width:100%; height:100vh; min-height:600px; display:flex; flex-direction:column; overflow:hidden;}
+  [hidden]{display:none !important;}
+
+  #stripeBand{ position:absolute; top:0; left:0; right:0; height:10px; z-index:1;
+    background:repeating-linear-gradient(45deg, var(--coral) 0 14px, #fff 14px 28px); }
+
+  #musicToggle{
+    position:absolute; top:18px; right:14px; z-index:30;
+    width:40px; height:40px; border-radius:50%;
+    background:rgba(74,46,58,.08); border:1px solid rgba(74,46,58,.14);
+    color:var(--ink); font-size:17px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:transform .12s ease, background .15s ease;
+  }
+  #musicToggle:hover{ background:rgba(74,46,58,.16); }
+  #musicToggle:active{ transform:scale(.9); }
+  #musicToggle.on{ background:linear-gradient(135deg, var(--teal), #2A9C8D); color:#fff; border-color:transparent; }
+
+  /* ---------- MENU ---------- */
+  #menuScreen{position:relative; z-index:2; flex:1; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; padding:24px; gap:16px;}
+  #menuScreen > *{ animation:menuIn .6s cubic-bezier(.22,.9,.32,1.1) both; }
+  #menuScreen > *:nth-child(1){ animation-delay:.05s; }
+  #menuScreen > *:nth-child(2){ animation-delay:.16s; }
+  #menuScreen > *:nth-child(3){ animation-delay:.27s; }
+  #menuScreen > *:nth-child(4){ animation-delay:.38s; }
+  @keyframes menuIn{0%{opacity:0; transform:translateY(20px) scale(.97);} 100%{opacity:1; transform:translateY(0) scale(1);}}
+
+  .mascot{position:absolute; top:7%; left:8%; font-size:38px; pointer-events:none;
+    animation:bob 4.2s ease-in-out infinite, menuIn .6s ease .5s both;}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-6deg);} 50%{transform:translateY(-12px) rotate(6deg);}}
+
+  .kicker{font-family:var(--font-body); font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    font-size:12px; color:#D64F73;}
+  h1{font-family:var(--font-display); font-weight:700; font-size:clamp(28px,6vw,44px); margin:6px 0 0; color:var(--ink);}
+  .subtitle{color:var(--dim); font-size:15px; max-width:400px; margin:6px auto 0; font-weight:700;}
+
+  .panel{background:var(--panel-bg); border:1px solid rgba(74,46,58,.08); border-radius:20px;
+    padding:18px 20px; width:min(92vw,420px); backdrop-filter:blur(6px);
+    box-shadow:0 10px 26px rgba(74,46,58,.1);}
+  .panel h2{font-family:var(--font-display); font-size:13px; font-weight:600; margin:0 0 12px;
+    color:var(--dim); text-transform:uppercase; letter-spacing:.08em; text-align:left;}
+  .level-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
+  .level-btn{position:relative; font-family:var(--font-body); font-weight:800; font-size:14px; color:var(--ink);
+    background:rgba(255,255,255,.75); border:2px solid rgba(74,46,58,.1); border-radius:14px;
+    padding:12px 6px; cursor:pointer; transition:all .15s ease;}
+  .level-btn small{display:block; font-weight:700; color:var(--dim); font-size:11px; margin-top:3px;}
+  .level-btn:hover{border-color:var(--teal); transform:translateY(-1px);}
+  .level-btn.active{background:linear-gradient(135deg, var(--teal), #2A9C8D); color:#fff; border-color:transparent;
+    box-shadow:0 6px 18px rgba(63,191,174,.35);}
+  .level-btn.active small{color:#E9FBF7;}
+  .level-btn.level-done::after{
+    content:'✓'; position:absolute; top:-6px; right:-6px; width:18px; height:18px; border-radius:50%;
+    background:var(--coral); color:#fff; font-size:11px; font-weight:800; display:flex;
+    align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(0,0,0,.2);
+  }
+
+  #startBtn{font-family:var(--font-display); font-weight:600; font-size:18px; color:#3A2400;
+    background:linear-gradient(135deg, var(--gold), #E0A93A); border:none; border-radius:999px;
+    padding:14px 40px; cursor:pointer; box-shadow:0 10px 26px rgba(255,201,60,.4); transition:transform .15s ease;}
+  #startBtn:hover{transform:translateY(-2px) scale(1.02);}
+  #startBtn:active{transform:translateY(0) scale(.98);}
+
+  /* ---------- GAME ---------- */
+  #gameScreen{position:relative; z-index:2; flex:1; display:none; flex-direction:column; min-height:0;}
+  #topbar{display:flex; align-items:center; justify-content:space-between; gap:8px;
+    padding:16px 60px 6px 16px; font-family:var(--font-body); font-weight:800; font-size:13px;
+    color:var(--dim); flex-wrap:wrap;}
+  #backBtn{background:rgba(74,46,58,.08); border:none; color:var(--ink); font-weight:800;
+    border-radius:999px; padding:6px 14px; cursor:pointer; font-family:var(--font-body); font-size:12px;}
+  .stat{background:rgba(255,255,255,.7); border-radius:999px; padding:6px 14px;}
+  .stat b{color:var(--ink);}
+
+  #orderCard{ position:absolute; top:66px; right:12px; z-index:15;
+    background:rgba(255,255,255,.85); border:2px solid rgba(74,46,58,.12); border-radius:16px;
+    padding:8px 10px 6px; box-shadow:0 8px 16px rgba(74,46,58,.15); text-align:center; }
+  #orderCard h3{ font-family:var(--font-display); font-weight:600; font-size:11px; color:var(--dim); margin:0 0 4px; }
+
+  #playArea{ flex:1; display:flex; align-items:center; justify-content:center; padding:6px 14px; min-height:0; }
+
+  .stackPanel{ display:flex; flex-direction:column; align-items:center; gap:8px; position:relative; }
+  .stackPanel h3{ font-family:var(--font-display); font-weight:600; font-size:14px; color:var(--dim); margin:0; }
+  .stackFrame{ background:rgba(255,255,255,.55); border-radius:18px; padding:10px 14px 8px;
+    box-shadow:0 8px 16px rgba(74,46,58,.12); }
+
+  .towerWrap{ position:relative; width:110px; height:210px; }
+  .cone{ position:absolute; left:50%; bottom:0; transform:translateX(-50%);
+    width:60px; height:70px;
+    background:linear-gradient(160deg, #F0B86E, var(--cone)); clip-path:polygon(12% 0%, 88% 0%, 50% 100%);
+    box-shadow:0 4px 6px rgba(0,0,0,.15);}
+  .cone::before{ content:''; position:absolute; inset:0;
+    background-image:repeating-linear-gradient(45deg, rgba(255,255,255,.3) 0 3px, transparent 3px 8px),
+                      repeating-linear-gradient(-45deg, rgba(0,0,0,.14) 0 3px, transparent 3px 8px);
+    clip-path:inherit; }
+
+  .scoop{ position:absolute; left:50%; transform:translateX(-50%); width:68px; height:46px;
+    border-radius:50% 50% 46% 46% / 60% 60% 40% 40%;
+    box-shadow:inset -6px -6px 8px rgba(0,0,0,.15), inset 4px 4px 6px rgba(255,255,255,.35), 0 4px 6px rgba(0,0,0,.12);
+    animation:scoopDrop .3s cubic-bezier(.3,1.3,.4,1.2) both; }
+  @keyframes scoopDrop{ 0%{opacity:0; transform:translateX(-50%) translateY(-16px) scale(.7);} 100%{opacity:1; transform:translateX(-50%) translateY(0) scale(1);} }
+  .scoop .dot{ position:absolute; width:6px; height:6px; border-radius:50%; }
+
+  .mini .towerWrap{ width:60px; height:118px; }
+  .mini .cone{ width:32px; height:38px; }
+  .mini .scoop{ width:36px; height:24px; box-shadow:inset -3px -3px 5px rgba(0,0,0,.15), inset 2px 2px 4px rgba(255,255,255,.3); }
+  .mini .scoop .dot{ width:3.5px; height:3.5px; }
+
+  #flavorPalette{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; padding:10px 16px 6px; }
+  .flavor-btn{ display:flex; flex-direction:column; align-items:center; gap:4px; border:none; cursor:pointer;
+    background:none; font-family:var(--font-body); font-weight:800; font-size:10.5px; color:var(--ink); }
+  .flavor-scoop{ width:52px; height:52px; border-radius:50%; box-shadow:0 6px 12px rgba(74,46,58,.22);
+    transition:transform .12s ease; }
+  .flavor-btn:active .flavor-scoop{ transform:scale(.9); }
+  .flavor-btn.shake .flavor-scoop{ animation:shakeFlavor .35s ease; }
+  @keyframes shakeFlavor{0%,100%{transform:translateX(0);} 25%{transform:translateX(-5px);} 75%{transform:translateX(5px);}}
+
+  .score-pop{ position:fixed; z-index:40; font-family:var(--font-display); font-weight:700; font-size:18px;
+    pointer-events:none; animation:scorePop .7s ease-out forwards; }
+  @keyframes scorePop{ 0%{opacity:1; transform:translate(-50%,-50%) scale(1);} 100%{opacity:0; transform:translate(-50%,-160%) scale(1.2);} }
+
+  #orderCompleteBanner{ position:absolute; inset:0; z-index:20; display:flex; align-items:center; justify-content:center;
+    background:rgba(255,255,255,.4); opacity:0; pointer-events:none; transition:opacity .3s ease; }
+  #orderCompleteBanner.show{ opacity:1; }
+  #orderCompleteBanner .badge{ background:#fff; border-radius:20px; padding:16px 26px; text-align:center;
+    box-shadow:0 14px 30px rgba(74,46,58,.3); font-family:var(--font-display); font-weight:700; font-size:20px;
+    color:var(--teal); animation:badgePop .4s cubic-bezier(.3,1.3,.4,1.2); }
+  @keyframes badgePop{0%{transform:scale(.5); opacity:0;} 100%{transform:scale(1); opacity:1;}}
+
+  /* ---------- FINISH ---------- */
+  #finishScreen{position:relative; z-index:2; flex:1; display:none; flex-direction:column;
+    align-items:center; justify-content:center; gap:12px; text-align:center; padding:24px;}
+  .btn-row{display:flex; gap:12px; flex-wrap:wrap; justify-content:center;}
+  .secondary-btn{font-family:var(--font-body); font-weight:800; font-size:14px; color:var(--ink);
+    background:rgba(255,255,255,.75); border:2px solid rgba(74,46,58,.12); border-radius:999px;
+    padding:12px 26px; cursor:pointer;}
+  .score-big{font-family:var(--font-display); font-size:44px; font-weight:700; color:#D64F73;}
+
+  @media (prefers-reduced-motion: reduce){
+    .mascot{animation:none;}
+    #menuScreen > *{animation:menuIn .01s linear both;}
+    .scoop{animation:none;}
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="stripeBand"></div>
+  <button id="musicToggle" aria-label="Musik latar">🔇</button>
+
+  <!-- MENU -->
+  <div id="menuScreen">
+    <img src="../assets/img/game-thumbnail/app-icecream.webp" alt="Jual Es Krim Mascot" style="width: 90px; height: 90px; object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.15)); border-radius: 22px;">
+    <div class="title-wrap">
+      <span class="kicker">Latihan Mengikuti Urutan</span>
+      <h1>🍦 Jual Es Krim</h1>
+      <p class="subtitle">Susun es krim sesuai gambar pesanan pelanggan. Salah pilih, skor berkurang!</p>
+    </div>
+    <div class="panel">
+      <h2>Pilih Level</h2>
+      <div class="level-grid" id="levelGrid"></div>
+    </div>
+    <button id="startBtn">Buka Toko 🍦</button>
+  </div>
+
+  <!-- GAME -->
+  <div id="gameScreen">
+    <div id="topbar">
+      <button id="backBtn">← Menu</button>
+      <div class="stat">Skor <b id="lblScore">0</b></div>
+      <div class="stat">Pesanan <b id="lblOrder">1</b>/<span id="lblTotalOrders">4</span></div>
+    </div>
+    <div id="orderCard" class="mini">
+      <h3>📋 Pesanan</h3>
+      <div class="towerWrap"><div class="cone"></div><div id="targetTower"></div></div>
+    </div>
+    <div id="playArea">
+      <div class="stackPanel" style="position:relative;">
+        <h3>🍦 Es Krim Kamu</h3>
+        <div class="stackFrame"><div class="towerWrap"><div class="cone"></div><div id="playerTower"></div></div></div>
+        <div id="orderCompleteBanner"><div class="badge">🎉 Pas!</div></div>
+      </div>
+    </div>
+    <div id="flavorPalette"></div>
+  </div>
+
+  <!-- FINISH -->
+  <div id="finishScreen">
+    <span class="kicker" id="finishKicker">Selesai!</span>
+    <h1 id="finishTitle" style="font-size:clamp(24px,5vw,36px)">🎉 Semua pesanan selesai!</h1>
+    <div class="score-big" id="finalScore">0</div>
+    <p class="subtitle">total skor</p>
+    <div class="btn-row">
+      <button class="secondary-btn" id="nextLevelBtn" hidden style="background:linear-gradient(135deg,var(--gold),#E0A93A); color:#3A2400; border:none;">Lanjut Level Berikutnya ➡️</button>
+    </div>
+    <div class="btn-row">
+      <button class="secondary-btn" id="restartBtn">🔁 Ulangi Level Ini</button>
+      <button class="secondary-btn" id="menuBtn2" style="background:linear-gradient(135deg,var(--teal),#2A9C8D); color:#fff; border:none;">🏠 Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function submitPortalScore(gameKey, score) {
+  try {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'MAINEDU_SUBMIT_SCORE',
+        gameKey: gameKey,
+        score: Number(score) || 0
+      }, '*');
+    }
+  } catch(e) {}
+}
+const CURRENT_GAME_KEY = "icecream";
+
+(function(){
+  const FLAVORS = {
+    stroberi:   { label:'Stroberi',   color:'#FF9BB3', dark:'#E8748F', dot:'#E14F72' },
+    coklat:     { label:'Coklat',     color:'#A9714B', dark:'#8B5A2B', dot:'#6B4423' },
+    vanila:     { label:'Vanila',     color:'#FFEFC2', dark:'#F0DFA0', dot:'#D9B96C' },
+    mint:       { label:'Mint',       color:'#8FE0B8', dark:'#5FC994', dot:'#3FA873' },
+    blueberry:  { label:'Blueberry',  color:'#8FB8F0', dark:'#5F91E0', dot:'#3F6FC0' },
+    mangga:     { label:'Mangga',     color:'#FFC46B', dark:'#F0A93A', dot:'#D6841A' },
+  };
+  const FLAVOR_KEYS = Object.keys(FLAVORS);
+  const LEVELS = {
+    mudah:  { label:'Mudah',  sub:'2 scoop', scoopCount:2, paletteSize:3, rounds:4 },
+    sedang: { label:'Sedang', sub:'3 scoop', scoopCount:3, paletteSize:4, rounds:5 },
+    sulit:  { label:'Sulit',  sub:'4 scoop', scoopCount:4, paletteSize:5, rounds:6 },
+  };
+  const LEVEL_ORDER = ['mudah', 'sedang', 'sulit'];
+
+  const menuScreen = document.getElementById('menuScreen');
+  const gameScreen = document.getElementById('gameScreen');
+  const finishScreen = document.getElementById('finishScreen');
+  const levelGrid = document.getElementById('levelGrid');
+  const targetTower = document.getElementById('targetTower');
+  const playerTower = document.getElementById('playerTower');
+  const flavorPalette = document.getElementById('flavorPalette');
+  const orderBanner = document.getElementById('orderCompleteBanner');
+
+  let state = {
+    levelKey: 'mudah',
+    doneLevels: new Set(),
+    score: 0,
+    orderIdx: 0,
+    totalOrders: 4,
+    target: [],
+    built: [],
+    locked: false,
+  };
+
+  // ---------- sound effects ----------
+  let audioCtx = null;
+  function ensureAudio(){
+    if(!audioCtx){
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if(!AC) return null;
+      audioCtx = new AC();
+    }
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+    return audioCtx;
+  }
+  function unlockAudio(){
+    const ctx = ensureAudio();
+    if(ctx){
+      if(ctx.state === 'suspended') ctx.resume();
+      try {
+        const buf = ctx.createBuffer(1, 1, 22050);
+        const src = ctx.createBufferSource();
+        src.buffer = buf;
+        src.connect(ctx.destination);
+        src.start(0);
+      } catch(e){}
+    }
+  }
+  ['touchstart', 'touchend', 'mousedown', 'pointerdown', 'click'].forEach(evt => {
+    window.addEventListener(evt, unlockAudio, { capture: true, passive: true });
+  });
+  function playTone({freq=440, freqEnd=null, duration=0.12, type='sine', volume=0.15, delay=0}){
+    const ctx = ensureAudio();
+    if(!ctx) return;
+    const t0 = ctx.currentTime + delay;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, t0);
+    if(freqEnd !== null){ osc.frequency.exponentialRampToValueAtTime(Math.max(freqEnd,1), t0+duration); }
+    gain.gain.setValueAtTime(0.0001, t0);
+    gain.gain.linearRampToValueAtTime(volume, t0+0.01);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0+duration);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(t0);
+    osc.stop(t0+duration+0.03);
+  }
+  function sfxPlop(){ playTone({freq:520, freqEnd:700, duration:0.1, type:'triangle', volume:0.15}); }
+  function sfxWrong(){ playTone({freq:300, duration:0.12, type:'sine', volume:0.1}); playTone({freq:220, duration:0.16, type:'sine', volume:0.1, delay:0.1}); }
+  function sfxOrderDone(){ [660,880,1108].forEach((f,i)=>playTone({freq:f, duration:0.14, type:'triangle', volume:0.16, delay:i*0.08})); }
+  function sfxFinish(){ [523,659,784,1046].forEach((f,i)=>playTone({freq:f, duration:0.16, type:'triangle', volume:0.16, delay:i*0.09})); }
+  function sfxClick(){ playTone({freq:600, duration:0.05, type:'square', volume:0.06}); }
+
+  // ---------- background music ----------
+  let musicOn = false;
+  let musicTimer = null;
+  let musicGain = null;
+  let musicStep = 0;
+  const MUSIC_PATTERN = [440.00, null, 493.88, 523.25, null, 493.88, 415.30, null, 440.00, null, null, null];
+  const musicToggleBtn = document.getElementById('musicToggle');
+
+  function ensureMusicGain(){
+    const ctx = ensureAudio();
+    if(!ctx) return null;
+    if(!musicGain){
+      musicGain = ctx.createGain();
+      musicGain.gain.value = 0.0001;
+      musicGain.connect(ctx.destination);
+    }
+    return musicGain;
+  }
+  function playMusicNote(freq){
+    const ctx = ensureAudio();
+    const gainBus = ensureMusicGain();
+    if(!ctx || !gainBus) return;
+    const t0 = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const g = ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(freq, t0);
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.linearRampToValueAtTime(0.045, t0+0.06);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0+0.5);
+    osc.connect(g).connect(gainBus);
+    osc.start(t0);
+    osc.stop(t0+0.55);
+  }
+  function startMusic(){
+    const ctx = ensureAudio();
+    const gainBus = ensureMusicGain();
+    if(!ctx || !gainBus || musicTimer) return;
+    gainBus.gain.cancelScheduledValues(ctx.currentTime);
+    gainBus.gain.linearRampToValueAtTime(1, ctx.currentTime+0.6);
+    musicStep = 0;
+    musicTimer = setInterval(()=>{
+      const note = MUSIC_PATTERN[musicStep % MUSIC_PATTERN.length];
+      if(note) playMusicNote(note);
+      musicStep++;
+    }, 460);
+  }
+  function stopMusic(){
+    if(musicTimer){ clearInterval(musicTimer); musicTimer=null; }
+    if(musicGain){
+      const ctx = ensureAudio();
+      musicGain.gain.cancelScheduledValues(ctx.currentTime);
+      musicGain.gain.linearRampToValueAtTime(0.0001, ctx.currentTime+0.3);
+    }
+  }
+  function updateMusicBtn(){
+    musicToggleBtn.textContent = musicOn ? '🔊' : '🔇';
+    musicToggleBtn.classList.toggle('on', musicOn);
+  }
+  musicToggleBtn.onclick = () => {
+    musicOn = !musicOn;
+    if(musicOn){ ensureAudio(); startMusic(); } else { stopMusic(); }
+    updateMusicBtn();
+  };
+
+  // ---------- menu ----------
+  function buildLevelGrid(){
+    levelGrid.innerHTML = '';
+    Object.entries(LEVELS).forEach(([key, cfg]) => {
+      const btn = document.createElement('button');
+      btn.className = 'level-btn' + (key===state.levelKey ? ' active':'') + (state.doneLevels.has(key) ? ' level-done':'');
+      btn.innerHTML = cfg.label + '<small>' + cfg.sub + '</small>';
+      btn.onclick = () => {
+        sfxClick();
+        state.levelKey = key;
+        [...levelGrid.children].forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+      };
+      levelGrid.appendChild(btn);
+    });
+  }
+  buildLevelGrid();
+
+  function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+  }
+
+  const STACK_METRICS = {
+    normal: { coneH:70, sink:22, step:28 },
+    mini:   { coneH:38, sink:12, step:16 },
+  };
+
+  function makeScoopEl(flavorKey, mini, index){
+    const f = FLAVORS[flavorKey];
+    const m = mini ? STACK_METRICS.mini : STACK_METRICS.normal;
+    const el = document.createElement('div');
+    el.className = 'scoop';
+    el.style.bottom = (m.coneH - m.sink + index*m.step) + 'px';
+    el.style.zIndex = 10 + index;
+    el.style.background = `radial-gradient(circle at 35% 28%, ${f.color}, ${f.dark})`;
+    const dotCount = mini ? 2 : 4;
+    for(let i=0;i<dotCount;i++){
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+      dot.style.background = f.dot;
+      dot.style.left = (20 + Math.random()*55) + '%';
+      dot.style.top = (25 + Math.random()*45) + '%';
+      el.appendChild(dot);
+    }
+    return el;
+  }
+
+  function renderTargetTower(){
+    targetTower.innerHTML = '';
+    state.target.forEach((fKey, i) => targetTower.appendChild(makeScoopEl(fKey, true, i)));
+  }
+  function renderPlayerTower(){
+    playerTower.innerHTML = '';
+    state.built.forEach((fKey, i) => playerTower.appendChild(makeScoopEl(fKey, false, i)));
+  }
+
+  function updateStats(){
+    document.getElementById('lblScore').textContent = state.score;
+    document.getElementById('lblOrder').textContent = state.orderIdx+1;
+    document.getElementById('lblTotalOrders').textContent = state.totalOrders;
+  }
+
+  function buildOrder(){
+    const cfg = LEVELS[state.levelKey];
+    const palette = shuffle(FLAVOR_KEYS).slice(0, cfg.paletteSize);
+    state.target = Array.from({length:cfg.scoopCount}, () => palette[randInt(0, palette.length-1)]);
+    state.built = [];
+    state.locked = false;
+    orderBanner.classList.remove('show');
+
+    renderTargetTower();
+    renderPlayerTower();
+
+    flavorPalette.innerHTML = '';
+    palette.forEach(fKey => {
+      const f = FLAVORS[fKey];
+      const btn = document.createElement('button');
+      btn.className = 'flavor-btn';
+      btn.innerHTML = `<div class="flavor-scoop" style="background:radial-gradient(circle at 35% 28%, ${f.color}, ${f.dark});"></div><span>${f.label}</span>`;
+      btn.onclick = () => onPickFlavor(fKey, btn);
+      flavorPalette.appendChild(btn);
+    });
+
+    updateStats();
+  }
+
+  function spawnScorePop(text, color){
+    const el = document.createElement('div');
+    el.className = 'score-pop';
+    el.textContent = text;
+    el.style.color = color;
+    const rect = playerTower.getBoundingClientRect();
+    el.style.left = (rect.left + rect.width/2) + 'px';
+    el.style.top = rect.top + 'px';
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(), 720);
+  }
+
+  function onPickFlavor(fKey, btn){
+    if(state.locked) return;
+    const nextIdx = state.built.length;
+    if(fKey === state.target[nextIdx]){
+      state.built.push(fKey);
+      renderPlayerTower();
+      sfxPlop();
+      state.score += 10;
+      spawnScorePop('+10', '#3FBFAE');
+      updateStats();
+      if(state.built.length >= state.target.length){
+        state.locked = true;
+        state.score += 15;
+        updateStats();
+        sfxOrderDone();
+        orderBanner.classList.add('show');
+        spawnScorePop('+15 Bonus!', '#FFC93C');
+        setTimeout(() => {
+          state.orderIdx++;
+          if(state.orderIdx >= state.totalOrders){
+            showFinish();
+          } else {
+            buildOrder();
+          }
+        }, 1300);
+      }
+    } else {
+      state.score = Math.max(0, state.score - 5);
+      updateStats();
+      sfxWrong();
+      spawnScorePop('-5', '#FF6F8F');
+      btn.classList.remove('shake');
+      void btn.offsetWidth;
+      btn.classList.add('shake');
+      setTimeout(()=>btn.classList.remove('shake'), 380);
+    }
+  }
+
+  function showFinish(){
+    sfxFinish();
+    submitPortalScore("icecream", state.score);
+    gameScreen.style.display = 'none';
+    finishScreen.style.display = 'flex';
+    document.getElementById('finalScore').textContent = state.score;
+
+    state.doneLevels.add(state.levelKey);
+    const curIdx = LEVEL_ORDER.indexOf(state.levelKey);
+    const nextKey = LEVEL_ORDER[curIdx+1];
+    const nextBtn = document.getElementById('nextLevelBtn');
+    const kicker = document.getElementById('finishKicker');
+    const title = document.getElementById('finishTitle');
+
+    if(nextKey){
+      kicker.textContent = 'Level ' + LEVELS[state.levelKey].label + ' Selesai!';
+      title.innerHTML = '<i class="bi bi-stars" style="color:#FFC93C"></i> Semua pesanan selesai!';
+      nextBtn.hidden = false;
+      nextBtn.innerHTML = 'Lanjut ke Level ' + LEVELS[nextKey].label + ' <i class="bi bi-arrow-right-short"></i>';
+      nextBtn.onclick = () => { sfxClick(); state.levelKey = nextKey; startGame(); };
+    } else {
+      kicker.textContent = 'Semua Level Selesai!';
+      title.innerHTML = '<i class="bi bi-trophy-fill" style="color:#FFC93C"></i> Kamu Juara Jual Es Krim!';
+      nextBtn.hidden = true;
+    }
+  }
+
+  function startGame(){
+    ensureAudio();
+    const cfg = LEVELS[state.levelKey];
+    state.totalOrders = cfg.rounds;
+    state.orderIdx = 0;
+    state.score = 0;
+    menuScreen.style.display = 'none';
+    finishScreen.style.display = 'none';
+    gameScreen.style.display = 'flex';
+    buildOrder();
+  }
+  function backToMenu(){
+    gameScreen.style.display = 'none';
+    finishScreen.style.display = 'none';
+    menuScreen.style.display = 'flex';
+    buildLevelGrid();
+  }
+
+  document.getElementById('startBtn').onclick = startGame;
+  document.getElementById('backBtn').onclick = () => { sfxClick(); backToMenu(); };
+  document.getElementById('restartBtn').onclick = () => { sfxClick(); startGame(); };
+  document.getElementById('menuBtn2').onclick = () => { sfxClick(); backToMenu(); };
+})();
+</script>
+</body>
+</html>

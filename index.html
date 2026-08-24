@@ -1628,7 +1628,7 @@
         <div class="panel-title">
           <i class="bi bi-controller" style="color: #0284C7;"></i> Game Edukasi Anak
         </div>
-        <span class="panel-badge" id="gameCountBadge">19 Game Aktif</span>
+        <span class="panel-badge" id="gameCountBadge">20 Game Aktif</span>
       </div>
 
       <!-- Empty search/filter state -->
@@ -1642,8 +1642,23 @@
       <div class="grid-scroll-wrap" id="gridScrollWrap">
         <div class="grid-launcher" id="appGrid">
 
+          <!-- App 20: Jual Es Krim -->
+          <div class="app-card is-new" data-category="ingatan" data-key="icecream" tabindex="0" role="button">
+            <span class="app-new-badge">BARU</span>
+            <div class="app-icon-wrap">
+              <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
+              <img src="assets/img/game-thumbnail/app-icecream.webp" alt="Jual Es Krim App Icon" class="app-icon-img">
+            </div>
+            <div class="app-title-pill">
+              <span class="app-title">Jual Es Krim</span>
+              <div class="app-stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
+            </div>
+          </div>
+
           <!-- App 19: Belajar Membaca -->
-          <div class="app-card is-new" data-category="memori_bahasa" data-key="read" tabindex="0" role="button">
+          <div class="app-card" data-category="memori_bahasa" data-key="read" tabindex="0" role="button">
             <span class="app-new-badge">BARU</span>
             <div class="app-icon-wrap">
               <span class="played-indicator"><i class="bi bi-check-lg"></i></span>
@@ -2202,6 +2217,15 @@
 
       // Game Details Data
       const GAME_DETAILS = {
+        icecream: {
+          title: "Jual Es Krim",
+          category: "Urutan & Memori",
+          url: "game/jual-eskrim.html",
+          hash: "icecream",
+          previewImg: "assets/img/game-thumbnail/preview-icecream.webp",
+          desc: "Game edukasi membuat & menjual es krim! Susun scoop rasa es krim sesuai urutan pesanan pembeli dengan tepat.",
+          benefits: ["Kemampuan mengikuti urutan & pola", "Daya ingat & konsentrasi visual", "Keterampilan motorik & presisi"]
+        },
         read: {
           title: "Belajar Membaca",
           category: "Membaca Suku Kata",
@@ -2598,7 +2622,8 @@
         piano: [{ name: 'Rayyan', score: 150 }, { name: 'Rara', score: 120 }],
         logika: [{ name: 'Rayyan', score: 180 }, { name: 'Rara', score: 150 }],
         rapikan_kamar: [{ name: 'Rayyan', score: 160 }, { name: 'Rara', score: 130 }],
-        read: [{ name: 'Rayyan', score: 180 }, { name: 'Rara', score: 150 }]
+        read: [{ name: 'Rayyan', score: 180 }, { name: 'Rara', score: 150 }],
+        icecream: [{ name: 'Rayyan', score: 190 }, { name: 'Rara', score: 150 }]
       };
 
       function initDefaultLeaderboard() {
@@ -2801,6 +2826,7 @@
           <option value="logika">Game Logika</option>
           <option value="rapikan_kamar">Rapikan Kamar</option>
           <option value="read">Belajar Membaca</option>
+          <option value="icecream">Jual Es Krim</option>
         </select>
       </div>
 
